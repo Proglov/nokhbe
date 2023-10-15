@@ -2,26 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+@font-face {
+    font-family: 'Shabnam';
+    src: url('/fonts/Shabnam.ttf');
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+    font-family: 'Shabnam', sans-serif;
+}
+
+.bg-banafsh {
+    background-color: rgb(66, 7, 122);
+}
+
+.MuiMenu-root ul {
+    background-color: rgb(167, 169, 255);
+    color: rgb(0, 0, 0);
+}
+
+body {
+    overflow-x: hidden;
 }
