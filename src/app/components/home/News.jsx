@@ -37,7 +37,7 @@ export default function News() {
                 <BsFillCircleFill className="text-black absolute" style={{ top: '-4px', left: '12px', fontSize: '10px' }} />
             </div>
 
-            <div style={{ borderLeft: '2px solid black', marginLeft: '16px', marginTop: '-5px' }} className='shadow-lg shadow-green-100'>
+            <div style={{ borderLeft: '2px solid black', marginLeft: '16px', marginTop: '-5px' }} className='shadow-lg shadow-green-100 relative'>
                 <div className='mt-2 p-3'>
                     <NewsTop src='/img/home-news/r_64_190826150203.jpg' day={3} month={6} year={1398} title={titles[0]} desc={description} href='#' />
                 </div>
@@ -65,6 +65,7 @@ export default function News() {
                 </div>
                 <AiOutlineArrowDown className='absolute' style={{ left: '-9px', bottom: '-5px' }} />
             </div>
+
         </div>
     )
 }

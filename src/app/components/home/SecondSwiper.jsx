@@ -1,10 +1,9 @@
 'use client'
-import { useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import styles from '../../../styles/SecSwiper.module.css'
 
 const items = [
     {
@@ -19,11 +18,54 @@ const items = [
 ];
 
 export default function SecondSwiper() {
-    const [selectedImage, setSelectedImage] = useState(items[0].src);
+    const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+    const [op0, setOp0] = useState(false);
+    const [resetTimer, setResetTimer] = useState(false);
+    const [timer, setTimer] = useState(null);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setOp0(true);
+            clearTimeout(timer);
+            const nextIndex = (selectedImageIndex + 1) % items.length;
+            setTimer(
+                setTimeout(() => {
+                    setOp0(false);
+                    setSelectedImageIndex(nextIndex);
+                }, 300)
+            );
+        }, 5000);
+
+        return () => {
+            clearInterval(interval);
+            clearTimeout(timer);
+        };
+    }, [selectedImageIndex, timer]);
 
     const handleImageClick = (index) => {
-        setSelectedImage(items[index].src);
+        if (index !== selectedImageIndex) {
+            clearTimeout(timer);
+            setOp0(true);
+            setTimeout(() => {
+                setOp0(false);
+                setResetTimer(true);
+                setSelectedImageIndex(index);
+            }, 300);
+        }
     };
+
+    useEffect(() => {
+        if (resetTimer) {
+            setResetTimer(false);
+            const nextIndex = (selectedImageIndex + 1) % items.length;
+            setTimer(
+                setTimeout(() => {
+                    setOp0(false);
+                    setSelectedImageIndex(nextIndex);
+                }, 5000)
+            );
+        }
+    }, [resetTimer, selectedImageIndex]);
 
     return (
         <Box sx={{ marginTop: '-30px', padding: '10px' }}>
@@ -31,10 +73,11 @@ export default function SecondSwiper() {
                 <Grid item xs={12} lg={8} sx={{ display: 'flex', justifyContent: 'center' }}>
                     <Image
                         style={{ borderRadius: '10px' }}
-                        src={selectedImage}
+                        src={items[selectedImageIndex].src}
                         width={1920}
                         height={1080}
                         alt="Main Picture"
+                        className={`${styles.imageOpacity} ${op0 ? styles.imageOpacityHidden : ''}`}
                     />
                 </Grid>
                 <Grid item xs={12} lg={4}>

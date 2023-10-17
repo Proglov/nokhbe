@@ -16,17 +16,16 @@ const Navbar = () => {
             <Container maxWidth="xl">
                 <Toolbar sx={{ justifyContent: 'space-between', display: 'flex', alignItems: 'center' }}>
 
-                    <Box sx={{ width: { xs: '200px', sm: '500px', md: '800px' }, transform: { xs: 'translateX(20px)', sm: 'translateX(0px)' } }}>
+                    <Box sx={{ width: { xs: '200px', sm: '300px', md: '350px', lg: '400px' }, transform: { xs: 'translateX(20px)', sm: 'translateX(0px)' } }}>
 
                         <Image
                             src='/img/bashgah1.png'
-                            className="object-cover"
                             alt="Logo"
-                            width={250}
-                            height={50}
+                            width={1200}
+                            height={600}
                         />
                     </Box>
-                    <Typography sx={{ display: 'flex', alignItems: 'center', backgroundColor: ' #f1ffff ', borderRadius: '15px', color: 'black', fontSize: { xs: '10px', sm: '18px' } }} className='p-1'>
+                    <Typography sx={{ display: 'flex', alignItems: 'center', backgroundColor: ' #ffffff ', borderRadius: '15px', color: 'black', fontSize: { xs: '10px', sm: '18px' } }} className='p-1'>
                         {today}
                         <SlCalender className='m-1' />
                     </Typography>

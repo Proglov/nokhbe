@@ -25,7 +25,7 @@ export default function HomeSwiper() {
     const onAutoplayTimeLeft = (s, time) => {
     };
     return (
-        <div className={`${styles.paperam} mt-3 relative`}>
+        <div className={`${styles.paperam} relative`}>
             <Swiper
                 spaceBetween={30}
                 centeredSlides={true}

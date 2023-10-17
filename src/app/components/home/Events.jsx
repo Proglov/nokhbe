@@ -6,11 +6,11 @@ import { AiOutlineArrowLeft } from "react-icons/ai"
 export default function Events() {
     return (
         <div>
-            <div className="flex justify-between px-9 py-2">
-                <Typography variant="h2" sx={{ fontSize: { xs: '22px', sm: '25px', lg: '25px' }, paddingTop: '10px !important' }} >
+            <div className="flex justify-between px-9 py-2" id="events">
+                <Typography variant="h2" sx={{ fontSize: { xs: '22px', sm: '23px', lg: '23px' }, paddingTop: '10px !important' }} >
                     رویداد های پیش رو
                 </Typography>
-                <Button variant="contained" className="bg-slate-300 rounded-md p-2 hover:bg-slate-400 text-black" sx={{ fontSize: { xs: '15px', sm: '18px' } }}>
+                <Button variant="contained" className="bg-slate-300 rounded-md p-2 hover:bg-slate-400 text-black" sx={{ fontSize: { xs: '15px', sm: '16px' } }}>
                     <Link href='#'>
                         مشاهده همه رویدادها
                     </Link>

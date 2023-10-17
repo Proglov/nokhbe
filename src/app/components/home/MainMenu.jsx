@@ -36,8 +36,8 @@ export default function MainMenu() {
                         </ListItemIcon>
                     </Grid>
                     <Grid item>
-                        <Link href='#'>
-                            <ListItemText primary="اخبار و رویداد" />
+                        <Link href='#events'>
+                            <ListItemText primary="اخبار و رویداد ها" />
                         </Link>
                     </Grid>
                 </Grid>
@@ -49,7 +49,7 @@ export default function MainMenu() {
                     </Grid>
                     <Grid item>
                         <Link href='#'>
-                            <ListItemText primary="ورود و لاگین" />
+                            <ListItemText primary="ورود" />
                         </Link>
                     </Grid>
                 </Grid>
