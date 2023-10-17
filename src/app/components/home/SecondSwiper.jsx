@@ -5,12 +5,6 @@ import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
 import Image from 'next/image';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import 'swiper/css';
-import 'swiper/css/free-mode';
-import 'swiper/css/navigation';
-import 'swiper/css/thumbs';
-
-import styles from '../../../styles/SecSwiper.module.css';
 
 const items = [
     {
