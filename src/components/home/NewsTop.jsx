@@ -13,7 +13,7 @@ export default function NewsTop({ src, year, month, day, title, desc, href }) {
                 <Grid item xs={12} sm={7} className="grid-item" sx={{ fontSize: { sm: '12px', md: '18px' } }}>
                     <div className="flex flex-col">
                         <div className="flex flex-row mt-2">
-                            <AiOutlineCalendar />
+                            <AiOutlineCalendar style={{ marginTop: '-3px' }} />
                             &nbsp;
                             <span style={{ lineHeight: '15px' }} >{year}/{month}/{day}</span>
                         </div>

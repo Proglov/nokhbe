@@ -25,7 +25,7 @@ const Navbar = () => {
                             height={600}
                         />
                     </Box>
-                    <Typography sx={{ display: 'flex', alignItems: 'center', backgroundColor: ' #ffffff ', borderRadius: '15px', color: 'black', fontSize: { xs: '10px', sm: '18px' } }} className='p-1'>
+                    <Typography sx={{ display: 'flex', alignItems: 'center', backgroundColor: ' #ffffff ', borderRadius: '15px', color: 'black', fontSize: { xs: '10px', sm: '18px', fontFamily: 'Shabnam' } }} className='p-1 opacity-80'>
                         {today}
                         <SlCalender className='m-1' />
                     </Typography>

@@ -5,7 +5,7 @@ import Grid from '@mui/material/Grid';
 import { BsFillCircleFill } from 'react-icons/bs'
 import { makeStyles } from '@material-ui/core';
 import Link from 'next/link';
-import styles from '../../../styles/MainMenu.module.css'
+import styles from '../../styles/home/MainMenu.module.css'
 
 const useStyles = makeStyles({
     summary: {
@@ -25,13 +25,13 @@ export default function MainMenu() {
     const circleBG = '#834fff';
 
     return (
-        <Box sx={{ flexGrow: 1, color: 'white' }} className={styles.mainMenu}>
+        <Box sx={{ flexGrow: 1, color: 'white', paddingBottom: '20px' }} className={styles.mainMenu}>
 
             <Grid container>
 
                 <Grid item xs={12} className={`${classes.detailes}`} container justify="flex-end" alignItems="center">
-                    <Grid item className='mr-8'>
-                        <ListItemIcon>
+                    <Grid item className='mr-4'>
+                        <ListItemIcon style={{ paddingRight: '20px' }}>
                             <BsFillCircleFill color={circleBG} />
                         </ListItemIcon>
                     </Grid>
@@ -41,9 +41,10 @@ export default function MainMenu() {
                         </Link>
                     </Grid>
                 </Grid>
+
                 <Grid item xs={12} className={`mt-2 ${classes.detailes}`} container justify="flex-end" alignItems="center" >
-                    <Grid item className='mr-8'>
-                        <ListItemIcon>
+                    <Grid item className='mr-4'>
+                        <ListItemIcon style={{ paddingRight: '20px' }}>
                             <BsFillCircleFill color={circleBG} />
                         </ListItemIcon>
                     </Grid>
@@ -55,8 +56,8 @@ export default function MainMenu() {
                 </Grid>
 
                 <Grid item xs={12} container justify="flex-end" alignItems="center" className={`mt-2 ${classes.detailes}`} >
-                    <Grid item className='mr-8'>
-                        <ListItemIcon>
+                    <Grid item className='mr-4'>
+                        <ListItemIcon style={{ paddingRight: '20px' }}>
                             <BsFillCircleFill color={circleBG} />
                         </ListItemIcon>
                     </Grid>
@@ -68,22 +69,8 @@ export default function MainMenu() {
                 </Grid>
 
                 <Grid item xs={12} container justify="flex-end" alignItems="center" className={`mt-2 ${classes.detailes}`} >
-                    <Grid item className='mr-8'>
-                        <ListItemIcon>
-                            <BsFillCircleFill color={circleBG} />
-                        </ListItemIcon>
-                    </Grid>
-                    <Grid item>
-                        <Link href='#'>
-                            <ListItemText primary="معرفی و درباه ما" />
-                        </Link>
-                    </Grid>
-                </Grid>
-
-
-                <Grid item xs={12} container justify="flex-end" alignItems="center" className={`mt-2 ${classes.detailes}`} >
-                    <Grid item className='mr-8'>
-                        <ListItemIcon>
+                    <Grid item className='mr-4'>
+                        <ListItemIcon style={{ paddingRight: '20px' }}>
                             <BsFillCircleFill color={circleBG} />
                         </ListItemIcon>
                     </Grid>

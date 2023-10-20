@@ -1,4 +1,4 @@
-import { jalaliMonth } from "@/app/utils/funcs"
+import { jalaliMonth } from "@/utils/funcs"
 import { PiClockDuotone } from 'react-icons/pi'
 
 export default function EventComponents({ day, month, year, desc }) {

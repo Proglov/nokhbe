@@ -1,22 +1,17 @@
-import Navbar from "./components/home/Navbar";
-import HomeSwiper from "./components/home/HomeSwiper";
-import SecondSwiper from "./components/home/SecondSwiper";
-import SecondNav from "./components/home/SecondNav";
-import Events from "./components/home/Events";
-import News from "./components/home/News";
-import Announcements from "./components/home/Announcements";
+import HomeSwiper from "../components/home/HomeSwiper";
+import SecondSwiper from "../components/home/SecondSwiper";
+import MenuNav from "../components/home/MenuNav";
+import Events from "../components/home/Events";
+import News from "../components/home/News";
+import Announcements from "../components/home/Announcements";
 import { Grid } from "@mui/material";
-import Footer from "./components/home/Footer";
 import styles from './styles.module.css'
 
 export default function Home() {
   return (
     <>
-      <header>
-        <Navbar />
-      </header>
       <nav className={styles.smallScreenNav}>
-        <SecondNav />
+        <MenuNav />
       </nav>
       <main>
         <HomeSwiper />
@@ -25,7 +20,7 @@ export default function Home() {
         <SecondSwiper />
       </section>
       <nav className={`static ${styles.mdScreenNav}`}>
-        <SecondNav />
+        <MenuNav />
       </nav>
       <section className='mt-5' >
         <Events />
@@ -40,9 +35,6 @@ export default function Home() {
           </Grid>
         </Grid>
       </section>
-      <footer className="mt-5">
-        <Footer />
-      </footer>
     </>
   )
 }
