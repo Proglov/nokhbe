@@ -8,7 +8,7 @@ import EventsPagination from '../../components/events/EventsPagination'
 export default function Events() {
     return (
         <>
-            <nav>
+            <nav className="mt-1">
                 <MenuNav />
             </nav>
             <section className='mt-5' >

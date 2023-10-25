@@ -9,7 +9,7 @@ import NewsTop from '@/components/home/NewsTop'
 export default function Events() {
     return (
         <>
-            <nav>
+            <nav className="mt-1">
                 <MenuNav />
             </nav>
             <section className='mt-5' >

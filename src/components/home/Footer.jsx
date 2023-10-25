@@ -91,16 +91,16 @@ export default function Footer() {
             <Grid item xs={12} sm={6} className={`grid-item mt-2 ${styles.dynamicText} ${styles.mrDynamic}`}>
                 <div className='flex flex-row'>
                     <span>
-                        <span className=''>دفتر مرکزی:</span> مازندران، آمل، کلیومتر 5 جاده هراز، دو راهی امامزاده عبدلله
+                        <span className=''>دفتر مرکزی:</span> مازندران، آمل، کلیومتر ۵ جاده هراز، دو راهی امامزاده عبدلله
                     </span>
                 </div>
                 <br />
                 <div className='flex flex-row'>
-                    <span><span className=''>تلفن تماس:</span> 01144203711</span>
+                    <span><span className=''>تلفن تماس:</span> ۰۱۱۴۴۲۰۳۷۱۱</span>
                 </div>
                 <br />
                 <div className='flex flex-row'>
-                    <span><span className=''>فکس:</span>01144203755</span>
+                    <span><span className=''>فکس:</span> ۰۱۱۴۴۲۰۳۷۵۵</span>
                 </div>
                 <br />
                 <div className='flex flex-row'>

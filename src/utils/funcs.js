@@ -40,3 +40,20 @@ export const jalaliMonth = (x) => {
             throw new Error("month should be between 1 and 12")
     }
 }
+
+export const numToMonth = (str) => {
+    let temp = '', temp2 = '';
+    temp += str[5];
+    temp += str[6];
+    temp = jalaliMonth(parseInt(temp));
+    for (let i = 8; i < 10; i++) {
+        temp2 += str[i];
+    }
+    temp2 += ' '
+    temp2 += temp;
+    temp2 += ' ماه '
+    for (let i = 0; i < 4; i++) {
+        temp2 += str[i];
+    }
+    return temp2
+}

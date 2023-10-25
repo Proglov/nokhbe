@@ -10,7 +10,7 @@ import styles from './styles.module.css'
 export default function Home() {
   return (
     <>
-      <nav className={styles.smallScreenNav}>
+      <nav className={`${styles.smallScreenNav} my-1`}>
         <MenuNav />
       </nav>
       <main>

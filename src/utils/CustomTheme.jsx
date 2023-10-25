@@ -12,7 +12,18 @@ const theme = createTheme({
     },
     typography: {
         fontFamily: "Shabnam"
-    }
+    },
+    components: {
+        MuiMenu: {
+            styleOverrides: {
+                list: {
+                    '&[role="menu"]': {
+                        backgroundColor: '#688bff'
+                    },
+                },
+            },
+        },
+    },
 });
 
 const CustomTheme = ({ children }) => {

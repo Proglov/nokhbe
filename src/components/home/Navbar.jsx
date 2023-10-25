@@ -6,10 +6,11 @@ import moment from 'moment-jalaali';
 import { SlCalender } from 'react-icons/sl'
 import { Box } from '@mui/material';
 import Image from 'next/image';
+import { numToMonth } from '@/utils/funcs';
 
 const Navbar = () => {
     moment.loadPersian();
-    const today = moment().format('jYYYY/jMM/jD');
+    const today = moment().format('jYYYY/jMM/jDD');
 
     return (
         <AppBar className='drop-shadow-lg' position="static" sx={{ background: 'linear-gradient(to bottom, #090072 40%, #ff9d33)' }}>
@@ -26,7 +27,7 @@ const Navbar = () => {
                         />
                     </Box>
                     <Typography sx={{ display: 'flex', alignItems: 'center', backgroundColor: ' #ffffff ', borderRadius: '15px', color: 'black', fontSize: { xs: '10px', sm: '18px', fontFamily: 'Shabnam' } }} className='p-1 opacity-80'>
-                        {today}
+                        {numToMonth(today)}
                         <SlCalender className='m-1' />
                     </Typography>
 
