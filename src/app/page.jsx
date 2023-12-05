@@ -7,6 +7,7 @@ import Announcements from "../components/home/Announcements";
 import { Grid } from "@mui/material";
 import styles from './styles.module.css'
 
+
 export default function Home() {
   return (
     <>

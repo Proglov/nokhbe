@@ -1,5 +1,4 @@
 'use client'
-import React, { useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -42,6 +41,7 @@ export default function HomeSwiper() {
                     <SwiperSlide key={index}>
                         <Image
                             src={item.src}
+                            blurDataURL={item.src}
                             width={1920}
                             height={1080}
                             alt="Picture of the university"

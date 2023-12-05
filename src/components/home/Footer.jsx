@@ -1,6 +1,8 @@
 import { Grid, List, ListItem, ListItemIcon, ListItemText } from '@mui/material'
 import Link from 'next/link'
 import { GoGoal } from "react-icons/go"
+import { FaChartBar } from "react-icons/fa";
+import { statisticsView } from '@/utils/SiteSView';
 import styles from '../../styles/home/Footer.module.css'
 
 export default function Footer() {
@@ -90,21 +92,30 @@ export default function Footer() {
 
             <Grid item xs={12} sm={6} className={`grid-item mt-2 ${styles.dynamicText} ${styles.mrDynamic}`}>
                 <div className='flex flex-row'>
+                    <span className='ml-2'>
+                        <FaChartBar style={{ fontSize: '25px' }} />
+                    </span>
+                    <div style={{ textAlign: 'right' }}>
+                        آمار بازدید ها<span style={{ color: 'red' }}>:</span> {statisticsView}
+                    </div>
+                </div>
+                <br />
+                <div className='flex flex-row'>
                     <span>
-                        <span className=''>دفتر مرکزی:</span> مازندران، آمل، کلیومتر ۵ جاده هراز، دو راهی امامزاده عبدلله
+                        <span className=''>دفتر مرکزی<span style={{ color: 'red' }}>:</span></span> مازندران، آمل، کلیومتر ۵ جاده هراز، دو راهی امامزاده عبدلله
                     </span>
                 </div>
                 <br />
                 <div className='flex flex-row'>
-                    <span><span className=''>تلفن تماس:</span> ۰۱۱۴۴۲۰۳۷۱۱</span>
+                    <span><span className=''>تلفن تماس<span style={{ color: 'red' }}>:</span></span> ۰۱۱۴۴۲۰۳۷۱۱</span>
                 </div>
                 <br />
                 <div className='flex flex-row'>
-                    <span><span className=''>فکس:</span> ۰۱۱۴۴۲۰۳۷۵۵</span>
+                    <span><span className=''>فکس<span style={{ color: 'red' }}>:</span></span> ۰۱۱۴۴۲۰۳۷۵۵</span>
                 </div>
                 <br />
                 <div className='flex flex-row'>
-                    <span><span className=''>پست الکترونیک:</span> info@yesc.ir</span>
+                    <span><span className=''>پست الکترونیک<span style={{ color: 'red' }}>:</span></span> info@yesc.ir</span>
                 </div>
             </Grid>
         </Grid>

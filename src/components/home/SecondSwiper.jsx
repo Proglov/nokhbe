@@ -87,6 +87,7 @@ export default function SecondSwiper() {
                                 <Image
                                     style={{ borderRadius: '10px' }}
                                     src={item.src}
+                                    blurDataURL={item.src}
                                     width={1920}
                                     height={1080}
                                     alt="Picture of the university"

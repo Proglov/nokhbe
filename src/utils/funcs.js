@@ -1,59 +1,47 @@
 export const jalaliMonth = (x) => {
     switch (x) {
-        case 1:
+        case '١':
             return "فروردین";
 
-        case 2:
+        case '۲':
             return "اردیبهشت";
 
-        case 3:
+        case '۳':
             return "خرداد";
 
-        case 4:
+        case '۴':
             return "تیر";
 
-        case 5:
+        case '۵':
             return "مرداد";
 
-        case 6:
+        case '۶':
             return "شهریور";
 
-        case 7:
+        case '۷':
             return "مهر";
 
-        case 8:
+        case '۸':
             return "آبان";
 
-        case 9:
+        case '۹':
             return "آذر";
 
-        case 10:
+        case '۱۰':
             return "دی";
 
-        case 11:
+        case '۱۱':
             return "بهمن";
 
-        case 12:
+        case '۱۲':
             return "اسفند";
 
         default:
             throw new Error("month should be between 1 and 12")
     }
 }
-
-export const numToMonth = (str) => {
-    let temp = '', temp2 = '';
-    temp += str[5];
-    temp += str[6];
-    temp = jalaliMonth(parseInt(temp));
-    for (let i = 8; i < 10; i++) {
-        temp2 += str[i];
-    }
-    temp2 += ' '
-    temp2 += temp;
-    temp2 += ' ماه '
-    for (let i = 0; i < 4; i++) {
-        temp2 += str[i];
-    }
-    return temp2
-}
+export const giveMeDateInFa = (str) => {
+    const result = str.split('/');
+    result[1] = jalaliMonth(result[1])
+    return result;
+};

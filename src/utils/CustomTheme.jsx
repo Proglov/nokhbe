@@ -18,11 +18,18 @@ const theme = createTheme({
             styleOverrides: {
                 list: {
                     '&[role="menu"]': {
-                        backgroundColor: '#688bff'
+                        backgroundColor: '#b8e9ff'
                     },
                 },
             },
         },
+        MuiBackdrop: {
+            styleOverrides: {
+                root: {
+                    backgroundColor: 'rgba( 169, 175, 206 ,.1)'
+                }
+            }
+        }
     },
 });
 

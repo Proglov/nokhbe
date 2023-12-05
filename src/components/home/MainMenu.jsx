@@ -49,7 +49,7 @@ export default function MainMenu() {
                         </ListItemIcon>
                     </Grid>
                     <Grid item>
-                        <Link href='#'>
+                        <Link href='/authentication'>
                             <ListItemText primary="ورود" />
                         </Link>
                     </Grid>

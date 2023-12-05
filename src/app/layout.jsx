@@ -2,6 +2,7 @@ import './globals.css'
 import CustomTheme from '../utils/CustomTheme'
 import Navbar from '../components/home/Navbar'
 import Footer from '../components/home/Footer'
+import { EdgeStoreProvider } from '../lib/edgestore';
 
 export const metadata = {
   title: 'نخبگان',
@@ -9,18 +10,21 @@ export const metadata = {
 }
 
 export default function RootLayout({ children }) {
+
   return (
     <html lang="fa-IR" dir='rtl'>
       <body>
-        <CustomTheme>
-          <header>
-            <Navbar />
-          </header>
-          {children}
-          <footer className="mt-5">
-            <Footer />
-          </footer>
-        </CustomTheme>
+        <EdgeStoreProvider>
+          <CustomTheme>
+            <header>
+              <Navbar />
+            </header>
+            {children}
+            <footer className="mt-5">
+              <Footer />
+            </footer>
+          </CustomTheme>
+        </EdgeStoreProvider>
       </body>
     </html>
   )

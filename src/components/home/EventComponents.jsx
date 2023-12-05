@@ -1,26 +1,26 @@
-import { jalaliMonth } from "@/utils/funcs"
 import { PiClockDuotone } from 'react-icons/pi'
+import { giveMeDateInFa } from '@/utils/funcs'
 
-export default function EventComponents({ day, month, year, desc }) {
+export default function EventComponents({ date, title }) {
     return (
         <div>
             <div className="flex" style={{ alignItems: 'center' }}>
                 <div className='flex flex-col bg-blue-950 text-slate-100 rounded text-center p-2'>
                     <div>
-                        {day}
+                        {giveMeDateInFa(date)[2]}
                     </div>
                     <div className="text-xs">
-                        {jalaliMonth(month)}
+                        {giveMeDateInFa(date)[1]}
                     </div>
                 </div>
                 <div className="flex flex-col mr-2">
                     <div>
-                        {desc}
+                        {title}
                     </div>
                     <div className="flex flex-row mt-2">
                         <PiClockDuotone />
                         &nbsp;
-                        <span style={{ lineHeight: '15px' }} >{year}/{month}/{day}</span>
+                        <span style={{ lineHeight: '15px' }} >{date}</span>
                     </div>
                 </div>
             </div>
