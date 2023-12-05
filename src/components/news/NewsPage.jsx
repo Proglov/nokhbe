@@ -82,7 +82,7 @@ export default function NewsPage({ type }) {
                                         {items.map((item, i) => {
                                             if (i > 0) {
                                                 return (
-                                                    <Link href={`${type}/${item.id}`}>
+                                                    <Link href={`${type}/${item.id}`} key={item.id}>
                                                         <SingleNews title={item.title} desc={item.description} src={item.imageURL} date={new Intl.DateTimeFormat('fa-IR').format(new Date(item.createdAt))} key={item.id} />
                                                     </Link>
                                                 )
@@ -93,7 +93,7 @@ export default function NewsPage({ type }) {
                                     :
                                     <>
                                         {items.map((item) => (
-                                            <Link href={`${type}/${item.id}`}>
+                                            <Link href={`${type}/${item.id}`} key={item.id}>
                                                 <SingleNews title={item.title} desc={item.description} src={item.imageURL} date={new Intl.DateTimeFormat('fa-IR').format(new Date(item.createdAt))} key={item.id} />
                                             </Link>
                                         ))}

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { siteAPI } from "@/utils/API";
 
 
-export default function page({ params }) {
+export default function Page({ params }) {
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
     const [isError, setIsError] = useState('')
@@ -41,7 +41,7 @@ export default function page({ params }) {
                 setIsError(true);
                 setLoading(false);
             });
-    }, []);
+    }, [params.id]);
     return (
         <Grid item xs={12} sm={8} md={8} className="grid-item">
             {

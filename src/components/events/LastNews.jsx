@@ -59,7 +59,7 @@ export default function LastNews({ type }) {
                         items?.length !== 0 ?
                             <>
                                 {items.map((item) => (
-                                    <Link href={`${siteAPI}/${type}/${item.id}`}>
+                                    <Link href={`${siteAPI}/${type}/${item.id}`} key={item.id}>
                                         <SideInfo title={item.title} date={new Intl.DateTimeFormat('fa-IR').format(new Date(item.createdAt))} key={item.id} />
                                     </Link>
                                 ))}
