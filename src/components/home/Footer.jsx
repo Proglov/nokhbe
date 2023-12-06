@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { GoGoal } from "react-icons/go"
 import { FaChartBar } from "react-icons/fa";
 import { statisticsView } from '@/utils/SiteSView';
-import styles from '../../styles/home/Footer.module.css'
+import styles from '../../styles/Home/Footer.module.css'
 
 export default function Footer() {
     return (
