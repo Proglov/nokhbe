@@ -1,14 +1,37 @@
 'use client'
-import { Button, Grid, InputLabel, MenuItem, Select } from "@mui/material";
+import { Button, Grid, InputLabel, MenuItem, OutlinedInput, Select } from "@mui/material";
+import Chip from '@mui/material/Chip';
 import Link from "next/link";
 import { useContext, useState } from "react";
 import { TabContext } from "./SignAndLog";
 import { ToastContainer, toast } from "react-toastify";
 import { tags } from "@/utils/tags";
 import "react-toastify/dist/ReactToastify.css";
+import Box from '@mui/material/Box';
+import { useTheme } from "@emotion/react";
 
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+    PaperProps: {
+        style: {
+            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+            width: 250,
+        },
+    },
+};
+
+
+function getStyles(tagOptions, tags, theme) {
+    return {
+        fontWeight: tags.indexOf(tagOptions) === -1
+            ? theme.typography.fontWeightRegular
+            : theme.typography.fontWeightMedium,
+    };
+}
 
 export default function SignUp() {
+    const theme = useTheme();
     const [levelIsOne, setLevelIsOne] = useState(true);
     const { setTabValue } = useContext(TabContext)
     const [isSubmitting, setIsSubmitting] = useState(false)
@@ -28,7 +51,7 @@ export default function SignUp() {
         biography: '',
         education: '',
         abilities: '',
-        club: ''
+        club: []
     });
 
     const toggleLevel = () => setLevelIsOne(prev => !prev);
@@ -147,7 +170,7 @@ export default function SignUp() {
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (formData2.abilities === '' || formData2.address === '' || formData2.biography === '' || formData2.club === '' || formData2.education === '' || formData2.fullName === '' || formData2.mobileNumber === '' || formData2.nationalCode === '' || formData2.phoneNumber === '' || formData2.postalCode === '' || formData2.abilities === ' ' || formData2.address === ' ' || formData2.biography === ' ' || formData2.club === ' ' || formData2.education === ' ' || formData2.fullName === ' ' || formData2.mobileNumber === ' ' || formData2.nationalCode === ' ' || formData2.phoneNumber === ' ' || formData2.postalCode === ' ') {
+        if (formData2.abilities === '' || formData2.address === '' || formData2.biography === '' || formData2.club.length === 0 || formData2.education === '' || formData2.fullName === '' || formData2.mobileNumber === '' || formData2.nationalCode === '' || formData2.phoneNumber === '' || formData2.postalCode === '' || formData2.abilities === ' ' || formData2.address === ' ' || formData2.biography === ' ' || formData2.education === ' ' || formData2.fullName === ' ' || formData2.mobileNumber === ' ' || formData2.nationalCode === ' ' || formData2.phoneNumber === ' ' || formData2.postalCode === ' ') {
             toast.error('لطفا تمامی فیلد ها را تکمیل نمایید')
             return
         }
@@ -163,7 +186,7 @@ export default function SignUp() {
             biography: '',
             education: '',
             abilities: '',
-            club: ''
+            club: []
         }));
 
         //API 
@@ -268,7 +291,7 @@ export default function SignUp() {
                             :
                             <form className="space-y-4 md:space-y-6">
                                 <div>
-                                    <input type="text" name="name" id="name" className="border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  focus:ring-blue-500" placeholder="نام و نام خانوادگی" required onChange={handleFormChange2} value={formData2.fullName} />
+                                    <input type="text" name="name" id="name" className="border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  focus:ring-blue-500" placeholder="نام و نام خانوادگی / نام سازمان / شرکت" required onChange={handleFormChange2} value={formData2.fullName} />
                                 </div>
 
                                 <div>
@@ -284,7 +307,7 @@ export default function SignUp() {
                                 </div>
 
                                 <div>
-                                    <input type="text" name="address" id="address" className="border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  focus:ring-blue-500" placeholder="آدرس" required onChange={handleFormChange2} value={formData2.address} />
+                                    <textarea class="resize-none rounded-md border border-solid mغ-2 w-full" name="address" required id="address" onChange={handleFormChange2} value={formData2.address} placeholder="  آدرس" />
                                 </div>
 
                                 <div>
@@ -292,7 +315,8 @@ export default function SignUp() {
                                 </div>
 
                                 <div>
-                                    <input type="text" name="biography" id="biography" className="border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  focus:ring-blue-500" placeholder="بیوگرافی و رزومه شخصی / مجموعه" required onChange={handleFormChange2} value={formData2.biography} />
+
+                                    <textarea class="resize-none rounded-md border border-solid mغ-2 w-full" name="biography" id="biography" placeholder="بیوگرافی و رزومه شخصی / مجموعه" required onChange={handleFormChange2} value={formData2.biography} />
                                 </div>
 
                                 <div>
@@ -304,19 +328,37 @@ export default function SignUp() {
                                 </div>
 
                                 <div>
-                                    <InputLabel id="demo-simple-select-label">باشگاه و کارگروه جهت فعالیت و عضویت</InputLabel>
+                                    <InputLabel
+                                        id="demo-multiple-chip-label">
+                                        باشگاه و کارگروه جهت فعالیت و عضویت
+                                    </InputLabel>
                                     <Select
-                                        labelId="demo-simple-select-label"
-                                        id="demo-simple-select"
                                         name="club"
+                                        className={`shadow appearance-none border rounded w-full py-2 px-3 lg:mt-5 text-gray-700 leading-tight bg-white focus:bg-white focus:border-purple-500`}
+                                        labelId="demo-multiple-chip-label"
+                                        id="demo-multiple-chip"
+                                        multiple
                                         value={formData2.club}
-                                        label="Age"
                                         onChange={handleFormChange2}
-                                        sx={{ minWidth: '100%' }}
+                                        input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                                        renderValue={(selected) => (
+                                            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                                {selected.map((value) => (
+                                                    <Chip key={value} label={value} />
+                                                ))}
+                                            </Box>
+                                        )}
+                                        MenuProps={MenuProps}
                                     >
-                                        {tags.map((v, i) => {
-                                            return <MenuItem key={i} value={v}>{v}</MenuItem>
-                                        })}
+                                        {tags.map((tag) => (
+                                            <MenuItem
+                                                key={tag}
+                                                value={tag}
+                                                style={getStyles(tag, formData2.club, theme)}
+                                            >
+                                                {tag}
+                                            </MenuItem>
+                                        ))}
                                     </Select>
                                 </div>
 

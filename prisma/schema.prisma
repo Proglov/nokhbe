@@ -64,6 +64,6 @@ model User {
   biography    String
   education    String
   abilities    String
-  club         String
+  club         String[]
   joinedAt     DateTime @default(now())
 }
