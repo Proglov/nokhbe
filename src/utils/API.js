@@ -1,2 +1,2 @@
 
-export const siteAPI = "http://localhost:3000"
+export const siteAPI = process.env.API_URL;
