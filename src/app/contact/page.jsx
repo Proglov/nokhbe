@@ -3,13 +3,14 @@ import { Box, Container, Typography } from "@mui/material";
 import Image from "next/image";
 
 export default function page() {
+    const src = '/img/home-main/IMG_20231004_155303_382.jpg'
     return (
         <div>
             <nav className="mt-1">
                 <MenuNav />
             </nav>
             <div className="mt-2">
-                <Image className="mx-auto rounded-3xl" src='/img/home-main/IMG_20231004_155303_382.jpg' width={600} height={600} alt="Activities" />
+                <Image className="mx-auto rounded-3xl" src={src} placeholder="blur" blurDataURL={'img/wait.png'} width={600} height={600} alt="Activities" />
             </div>
             <div>
 

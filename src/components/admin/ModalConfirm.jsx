@@ -77,6 +77,8 @@ export default function ModalConfirm({ type, id, title, description, imageURL, t
                                     <div className='bg-black' style={{ width: '200px' }}>
                                         <Image
                                             src={imageURL}
+                                            blurDataURL={'img/wait.png'}
+                                            placeholder="blur"
                                             alt='عکس ارسال شده'
                                             width={200}
                                             height={200} />

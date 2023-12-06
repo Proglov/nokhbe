@@ -74,6 +74,8 @@ export default function Swiper() {
                     <Image
                         style={{ borderRadius: '10px' }}
                         src={items[selectedImageIndex].src}
+                        blurDataURL={'img/wait.png'}
+                        placeholder="blur"
                         width={1920}
                         height={1080}
                         alt="Main Picture"
@@ -87,6 +89,8 @@ export default function Swiper() {
                                 <Image
                                     style={{ borderRadius: '10px' }}
                                     src={item.src}
+                                    blurDataURL={'img/wait.png'}
+                                    placeholder="blur"
                                     width={1920}
                                     height={1080}
                                     alt="Picture of the university"

@@ -6,7 +6,7 @@ export default function NewsTop({ src, date, title, desc }) {
     return (
         <Grid container spacing={2} className="p-3" sx={{ alignItems: 'center' }}>
             <Grid item xs={12} sm={5} className="grid-item mt-2">
-                <Image src={src} alt={title} width={1960} height={1080} />
+                <Image src={src} blurDataURL="img/wait.png" placeholder="blur" alt={title} width={1960} height={1080} />
             </Grid>
             <Grid item xs={12} sm={7} className="grid-item" sx={{ fontSize: { sm: '12px', md: '18px' } }}>
                 <div className="flex flex-col">

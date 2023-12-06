@@ -38,6 +38,8 @@ export default function Slider() {
                     <SwiperSlide key={index}>
                         <Image
                             src={item.src}
+                            blurDataURL='img/wait.png'
+                            placeholder="blur"
                             width={1920}
                             height={1080}
                             alt="Picture of the university"

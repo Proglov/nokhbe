@@ -7,7 +7,7 @@ export default function NewsComponent({ src, date, title }) {
     return (
         <Grid container spacing={2} className="p-3" sx={{ alignItems: "center" }}>
             <Grid item xs={12} sm={5} className="grid-item">
-                <Image src={src} blurDataURL={src} alt={title} width={1960} height={1080} />
+                <Image src={src} blurDataURL={'img/wait.png'} placeholder="blur" alt={title} width={1960} height={1080} />
             </Grid>
             <Grid item xs={12} sm={7} className="grid-item">
                 <Box className="flex flex-col" sx={{ fontSize: { xs: '18px', sm: '12px', md: '16px', lg: '20px' } }}>

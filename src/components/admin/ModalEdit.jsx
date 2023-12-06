@@ -233,6 +233,8 @@ export default function ModalEdit() {
                                                     <div className='bg-black' style={{ width: '200px' }}>
                                                         <Image
                                                             src={selectedItem.imageURL}
+                                                            blurDataURL={'img/wait.png'}
+                                                            placeholder="blur"
                                                             alt='عکس ارسال شده'
                                                             width={200}
                                                             height={200} />

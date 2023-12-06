@@ -23,6 +23,8 @@ const Navbar = async () => {
                         <Link href='/'>
                             <Image
                                 src='/img/bashgah1.png'
+                                blurDataURL={'img/wait.png'}
+                                placeholder="blur"
                                 alt="Logo"
                                 width={1200}
                                 height={600}
