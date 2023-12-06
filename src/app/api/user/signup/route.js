@@ -5,7 +5,21 @@ import { hash } from "bcrypt"
 export async function POST(req) {
     try {
         const body = await req.json();
-        const { email, username, password } = body;
+        const {
+            username,
+            email,
+            password,
+            fullName,
+            nationalCode,
+            mobileNumber,
+            phoneNumber,
+            address,
+            postalCode,
+            biography,
+            education,
+            abilities,
+            club
+        } = body;
 
         // validation goes here!
         if (username.length < 8 || password.length < 8) {
@@ -13,7 +27,7 @@ export async function POST(req) {
         }
 
         //check if email already exists
-        const existingUserByEmail = await prisma.NormalUser.findUnique({
+        const existingUserByEmail = await prisma.user.findUnique({
             where: { email }
         })
         if (existingUserByEmail) {
@@ -21,19 +35,32 @@ export async function POST(req) {
         }
 
         //check if username already exists
-        const existingUserByUsername = await prisma.NormalUser.findUnique({
+        const existingUserByUsername = await prisma.user.findUnique({
             where: { username }
         })
         if (existingUserByUsername) {
             return NextResponse.json({ user: null, message: "این نام کاربری قبلا استفاده شده است" }, { status: 409 })
         }
 
-        const hashedPassword = await hash(password, 10)
-        const newUser = await prisma.NormalUser.create({
+        const hashedPassword = await hash(password, 10);
+
+
+
+        const newUser = await prisma.user.create({
             data: {
                 username,
                 email,
-                password: hashedPassword
+                password: hashedPassword,
+                fullName,
+                nationalCode,
+                mobileNumber,
+                phoneNumber,
+                address,
+                postalCode,
+                biography,
+                education,
+                abilities,
+                club
             }
         })
 

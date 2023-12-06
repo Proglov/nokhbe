@@ -23,12 +23,12 @@ export async function POST(req) {
 
         if (!emailOrUsername) return NextResponse.json({ message: "وارد کردن ایمیل یا نام کاربری الزامیست" }, { status: 409 });
 
-        const existingUserByEmail = await prisma.NormalUser.findUnique({
+        const existingUserByEmail = await prisma.user.findUnique({
             where: { email: emailOrUsername }
         });
 
         if (!existingUserByEmail) {
-            const existingUserByUsername = await prisma.NormalUser.findUnique({
+            const existingUserByUsername = await prisma.user.findUnique({
                 where: { username: emailOrUsername }
             });
 

@@ -1,12 +1,15 @@
 'use client'
-import { Button, Grid } from "@mui/material";
+import { Button, Grid, InputLabel, MenuItem, Select } from "@mui/material";
 import Link from "next/link";
 import { useContext, useState } from "react";
 import { TabContext } from "./SignAndLog";
 import { ToastContainer, toast } from "react-toastify";
+import { tags } from "@/utils/tags";
 import "react-toastify/dist/ReactToastify.css";
 
+
 export default function SignUp() {
+    const [levelIsOne, setLevelIsOne] = useState(true);
     const { setTabValue } = useContext(TabContext)
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [formData, setFormData] = useState({
@@ -15,6 +18,20 @@ export default function SignUp() {
         password: '',
         confirmPassword: ''
     });
+    const [formData2, setFormData2] = useState({
+        fullName: '',
+        nationalCode: '',
+        mobileNumber: '',
+        phoneNumber: '',
+        address: '',
+        postalCode: '',
+        biography: '',
+        education: '',
+        abilities: '',
+        club: ''
+    });
+
+    const toggleLevel = () => setLevelIsOne(prev => !prev);
 
     const handleFormChange = (event) => {
         const { name, value } = event.target;
@@ -41,8 +58,63 @@ export default function SignUp() {
         }
 
     }
+    const handleFormChange2 = (event) => {
+        const { name, value } = event.target;
+        if (name === 'name') {
+            setFormData2(prevForm => ({
+                ...prevForm,
+                fullName: value
+            }));
+        } else if (name === 'abilities') {
+            setFormData2(prevForm => ({
+                ...prevForm,
+                abilities: value
+            }));
+        } else if (name === 'address') {
+            setFormData2(prevForm => ({
+                ...prevForm,
+                address: value
+            }));
+        } else if (name === 'biography') {
+            setFormData2(prevForm => ({
+                ...prevForm,
+                biography: value
+            }));
+        } else if (name === 'club') {
+            setFormData2(prevForm => ({
+                ...prevForm,
+                club: value
+            }));
+        } else if (name === 'education') {
+            setFormData2(prevForm => ({
+                ...prevForm,
+                education: value
+            }));
+        } else if (name === 'mobileNumber') {
+            setFormData2(prevForm => ({
+                ...prevForm,
+                mobileNumber: value
+            }));
+        } else if (name === 'nationalCode') {
+            setFormData2(prevForm => ({
+                ...prevForm,
+                nationalCode: value
+            }));
+        } else if (name === 'phoneNumber') {
+            setFormData2(prevForm => ({
+                ...prevForm,
+                phoneNumber: value
+            }));
+        } else if (name === 'postalCode') {
+            setFormData2(prevForm => ({
+                ...prevForm,
+                postalCode: value
+            }));
+        }
 
-    const handleSubmit = async (e) => {
+    }
+
+    const checkFirstLevel = async (e) => {
         e.preventDefault();
         setIsSubmitting(true)
         if (formData.password === '' || formData.username === '' || formData.confirmPassword === '' || formData.email === '') {
@@ -67,55 +139,82 @@ export default function SignUp() {
             return
         }
         if (formData.confirmPassword === formData.password) {
-            setFormData(() => ({
-                email: '',
-                password: '',
-                confirmPassword: '',
-                username: ''
-            }));
-
-            //API 
-            const response = await fetch('api/user/signup', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    username: formData.username,
-                    email: formData.email,
-                    password: formData.password
-                })
-            })
-                .then((response) => {
-                    return response.json();
-                })
-                .then((data) => {
-                    if (!data) {
-                        toast.error('مشکلی در اتصال اینترنت رخ داده است!')
-                    }
-                    if (data.message === "کاربری با این ایمیل قبلا وارد شده است") {
-                        toast.error("کاربری با این ایمیل قبلا وارد شده است")
-                    } else if (data.message === "این نام کاربری قبلا استفاده شده است") {
-                        toast.error("این نام کاربری قبلا استفاده شده است")
-                    } else {
-                        //redirect
-                        toast.success('با موفقیت ثبت نام شدید ! تا لحظاتی دیگر به صفحه ی ورود منتقل میشوید...')
-                        setTimeout(() => {
-                            setFormData(prevForm => ({
-                                ...prevForm,
-                                isSuccessfull: false
-                            }));
-                            setTabValue(0)
-                        }, 5000);
-                    }
-                })
-                .catch(() => {
-                    toast.error('مشکلی در اتصال اینترنت رخ داده است!!')
-                })
-
+            toggleLevel();
         } else {
             toast.error('رمزعبور با تکرار رمزعبور مطابقت ندارد')
         }
+        setIsSubmitting(false)
+    }
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (formData2.abilities === '' || formData2.address === '' || formData2.biography === '' || formData2.club === '' || formData2.education === '' || formData2.fullName === '' || formData2.mobileNumber === '' || formData2.nationalCode === '' || formData2.phoneNumber === '' || formData2.postalCode === '' || formData2.abilities === ' ' || formData2.address === ' ' || formData2.biography === ' ' || formData2.club === ' ' || formData2.education === ' ' || formData2.fullName === ' ' || formData2.mobileNumber === ' ' || formData2.nationalCode === ' ' || formData2.phoneNumber === ' ' || formData2.postalCode === ' ') {
+            toast.error('لطفا تمامی فیلد ها را تکمیل نمایید')
+            return
+        }
+        setIsSubmitting(true)
+
+        setFormData2(() => ({
+            fullName: '',
+            nationalCode: '',
+            mobileNumber: '',
+            phoneNumber: '',
+            address: '',
+            postalCode: '',
+            biography: '',
+            education: '',
+            abilities: '',
+            club: ''
+        }));
+
+        //API 
+        fetch('api/user/signup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: formData.username,
+                email: formData.email,
+                password: formData.password,
+                fullName: formData2.fullName,
+                nationalCode: formData2.nationalCode,
+                mobileNumber: formData2.mobileNumber,
+                phoneNumber: formData2.phoneNumber,
+                address: formData2.address,
+                postalCode: formData2.postalCode,
+                biography: formData2.biography,
+                education: formData2.education,
+                abilities: formData2.abilities,
+                club: formData2.club
+            })
+        })
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                if (!data) {
+                    toast.error('مشکلی در اتصال اینترنت رخ داده است!')
+                }
+                if (data.message === "کاربری با این ایمیل قبلا وارد شده است") {
+                    toast.error("کاربری با این ایمیل قبلا وارد شده است")
+                } else if (data.message === "این نام کاربری قبلا استفاده شده است") {
+                    toast.error("این نام کاربری قبلا استفاده شده است")
+                } else {
+                    //redirect
+                    toast.success('با موفقیت ثبت نام شدید ! تا لحظاتی دیگر به صفحه ی ورود منتقل میشوید...')
+                    setTimeout(() => {
+                        setFormData(prevForm => ({
+                            ...prevForm,
+                            isSuccessfull: false
+                        }));
+                        setTabValue(0)
+                    }, 5000);
+                }
+            })
+            .catch(() => {
+                toast.error('مشکلی در اتصال اینترنت رخ داده است!!')
+            })
+
         setIsSubmitting(false)
     }
 
@@ -126,54 +225,132 @@ export default function SignUp() {
                     <h1 className="text-xl leading-tight tracking-tight text-gray-900 md:text-2xl">
                         ثبت نام
                     </h1>
-                    <form className="space-y-4 md:space-y-6">
-                        <div>
-                            <input type="email" name="email" id="email" className="border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  focus:ring-blue-500" placeholder="ایمیل خود را وارد کنید" required onChange={handleFormChange} value={formData.email} />
-                        </div>
+                    {
+                        levelIsOne ?
+                            <form className="space-y-4 md:space-y-6">
+                                <div>
+                                    <input type="email" name="email" id="email" className="border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  focus:ring-blue-500" placeholder="ایمیل خود را وارد کنید" required onChange={handleFormChange} value={formData.email} />
+                                </div>
 
-                        <div>
-                            <input type="text" name="username" id="username" className="border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  focus:ring-blue-500" placeholder="نام کاربری خود را وارد کنید" required onChange={handleFormChange} value={formData.username} />
-                        </div>
+                                <div>
+                                    <input type="text" name="username" id="username" className="border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  focus:ring-blue-500" placeholder="نام کاربری خود را وارد کنید" required onChange={handleFormChange} value={formData.username} />
+                                </div>
 
-                        <div>
-                            <input type="password" name="password" id="password" placeholder="رمز عبور" className="border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  focus:ring-blue-500" required onChange={handleFormChange} value={formData.password} />
-                        </div>
+                                <div>
+                                    <input type="password" name="password" id="password" placeholder="رمز عبور" className="border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  focus:ring-blue-500" required onChange={handleFormChange} value={formData.password} />
+                                </div>
 
-                        <div>
-                            <input type="password" name="confirmPassword" id="confirmPassword" placeholder="تکرار رمز عبور" className="border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  focus:ring-blue-500" required onChange={handleFormChange} value={formData.confirmPassword} />
-                        </div>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="outlined"
-                            color='success'
-                            className='text-lg'
-                            disabled={isSubmitting}
-                            onClick={(e) => handleSubmit(e)}
-                        >
-                            <span style={{ fontFamily: 'Shabnam' }}>
-                                ثبت نام
-                            </span>
-                        </Button>
+                                <div>
+                                    <input type="password" name="confirmPassword" id="confirmPassword" placeholder="تکرار رمز عبور" className="border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  focus:ring-blue-500" required onChange={handleFormChange} value={formData.confirmPassword} />
+                                </div>
+                                <Button
+                                    type="button"
+                                    fullWidth
+                                    variant="outlined"
+                                    color='success'
+                                    className='text-lg'
+                                    disabled={isSubmitting}
+                                    onClick={(e) => checkFirstLevel(e)}
+                                >
+                                    <span style={{ fontFamily: 'Shabnam' }}>
+                                        مرحله بعد
+                                    </span>
+                                </Button>
 
-                        <div className="text-red-600">
-                            {formData.error}
-                        </div>
-                        {
-                            formData.isSuccessfull &&
-                            <div className="text-green-500">
+                                <Grid container className='my-3'>
+                                    <Grid item>
+                                        <Link href="#" onClick={() => setTabValue(0)} style={{ color: 'blue' }}>
+                                            قبلا ثبت نام کرده اید؟
+                                        </Link>
+                                    </Grid>
+                                </Grid>
+                            </form>
+                            :
+                            <form className="space-y-4 md:space-y-6">
+                                <div>
+                                    <input type="text" name="name" id="name" className="border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  focus:ring-blue-500" placeholder="نام و نام خانوادگی" required onChange={handleFormChange2} value={formData2.fullName} />
+                                </div>
 
-                            </div>
-                        }
+                                <div>
+                                    <input type="text" name="nationalCode" id="nationalCode" className="border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  focus:ring-blue-500" placeholder="کدملی / شناسه ملی" required onChange={handleFormChange2} value={formData2.nationalCode} />
+                                </div>
 
-                        <Grid container className='my-3'>
-                            <Grid item>
-                                <Link href="#" onClick={() => setTabValue(0)} style={{ color: 'blue' }}>
-                                    قبلا ثبت نام کرده اید؟
-                                </Link>
-                            </Grid>
-                        </Grid>
-                    </form>
+                                <div>
+                                    <input type="text" name="mobileNumber" id="mobileNumber" className="border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  focus:ring-blue-500" placeholder="تلفن همراه" required onChange={handleFormChange2} value={formData2.mobileNumber} />
+                                </div>
+
+                                <div>
+                                    <input type="text" name="phoneNumber" id="phoneNumber" className="border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  focus:ring-blue-500" placeholder="تلفن ثابت" required onChange={handleFormChange2} value={formData2.phoneNumber} />
+                                </div>
+
+                                <div>
+                                    <input type="text" name="address" id="address" className="border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  focus:ring-blue-500" placeholder="آدرس" required onChange={handleFormChange2} value={formData2.address} />
+                                </div>
+
+                                <div>
+                                    <input type="text" name="postalCode" id="postalCode" className="border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  focus:ring-blue-500" placeholder="کد پستی" required onChange={handleFormChange2} value={formData2.postalCode} />
+                                </div>
+
+                                <div>
+                                    <input type="text" name="biography" id="biography" className="border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  focus:ring-blue-500" placeholder="بیوگرافی و رزومه شخصی / مجموعه" required onChange={handleFormChange2} value={formData2.biography} />
+                                </div>
+
+                                <div>
+                                    <input type="text" name="education" id="education" className="border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  focus:ring-blue-500" placeholder="تحصیلات و افتخارات" required onChange={handleFormChange2} value={formData2.education} />
+                                </div>
+
+                                <div>
+                                    <input type="text" name="abilities" id="abilities" className="border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  focus:ring-blue-500" placeholder="خدمت و توانایی ها" required onChange={handleFormChange2} value={formData2.abilities} />
+                                </div>
+
+                                <div>
+                                    <InputLabel id="demo-simple-select-label">باشگاه و کارگروه جهت فعالیت و عضویت</InputLabel>
+                                    <Select
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        name="club"
+                                        value={formData2.club}
+                                        label="Age"
+                                        onChange={handleFormChange2}
+                                        sx={{ minWidth: '100%' }}
+                                    >
+                                        {tags.map((v, i) => {
+                                            return <MenuItem key={i} value={v}>{v}</MenuItem>
+                                        })}
+                                    </Select>
+                                </div>
+
+                                <div className="flex">
+                                    <Button
+                                        type="button"
+                                        fullWidth
+                                        variant="outlined"
+                                        color='error'
+                                        className='text-lg mx-1'
+                                        disabled={isSubmitting}
+                                        onClick={toggleLevel}
+                                    >
+                                        <span style={{ fontFamily: 'Shabnam' }}>
+                                            مرحله قبل
+                                        </span>
+                                    </Button>
+                                    <Button
+                                        type="submit"
+                                        fullWidth
+                                        variant="outlined"
+                                        color='success'
+                                        className='text-lg mx-1'
+                                        disabled={isSubmitting}
+                                        onClick={(e) => handleSubmit(e)}
+                                    >
+                                        <span style={{ fontFamily: 'Shabnam' }}>
+                                            ثبت نام
+                                        </span>
+                                    </Button>
+                                </div>
+                            </form>
+                    }
+
                 </div>
             </div>
             <ToastContainer

@@ -13,7 +13,7 @@ export async function POST(req) {
         }
 
         //check if email doesn't exist
-        const existingUserByEmail = await prisma.NormalUser.findUnique({
+        const existingUserByEmail = await prisma.user.findUnique({
             where: { email }
         })
         if (!existingUserByEmail)
@@ -26,7 +26,7 @@ export async function POST(req) {
 
         const hashedPassword = await hash(newPassword, 10)
 
-        await prisma.NormalUser.update({
+        await prisma.user.update({
             data: {
                 password: hashedPassword
             },
