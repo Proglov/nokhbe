@@ -16,7 +16,6 @@ import { useState } from 'react';
 import { useAdminContext } from '@/hooks/useAdminHooks';
 import { useEdgeStore } from '../../lib/edgestore';
 import { SingleImageDropzone } from './single-image-dropzone';
-import { siteAPI } from '@/utils/API';
 
 
 const ITEM_HEIGHT = 48;
@@ -153,7 +152,7 @@ export default function AddNew({ type }) {
                 error: ''
             })), 5000);
         } else {
-            fetch(`${siteAPI}/api/${type}`, {
+            fetch(`/api/${type}`, {
                 headers: { 'Content-Type': 'application/json' },
                 method: 'POST',
                 body: JSON.stringify({

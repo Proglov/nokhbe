@@ -3,7 +3,6 @@ import { Divider, Grid, List, Skeleton, Typography } from '@mui/material'
 import SideInfo from './SideInfo'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { siteAPI } from '@/utils/API'
 
 export default function LastNews({ type }) {
     const [error, setError] = useState('')
@@ -13,7 +12,7 @@ export default function LastNews({ type }) {
 
     useEffect(() => {
         setLoading(true);
-        fetch(`${siteAPI}/api/${type}?page=1&perPage=20&justPositiveStatus=true`, { cache: 'no-store' })
+        fetch(`/api/${type}?page=1&perPage=20&justPositiveStatus=true`, { cache: 'no-store' })
             .then((response) => {
                 if (!response.ok) {
                     throw new Error('لطفا اتصال اینترنت خود را بررسی کنید');
@@ -59,7 +58,7 @@ export default function LastNews({ type }) {
                         items?.length !== 0 ?
                             <>
                                 {items.map((item) => (
-                                    <Link href={`${siteAPI}/${type}/${item.id}`} key={item.id}>
+                                    <Link href={`/${type}/${item.id}`} key={item.id}>
                                         <SideInfo title={item.title} date={new Intl.DateTimeFormat('fa-IR').format(new Date(item.createdAt))} key={item.id} />
                                     </Link>
                                 ))}

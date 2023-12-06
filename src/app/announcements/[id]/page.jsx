@@ -2,7 +2,6 @@
 import NewsTop from "@/components/news/NewsTop"
 import { Grid, Skeleton } from "@mui/material";
 import { useEffect, useState } from "react";
-import { siteAPI } from "@/utils/API";
 
 
 export default function Page({ params }) {
@@ -18,7 +17,7 @@ export default function Page({ params }) {
 
     useEffect(() => {
         setLoading(true);
-        fetch(`${siteAPI}/api/announcements/${params.id}`, { cache: 'no-store' })
+        fetch(`/api/announcements/${params.id}`, { cache: 'no-store' })
             .then((response) => {
                 if (!response.ok) {
                     throw new Error('لطفا اتصال اینترنت خود را بررسی کنید');

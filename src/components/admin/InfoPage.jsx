@@ -17,7 +17,6 @@ import ModalDelete from './ModalDelete';
 import ModalEdit from './ModalEdit';
 import { useAdminContext } from '@/hooks/useAdminHooks';
 import { useEdgeStore } from '@/lib/edgestore';
-import { siteAPI } from '@/utils/API';
 
 export const NewsContext = createContext();
 export const ModalConfirmContext = createContext();
@@ -67,7 +66,7 @@ export default function InfoPage({ type }) {
 
     useEffect(() => {
         setLoading(true);
-        fetch(`${siteAPI}/api/${type}/count`, { cache: 'no-store' })
+        fetch(`/api/${type}/count`, { cache: 'no-store' })
             .then((response) => response.json())
             .then((data) => {
                 setLastInfoTablePageNumber(Math.ceil(data.count / infoItemsPerPage));
@@ -76,7 +75,7 @@ export default function InfoPage({ type }) {
                 setIsError(true);
                 setError(err);
             });
-        fetch(`${siteAPI}/api/${type}?page=${currentInfoPage}&perPage=${infoItemsPerPage}`, { cache: 'no-store' })
+        fetch(`/api/${type}?page=${currentInfoPage}&perPage=${infoItemsPerPage}`, { cache: 'no-store' })
             .then((response) => {
                 if (!response.ok) {
                     throw new Error('لطفا اتصال اینترنت خود را بررسی کنید');
@@ -112,7 +111,7 @@ export default function InfoPage({ type }) {
             obj.imageURL = imageRes.url;
         }
 
-        fetch(`${siteAPI}/api/${type}/${obj.id}`, {
+        fetch(`/api/${type}/${obj.id}`, {
             headers: { 'Content-Type': 'application/json' },
             method: 'PATCH',
             body: JSON.stringify(obj)
@@ -146,7 +145,7 @@ export default function InfoPage({ type }) {
 
     const confirmItem = (id) => {
         setOperatingID(id);
-        fetch(`${siteAPI}/api/${type}/${id}`, {
+        fetch(`/api/${type}/${id}`, {
             headers: { 'Content-Type': 'application/json' },
             method: 'PATCH',
             body: JSON.stringify({ status: true })
@@ -205,7 +204,7 @@ export default function InfoPage({ type }) {
             }
         })
 
-        fetch(`${siteAPI}/api/${type}/${id}`, { method: 'DELETE' })
+        fetch(`/api/${type}/${id}`, { method: 'DELETE' })
             .then((response) => {
                 if (!response.ok) {
                     throw new Error('لطفا اتصال اینترنت خود را بررسی کنید');

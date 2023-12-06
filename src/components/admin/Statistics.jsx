@@ -7,7 +7,6 @@ import TableRow from '@mui/material/TableRow';
 import { useEffect, useContext } from 'react';
 import { useAdminContext } from '@/hooks/useAdminHooks';
 import { Grid } from '@mui/material';
-import { siteAPI } from '@/utils/API';
 
 
 export default function Statistics() {
@@ -15,7 +14,7 @@ export default function Statistics() {
 
     useEffect(() => {
         setStaticProps(prevProps => ({ ...prevProps, loadingNews: true }));
-        fetch(`${siteAPI}/api/news/count`, { cache: 'no-store' })
+        fetch(`/api/news/count`, { cache: 'no-store' })
             .then(response => response.json())
             .then(data => {
                 setStaticProps(prevProps => ({
@@ -35,7 +34,7 @@ export default function Statistics() {
 
     useEffect(() => {
         setStaticProps(prevProps => ({ ...prevProps, loadingEvents: true }));
-        fetch(`${siteAPI}/api/events/count`, { cache: 'no-store' })
+        fetch(`/api/events/count`, { cache: 'no-store' })
             .then(response => response.json())
             .then(data => {
                 setStaticProps(prevProps => ({
@@ -55,7 +54,7 @@ export default function Statistics() {
 
     useEffect(() => {
         setStaticProps(prevProps => ({ ...prevProps, loadingAnnouncements: true }));
-        fetch(`${siteAPI}/api/announcements/count`, { cache: 'no-store' })
+        fetch(`/api/announcements/count`, { cache: 'no-store' })
             .then(response => response.json())
             .then(data => {
                 setStaticProps(prevProps => ({
