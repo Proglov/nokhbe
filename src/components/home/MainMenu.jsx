@@ -5,7 +5,7 @@ import Grid from '@mui/material/Grid';
 import { BsFillCircleFill } from 'react-icons/bs'
 import { makeStyles } from '@material-ui/core';
 import Link from 'next/link';
-import styles from '../../styles/home/MainMenu.module.css'
+import styles from '../../styles/Home/MainMenu.module.css'
 
 const useStyles = makeStyles({
     summary: {

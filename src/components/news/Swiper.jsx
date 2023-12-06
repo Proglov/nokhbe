@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import styles from '../../styles/home/SecSwiper.module.css'
+import styles from '../../styles/Home/SecSwiper.module.css'
 
 const items = [
     {

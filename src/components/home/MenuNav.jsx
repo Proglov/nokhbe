@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import { IoMdArrowDropdown, IoMdArrowDropleft } from "react-icons/io"
 import { Box, Divider } from '@mui/material';
-import styles from '../../styles/home/MenuNav.module.css'
+import styles from '../../styles/Home/MenuNav.module.css'
 
 export default function MenuNav() {
     const [anchorEl1, setAnchorEl1] = useState(null);
