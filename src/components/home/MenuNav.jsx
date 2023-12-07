@@ -5,6 +5,7 @@ import Menu from '@mui/material/Menu';
 import { IoMdArrowDropdown, IoMdArrowDropleft } from "react-icons/io"
 import { Box, Divider } from '@mui/material';
 import styles from '../../styles/Home/MenuNav.module.css'
+import Link from 'next/link';
 
 export default function MenuNav() {
     const [anchorEl1, setAnchorEl1] = useState(null);
@@ -62,15 +63,24 @@ export default function MenuNav() {
                                 <Box sx={{ bgcolor: 'linear-gradient(to bottom, #090072 40%, #ff9d33)' }}>
                                     <li className='px-5 py-1 sm:px-3 md:px-5 lg:px-10' style={{ borderBottom: '3px solid black', textAlign: 'center' }}>
                                         <Box sx={{ fontSize: { xs: '10px', sm: '15px', md: '20px', lg: '23px', paddingX: { xs: '5px', sm: '4px', md: '6px', lg: '8px' } } }} onClick={handleClose}>
-                                            رویداد ها</Box>
+                                            <Link href='/events'>
+                                                رویداد ها
+                                            </Link>
+                                        </Box>
                                     </li>
                                     <li className='py-1 px-5 sm:px-3 md:px-5 lg:px-10' style={{ borderBottom: '3px solid black', textAlign: 'center' }}>
                                         <Box sx={{ fontSize: { xs: '10px', sm: '15px', md: '20px', lg: '23px', paddingX: { xs: '5px', sm: '4px', md: '6px', lg: '8px' } } }} onClick={handleClose}>
-                                            اخبار</Box>
+                                            <Link href='/news'>
+                                                اخبار
+                                            </Link>
+                                        </Box>
                                     </li>
                                     <li className='py-1 px-5 sm:px-3 md:px-5 lg:px-10' style={{ textAlign: 'center' }}>
                                         <Box sx={{ fontSize: { xs: '10px', sm: '15px', md: '20px', lg: '23px', paddingX: { xs: '5px', sm: '4px', md: '6px', lg: '8px' } } }} onClick={handleClose}>
-                                            اطلاعیه ها</Box>
+                                            <Link href='/announcements'>
+                                                اطلاعیه ها
+                                            </Link>
+                                        </Box>
                                     </li></Box>
                             </Menu>
                         </li>
@@ -84,7 +94,11 @@ export default function MenuNav() {
                         <Divider orientation='vertical' sx={{ backgroundColor: 'white', height: '50%' }} />
 
                         <li className='text-center'>
-                            <a href="#" className="text-gray-900 dark:text-white">خدمات و عضویت</a>
+                            <a href="#" className="text-gray-900 dark:text-white">
+                                <Link href='/joining'>
+                                    خدمات و عضویت
+                                </Link>
+                            </a>
                         </li>
 
                         <Divider orientation='vertical' sx={{ backgroundColor: 'white', height: '50%' }} />
@@ -116,15 +130,24 @@ export default function MenuNav() {
                             >
                                 <li className='py-1 px-5 sm:px-3 md:px-5 lg:px-10' style={{ borderBottom: '3px solid black' }}>
                                     <Box sx={{ fontSize: { xs: '10px', sm: '15px', md: '20px', lg: '23px', paddingX: { xs: '5px', sm: '4px', md: '6px', lg: '8px' } } }}>
-                                        فعالیت های باشگاه</Box>
+                                        <Link href='/activities'>
+                                            فعالیت های باشگاه
+                                        </Link>
+                                    </Box>
                                 </li>
                                 <li className='py-1 px-5 sm:px-3 md:px-5 lg:px-10' style={{ borderBottom: '3px solid black' }}>
                                     <Box sx={{ fontSize: { xs: '10px', sm: '15px', md: '20px', lg: '23px', paddingX: { xs: '5px', sm: '4px', md: '6px', lg: '8px' } } }} onClick={handleClose}>
-                                        اهداف و مامورریت باشگاه</Box>
+                                        <Link href='/purposes'>
+                                            اهداف و مامورریت باشگاه
+                                        </Link>
+                                    </Box>
                                 </li>
                                 <li className='py-1 px-5 sm:px-3 md:px-5 lg:px-10' style={{ borderBottom: '3px solid black' }}>
                                     <Box sx={{ fontSize: { xs: '10px', sm: '15px', md: '20px', lg: '23px', paddingX: { xs: '5px', sm: '4px', md: '6px', lg: '8px' } } }}>
-                                        معرفی و سوابق باشگاه</Box>
+                                        <Link href='/introduction'>
+                                            معرفی و سوابق باشگاه
+                                        </Link>
+                                    </Box>
                                 </li>
                                 <li className='px-3 sm:px-2 md:px-3 lg:px-10' style={{ borderBottom: '3px solid black' }}>
                                     <Box sx={{ fontSize: { xs: '10px', sm: '15px', md: '20px', lg: '23px', paddingX: { xs: '5px', sm: '4px', md: '6px', lg: '8px' } } }} >
@@ -150,12 +173,17 @@ export default function MenuNav() {
                                             style={{ marginLeft: '-22vw', marginTop: '-8vw' }}>
                                             <li className='py-1 px-5 sm:px-3 md:px-5 lg:px-10' style={{ borderBottom: '3px solid black' }}>
                                                 <Box sx={{ fontSize: { xs: '10px', sm: '15px', md: '20px', lg: '23px', paddingX: { xs: '5px', sm: '4px', md: '6px', lg: '8px' } } }} onClick={handleClose}>
-                                                    هیئت امناء باشگاه
+                                                    <Link href='/organizational-structure/omana'>
+                                                        هیئت امناء باشگاه
+                                                    </Link>
                                                 </Box>
                                             </li>
                                             <li className='py-1 px-5 sm:px-3 md:px-5 lg:px-10'>
                                                 <Box sx={{ fontSize: { xs: '10px', sm: '15px', md: '20px', lg: '23px', paddingX: { xs: '5px', sm: '4px', md: '6px', lg: '8px' } } }} onClick={handleClose}>
-                                                    رئیس باشگاه</Box>
+                                                    <Link href='/organizational-structure/boss'>
+                                                        رئیس باشگاه
+                                                    </Link>
+                                                </Box>
                                             </li>
                                         </Menu>
                                     </Box>

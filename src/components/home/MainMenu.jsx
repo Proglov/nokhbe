@@ -62,7 +62,7 @@ export default function MainMenu() {
                         </ListItemIcon>
                     </Grid>
                     <Grid item>
-                        <Link href='#'>
+                        <Link href='/joining'>
                             <ListItemText primary="خدمات و عضویت" />
                         </Link>
                     </Grid>
@@ -75,7 +75,7 @@ export default function MainMenu() {
                         </ListItemIcon>
                     </Grid>
                     <Grid item>
-                        <Link href='#'>
+                        <Link href='/contact'>
                             <ListItemText primary="تماس با ما" />
                         </Link>
                     </Grid>

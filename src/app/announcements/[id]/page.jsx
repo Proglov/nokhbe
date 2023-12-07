@@ -42,7 +42,7 @@ export default function Page({ params }) {
             });
     }, [params.id]);
     return (
-        <Grid item xs={12} sm={8} md={8} className="grid-item">
+        <Grid item xs={12} sm={12} md={12} className="grid-item">
             {
                 isError ? (
                     <div>

@@ -1,3 +1,4 @@
+import MenuNav from "@/components/home/MenuNav";
 import { Box, Container, Typography } from "@mui/material";
 import Image from "next/image";
 
@@ -10,6 +11,9 @@ export default function page() {
 
     return (
         <div>
+            <nav className="mt-1">
+                <MenuNav />
+            </nav>
             <div className="mt-4 mr-4">
                 <Typography variant="h1" sx={{ fontSize: { xs: '18px', sm: '20px', md: '22px' } }}>
                     رئیس محترم باشگاه

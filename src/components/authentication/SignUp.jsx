@@ -137,7 +137,7 @@ export default function SignUp() {
 
     }
 
-    const checkFirstLevel = async (e) => {
+    const checkFirstLevel = (e) => {
         e.preventDefault();
         setIsSubmitting(true)
         if (formData.password === '' || formData.username === '' || formData.confirmPassword === '' || formData.email === '') {
@@ -168,12 +168,39 @@ export default function SignUp() {
         }
         setIsSubmitting(false)
     }
-    const handleSubmit = (e) => {
-        e.preventDefault();
+
+    const checkSecondLevel = () => {
         if (formData2.abilities === '' || formData2.address === '' || formData2.biography === '' || formData2.club.length === 0 || formData2.education === '' || formData2.fullName === '' || formData2.mobileNumber === '' || formData2.nationalCode === '' || formData2.phoneNumber === '' || formData2.postalCode === '' || formData2.abilities === ' ' || formData2.address === ' ' || formData2.biography === ' ' || formData2.education === ' ' || formData2.fullName === ' ' || formData2.mobileNumber === ' ' || formData2.nationalCode === ' ' || formData2.phoneNumber === ' ' || formData2.postalCode === ' ') {
             toast.error('لطفا تمامی فیلد ها را تکمیل نمایید')
-            return
+            return false
         }
+
+        if (formData2.mobileNumber[0] !== '0' || formData2.mobileNumber[1] !== '9' || formData2.mobileNumber.length !== 11) {
+            toast.error('شماره تلفن همراه باید به این صورت باشد: 09XXXXXXXXX')
+            return false
+        }
+        const phoneRegex = /^0\d{2,3}\d{8}$/;
+        if (!phoneRegex.test(formData2.phoneNumber)) {
+            toast.error('تلفن ثابت وارد شده صحیح نمیباشد! نمونه صحیح: 02101234567')
+            return false
+        }
+        const postalRegex = /^[0-9]{10}$/;
+        if (!postalRegex.test(formData2.postalCode)) {
+            toast.error('کد پستی دارای ده رقم است!')
+            return false
+        }
+        if (formData2.address.length < 10) {
+            toast.error('لطفا آدرس خود را به صورت کامل بنویسید')
+            return false
+        }
+        return true
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const isTrue = checkSecondLevel();
+        if (!isTrue) return
+
         setIsSubmitting(true)
 
         setFormData2(() => ({
@@ -299,7 +326,7 @@ export default function SignUp() {
                                 </div>
 
                                 <div>
-                                    <input type="text" name="mobileNumber" id="mobileNumber" className="border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  focus:ring-blue-500" placeholder="تلفن همراه" required onChange={handleFormChange2} value={formData2.mobileNumber} />
+                                    <input type="text" name="mobileNumber" id="mobileNumber" className="border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  focus:ring-blue-500" placeholder="تلفن همراه: 09XXXXXXXXX" required onChange={handleFormChange2} value={formData2.mobileNumber} />
                                 </div>
 
                                 <div>

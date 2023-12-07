@@ -97,18 +97,22 @@ export default function InfoPage({ type }) {
 
     const editItem = async (obj) => {
         setOperatingID(obj.id);
-
-        if (!!file) {
-            const imageRes = await edgestore.myPublicImages.upload({
-                file,
-                options: {
-                    replaceTargetUrl: obj.imageURL,
-                }
-            });
-            obj.imageURL = imageRes.url;
-        } else {
-            const imageRes = await edgestore.myPublicImages.upload({ file });
-            obj.imageURL = imageRes.url;
+        if (!!selectedItem.imageURL) {
+            if (!!file) {
+                const imageRes = await edgestore.myPublicImages.upload({
+                    file,
+                    options: {
+                        replaceTargetUrl: obj.imageURL,
+                    }
+                });
+                obj.imageURL = imageRes.url;
+            }
+        }
+        else {
+            if (!!file) {
+                const imageRes = await edgestore.myPublicImages.upload({ file });
+                obj.imageURL = imageRes.url;
+            }
         }
 
         fetch(`/api/${type}/${obj.id}`, {

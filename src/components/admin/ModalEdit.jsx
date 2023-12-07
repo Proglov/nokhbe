@@ -109,11 +109,6 @@ export default function ModalEdit() {
                 ...prevSelectedItem,
                 description: value,
             }));
-        } else if (name === 'image') {
-            // setSelectedItem(prevSelectedItem => ({
-            //     ...prevSelectedItem,
-            //     description: value,
-            // }));
         }
     };
 

@@ -1,3 +1,4 @@
+import MenuNav from "@/components/home/MenuNav";
 import { Box, Button, Container, Typography } from "@mui/material";
 import Image from "next/image";
 import { GiClick } from "react-icons/gi";
@@ -8,6 +9,9 @@ export default function page() {
 
     return (
         <div>
+            <nav className="mt-1">
+                <MenuNav />
+            </nav>
             <div>
                 <Container>
                     <Box className='mx-auto md:w-3/5 w-100 my-9'>
