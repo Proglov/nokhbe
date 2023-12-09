@@ -20,7 +20,7 @@ export default function NewsTop({ src, date, title, desc, showMore }) {
                     </div>
                     <div>
                         {
-                            showMore ?
+                            !showMore ?
                                 <div
                                     dangerouslySetInnerHTML={{ __html: desc }}
                                     style={{

@@ -63,7 +63,7 @@ export default function News() {
                                     {news.map((item, i) => {
                                         if (i !== 0) {
                                             return (
-                                                <Grid item xs={12} sm={6} md={4} lg={3} className="grid-item" key={item.id}>
+                                                <Grid item xs={12} sm={12} md={6} lg={6} className="grid-item" key={item.id}>
                                                     <Link href={`/news/${item.id}`}>
                                                         <NewsComponent src={item.imageURL} date={new Intl.DateTimeFormat('fa-IR').format(new Date(item.createdAt))} title={item.title} />
                                                     </Link>

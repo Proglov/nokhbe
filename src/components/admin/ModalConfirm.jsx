@@ -15,6 +15,8 @@ const ModalStyle = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 400,
+    maxHeight: 800,
+    overflowY: 'scroll',
     bgcolor: 'background.paper',
     border: '2px solid green',
     boxShadow: '0px 0px 10px 1px green',

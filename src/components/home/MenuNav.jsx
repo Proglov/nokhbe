@@ -88,13 +88,13 @@ export default function MenuNav() {
                         <Divider orientation='vertical' sx={{ backgroundColor: 'white', height: '50%' }} />
 
                         <li className='text-center'>
-                            <a href="/authentication" className="text-gray-900 dark:text-white"> &nbsp; &nbsp;ورود &nbsp;</a>
+                            <a href="/authentication" className="text-slate-50"> &nbsp; &nbsp;ورود &nbsp;</a>
                         </li>
 
                         <Divider orientation='vertical' sx={{ backgroundColor: 'white', height: '50%' }} />
 
                         <li className='text-center'>
-                            <a href="#" className="text-gray-900 dark:text-white">
+                            <a href="#" className="text-slate-50">
                                 <Link href='/joining'>
                                     خدمات و عضویت
                                 </Link>
@@ -170,7 +170,7 @@ export default function MenuNav() {
                                             MenuListProps={{
                                                 'aria-labelledby': 'dropdownDelayButton2',
                                             }}
-                                            style={{ marginLeft: '-22vw', marginTop: '-8vw' }}>
+                                            sx={{ marginLeft: { xs: '22vw', sm: '-22vw' }, marginTop: '-8vw' }}>
                                             <li className='py-1 px-5 sm:px-3 md:px-5 lg:px-10' style={{ borderBottom: '3px solid black' }}>
                                                 <Box sx={{ fontSize: { xs: '10px', sm: '15px', md: '20px', lg: '23px', paddingX: { xs: '5px', sm: '4px', md: '6px', lg: '8px' } } }} onClick={handleClose}>
                                                     <Link href='/organizational-structure/omana'>
@@ -190,20 +190,25 @@ export default function MenuNav() {
                                 </li>
                                 <li className='py-1 px-5 sm:px-3 md:px-5 lg:px-10'>
                                     <Box sx={{ fontSize: { xs: '10px', sm: '15px', md: '20px', lg: '23px', paddingX: { xs: '5px', sm: '4px', md: '6px', lg: '8px' } } }} onClick={handleClose}>
-                                        آیین نامه عضویت در باشگاه</Box>
+                                        <Link href='/regulations'>
+                                            آیین نامه عضویت در باشگاه
+                                        </Link>
+                                    </Box>
                                 </li>
                             </Menu>
                         </li>
 
                         <Divider orientation='vertical' sx={{ backgroundColor: 'white', height: '50%' }} />
 
-                        <li className='text-center'>
-                            <a href="#" className="text-gray-900 dark:text-white">تماس با ما</a>
+                        <li className='text-center text-slate-50'>
+                            <Link href='/contact'>
+                                تماس با ما
+                            </Link>
                         </li>
 
                     </ul>
                 </div>
-            </div>
-        </nav>
+            </div >
+        </nav >
     )
 }

@@ -77,7 +77,7 @@ export default function NewsPage({ type }) {
                                 type === 'news' ?
                                     <>
                                         <Link href={`${type}/${items[0].id}`}>
-                                            <NewsTop date={new Intl.DateTimeFormat('fa-IR').format(new Date(items[0].createdAt))} desc={items[0].description} src={items[0].imageURL} title={items[0].title} />
+                                            <NewsTop date={new Intl.DateTimeFormat('fa-IR').format(new Date(items[0].createdAt))} desc={items[0].description} src={items[0].imageURL} title={items[0].title} showMore={false} />
                                         </Link>
                                         {items.map((item, i) => {
                                             if (i > 0) {
