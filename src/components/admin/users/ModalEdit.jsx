@@ -122,7 +122,9 @@ export default function ModalEdit() {
     const { isModalEditOpen, setIsModalEditOpen, selectedItem, setSelectedItem, editItem } = useContext(ModalEditContext)
     const handleClose = () => setIsModalEditOpen(false);
 
-    const IranDate = new Intl.DateTimeFormat('fa-IR').format(new Date(selectedItem.joinedAt))
+    let IranDate
+    if (!!selectedItem.joinedAt)
+        IranDate = new Intl.DateTimeFormat('fa-IR').format(new Date(selectedItem.joinedAt))
 
     return (
         <Modal
