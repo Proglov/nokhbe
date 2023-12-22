@@ -1,8 +1,12 @@
+import { getUser } from '@/lib/getUser';
 import prisma from '@/lib/prismaDB'
 import { NextResponse } from 'next/server'
 
 export const POST = async (req) => {
     try {
+        const sessiion = await getUser()
+        if (sessiion.user.role !== process.env.ADMIN_ROLE)
+            return NextResponse.json({ message: "Unuthorized", error }, { status: 400 })
         const body = await req.json()
         const { title, description, imageURL, tags, createdBy, telegram } = body;
         const newEvents = await prisma.events.create({

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useContext, useState } from "react";
 import { TabContext } from "./SignAndLog";
 import { ToastContainer, toast } from "react-toastify";
-import { tags } from "@/utils/tags";
+import { tags } from "@/utils/tagsAndRoles";
 import "react-toastify/dist/ReactToastify.css";
 import Box from '@mui/material/Box';
 import { useTheme } from "@emotion/react";
@@ -334,7 +334,7 @@ export default function SignUp() {
                                 </div>
 
                                 <div>
-                                    <textarea class="resize-none rounded-md border border-solid mغ-2 w-full" name="address" required id="address" onChange={handleFormChange2} value={formData2.address} placeholder="  آدرس" />
+                                    <textarea class="resize-none rounded-md border border-solid w-full" name="address" required id="address" onChange={handleFormChange2} value={formData2.address} placeholder="  آدرس" />
                                 </div>
 
                                 <div>

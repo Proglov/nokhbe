@@ -43,8 +43,8 @@ export default function ControlPanel() {
 
     return (
         <Box
-            className='bg-cyan-400 mt-5 mb-8 p-2 mr-5 d-flex xl:flex-row flex-col'
-            sx={{ flexGrow: 1, display: 'flex', borderBottomRightRadius: '20px', borderTopRightRadius: '20px' }}
+            className='mt-5 mb-8 p-2 mr-5 d-flex xl:flex-row flex-col'
+            sx={{ flexGrow: 1, display: 'flex', borderBottomRightRadius: '20px', borderTopRightRadius: '20px', background: 'linear-gradient(to right top, #1583f4, #22d3ee 80%)' }}
         >
             <Tabs
                 className='xl:hidden block'

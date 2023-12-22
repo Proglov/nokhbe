@@ -1,10 +1,9 @@
 import ClientSidePage from '@/components/admin/ClientSidePage';
-import { NextAuthOptions } from '@/lib/NextAuthOptions';
-import { getServerSession } from 'next-auth'
+import { getUser } from '@/lib/getUser';
 import { notFound } from 'next/navigation';
 
 export default async function AdminPage() {
-    const session = await getServerSession(NextAuthOptions);
+    const session = await getUser()
 
     if (session?.user)
         return (

@@ -10,7 +10,7 @@ export default function Footer() {
         <Grid container spacing={2} className="p-3 bg-blue-950 text-slate-50">
             <Grid item xs={12} sm={5} className="grid-item">
                 <List>
-                    <Link href='#'>
+                    <Link href='http://farsi.khamenei.ir/index.html' target='_blank'>
                         <ListItem className='py-0'>
                             <ListItemIcon sx={{ color: 'orange' }}>
                                 <GoGoal />
@@ -21,7 +21,7 @@ export default function Footer() {
                             />
                         </ListItem>
                     </Link>
-                    <Link href='#'>
+                    <Link href='http://www.president.ir/fa/' target='_blank'>
                         <ListItem className='py-0'>
                             <ListItemIcon sx={{ color: 'orange' }}>
                                 <GoGoal />
@@ -32,7 +32,7 @@ export default function Footer() {
                             />
                         </ListItem>
                     </Link>
-                    <Link href='#'>
+                    <Link href='http://www.imam-khomeini.ir/' target='_blank'>
                         <ListItem className='py-0'>
                             <ListItemIcon sx={{ color: 'orange' }}>
                                 <GoGoal />
@@ -43,7 +43,7 @@ export default function Footer() {
                             />
                         </ListItem>
                     </Link>
-                    <Link href='#'>
+                    <Link href='http://www.msrt.ir/fa/pages/Home.aspx' target='_blank'>
                         <ListItem className='py-0'>
                             <ListItemIcon sx={{ color: 'orange' }}>
                                 <GoGoal />
@@ -54,7 +54,7 @@ export default function Footer() {
                             />
                         </ListItem>
                     </Link>
-                    <Link href='#'>
+                    <Link href='http://www.msrt.ir/fa/pages/Home.aspx' target='_blank'>
                         <ListItem className='py-0'>
                             <ListItemIcon sx={{ color: 'orange' }}>
                                 <GoGoal />
@@ -65,7 +65,7 @@ export default function Footer() {
                             />
                         </ListItem>
                     </Link>
-                    <Link href='#'>
+                    <Link href='http://www.isti.ir/' target='_blank'>
                         <ListItem className='py-0'>
                             <ListItemIcon sx={{ color: 'orange' }}>
                                 <GoGoal />
@@ -76,7 +76,7 @@ export default function Footer() {
                             />
                         </ListItem>
                     </Link>
-                    <Link href='#'>
+                    <Link href='http://shomal.ac.ir/' target='_blank'>
                         <ListItem className='py-0'>
                             <ListItemIcon sx={{ color: 'orange' }}>
                                 <GoGoal />

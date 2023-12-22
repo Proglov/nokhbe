@@ -9,14 +9,14 @@ import Select from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
 import { Button, Grid } from '@mui/material';
 import 'react-quill/dist/quill.snow.css';
-import CustomQuill from './CustomQuill';
+import CustomQuill from '../CustomQuill';
 import DOMPurify from 'dompurify'
 import { useRef, useContext } from 'react';
 import { useState } from 'react';
 import { useAdminContext } from '@/hooks/useAdminHooks';
-import { useEdgeStore } from '../../lib/edgestore';
-import { SingleImageDropzone } from './single-image-dropzone';
-import { tagOptions } from '@/utils/tags';
+import { useEdgeStore } from '../../../lib/edgestore';
+import { SingleImageDropzone } from '../single-image-dropzone';
+import { tagOptions } from '@/utils/tagsAndRoles';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -257,7 +257,7 @@ export default function AddNew({ type }) {
 
                     <Grid item xs={12} sm={12} md={12} lg={6}>
                         <div>
-                            <label className="block text-gray-800 mb-1 pr-4" htmlFor="inline-full-name">
+                            <label className="block text-white mb-1 pr-4" htmlFor="inline-full-name">
                                 عنوان {itemType}
                             </label>
                         </div>

@@ -40,8 +40,18 @@ export const jalaliMonth = (x) => {
             throw new Error("month should be between 1 and 12")
     }
 }
+
 export const giveMeDateInFa = (str) => {
     const result = str.split('/');
     result[1] = jalaliMonth(result[1])
     return result;
 };
+
+export const convertRoles = role => {
+    if (role === '111010')
+        return "ادمین"
+    else if (role === '000101')
+        return "کاربر عادی"
+    else if (role === '000000')
+        return "تایید نشده"
+}

@@ -39,17 +39,23 @@ export default function AddSegment() {
 
     return (
         <Box
-            className='bg-violet-600 ml-4 mt-5 p-3 pr-5 d-flex lg:flex-row flex-col'
-            sx={{ flexGrow: 1, display: 'flex', borderTopLeftRadius: '20px', borderBottomLeftRadius: '20px' }}
+            className='ml-4 mt-5 p-3 pr-5 d-flex lg:flex-row flex-col text-white'
+            sx={{ flexGrow: 1, display: 'flex', borderTopLeftRadius: '20px', borderBottomLeftRadius: '20px', background: 'linear-gradient(to right top, #22d3ee, #7c3aed 80%)' }}
         >
             <Tabs
                 className='lg:hidden block'
                 orientation='horizontal'
                 value={addSegmentsPage}
                 onChange={handleChange}
-                aria-label="Vertical tabs example"
+                aria-label="horizontal tabs example"
+                textColor='inherit'
+                TabIndicatorProps={{
+                    style: {
+                        backgroundColor: "#D97D54"
+                    }
+                }}
             >
-                <Tab label="اخبار" {...a11yProps(0)} />
+                <Tab label="اخبار" {...a11yProps(0)} sx={{ color: 'white' }} />
                 <Tab label="اطلاعیه" {...a11yProps(1)} />
                 <Tab label="رویداد" {...a11yProps(2)} />
             </Tabs>
@@ -60,6 +66,7 @@ export default function AddSegment() {
                 onChange={handleChange}
                 aria-label="Vertical tabs example"
                 sx={{ borderLeft: 1, borderColor: 'divider' }}
+                textColor='inherit'
             >
                 <Tab label="اخبار" {...a11yProps(0)} />
                 <Tab label="اطلاعیه" {...a11yProps(1)} />
@@ -68,19 +75,25 @@ export default function AddSegment() {
             <div style={{ width: '100%' }}>
                 <TabPanel value={addSegmentsPage} index={0}>
                     <div>
-                        افزودن خبر
+                        <div className='text-center'>
+                            افزودن خبر
+                        </div>
                         <AddNew type='news' />
                     </div>
                 </TabPanel>
                 <TabPanel value={addSegmentsPage} index={1}>
                     <div>
-                        افزودن اطلاعیه
+                        <div className='text-center'>
+                            افزودن اطلاعیه
+                        </div>
                         <AddNew type='announcements' />
                     </div>
                 </TabPanel>
                 <TabPanel value={addSegmentsPage} index={2}>
                     <div>
-                        افزودن رویداد
+                        <div className='text-center'>
+                            افزودن رویداد
+                        </div>
                         <AddNew type='events' />
                     </div>
                 </TabPanel>

@@ -15,11 +15,11 @@ import Select from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
 import { Grid } from '@mui/material';
 import 'react-quill/dist/quill.snow.css';
-import CustomQuill from './CustomQuill';
-import { } from 'react';
+import CustomQuill from '../CustomQuill';
 import { ModalEditContext } from './InfoPage';
 import Image from 'next/image';
-import { SingleImageDropzone } from './single-image-dropzone';
+import { SingleImageDropzone } from '../single-image-dropzone';
+import { tags as tagOptions } from '@/utils/tagsAndRoles'
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -31,36 +31,6 @@ const MenuProps = {
         },
     },
 };
-
-const tagOptions = [
-    'تجارت الکترونیک',
-    'انرژی های نو و تجدید پذیر',
-    'علوم آب و پساب های صنعتی',
-    'نانو ساختار و فناوری های مربوطه',
-    'هواپیمایی و هوانوردی',
-    'محیط زیست (انسانی - طبیعی)',
-    'منابع طبیعی و کشاورزی',
-    'نفت و گاز',
-    'سیستم های هوشمند کاربردی',
-    'کارآفرینی و اقتصاد توسعه',
-    'معدن و بهسازی گوهر سنگ ها',
-    'مدیریت و طراحی سیستم ها',
-    'پاتولوژی و گیاهان دارویی',
-    'کارآفرینی کسب و کارهای مجازی',
-    'ریاضیات و مطالعات علمی و دینی',
-    'علوم و فناوری های نوین و همگرا',
-    'تدوین دانشنامه علوم کیمیا در ایران',
-    'حقوق و حوزه های جدید',
-    'ره آموز در علوم انسانی',
-    'فرهنگ و ادب ایران',
-    'طب سنتی و داروهای گیاهی',
-    'مهندسی و برنامه ریزی حمل و نقل',
-    'معماری و گرایش های مربوطه',
-    'شیمی فیزیک',
-    'امور اقتصادی و مالی',
-    'ادمین',
-    'رئیس باشگاه',
-];
 
 function getStyles(tagOptions, tags, theme) {
     return {

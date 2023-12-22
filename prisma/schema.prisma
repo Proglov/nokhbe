@@ -54,7 +54,7 @@ model User {
   email        String   @unique
   username     String   @unique
   password     String
-  role         String   @default("000101")
+  role         String   @default("000000")
   fullName     String
   nationalCode String
   mobileNumber String
