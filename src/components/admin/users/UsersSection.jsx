@@ -168,7 +168,7 @@ export default function UsersSection() {
                 <div>درحال دریافت اطلاعات ...</div>
             ) : (
                 users?.length !== 0 ?
-                    <div>
+                    <div className='mb-8 pt-5 p-2 mr-5' style={{ borderBottomRightRadius: '20px', borderTopLeftRadius: '20px', background: 'linear-gradient(to right top,#3c6650,#008eff, #663c3c 80% )' }}>
                         <TableContainer component={Paper}>
                             <Table sx={{ minWidth: 1000 }} aria-label="customized table">
                                 <TableHead>

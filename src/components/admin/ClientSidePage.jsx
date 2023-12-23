@@ -21,7 +21,7 @@ export default function ClientSidePage() {
     const adminHooks = useAdminHooks();
 
     return (
-        <div>
+        <div className='min-h-screen'>
             <Typography className="my-3 mr-3" variant="h6" color={'primary'}>
                 صفحه ی ادمین
             </Typography>

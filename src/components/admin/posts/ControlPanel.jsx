@@ -43,14 +43,15 @@ export default function ControlPanel() {
 
     return (
         <Box
-            className='mt-5 mb-8 p-2 mr-5 d-flex xl:flex-row flex-col'
-            sx={{ flexGrow: 1, display: 'flex', borderBottomRightRadius: '20px', borderTopRightRadius: '20px', background: 'linear-gradient(to right top, #1583f4, #22d3ee 80%)' }}
+            className='mt-5 mb-8 p-2 mr-5 d-flex xl:flex-row flex-col text-white'
+            sx={{ flexGrow: 1, display: 'flex', borderBottomRightRadius: '20px', borderTopRightRadius: '20px', background: 'linear-gradient(to left bottom, #1583f4, #22d3ee 80%)' }}
         >
             <Tabs
                 className='xl:hidden block'
                 orientation='horizontal'
                 value={controlPanelsPage}
                 onChange={handleChange}
+                textColor='inherit'
                 aria-label="horizontal tabs example"
             >
                 <Tab label="اخبار" {...a11yProps(0)} />
@@ -63,6 +64,7 @@ export default function ControlPanel() {
                 value={controlPanelsPage}
                 onChange={handleChange}
                 aria-label="Vertical tabs example"
+                textColor='inherit'
                 sx={{ borderLeft: 1, borderColor: 'divider' }}
             >
                 <Tab label="اخبار" {...a11yProps(0)} />
@@ -71,19 +73,19 @@ export default function ControlPanel() {
             </Tabs>
             <div style={{ width: '100%' }}>
                 <TabPanel value={controlPanelsPage} index={0}>
-                    <div>
+                    <div className='text-center'>
                         اخبار
                     </div>
                     <InfoPage type='news' />
                 </TabPanel>
                 <TabPanel value={controlPanelsPage} index={1}>
-                    <div>
+                    <div className='text-center'>
                         اطلاعیه
                     </div>
                     <InfoPage type='announcements' />
                 </TabPanel>
                 <TabPanel value={controlPanelsPage} index={2}>
-                    <div>
+                    <div className='text-center'>
                         رویداد
                     </div>
                     <InfoPage type='events' />

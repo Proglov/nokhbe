@@ -11,7 +11,7 @@ export default function Page({ params }) {
         title: '',
         desc: '',
         date: '',
-        imageURL: '',
+        imagesURL: '',
     });
 
     useEffect(() => {
@@ -29,7 +29,7 @@ export default function Page({ params }) {
                 setItem({
                     title: data.title,
                     desc: data.description,
-                    imageURL: data.imageURL,
+                    imagesURL: data.imagesURL,
                     date: new Intl.DateTimeFormat('fa-IR').format(new Date(data.createdAt))
                 });
                 setLoading(false);
@@ -56,7 +56,7 @@ export default function Page({ params }) {
                 ) : (
                     item?.title !== '' ?
                         <>
-                            <NewsTop date={item.date} desc={item.desc} src={item.imageURL} title={item.title} showMore={true} />
+                            <NewsTop date={item.date} desc={item.desc} src={item.imagesURL} title={item.title} showMore={true} />
                         </>
                         : <div>
                             اطلاعاتی جهت نمایش وجود ندارد

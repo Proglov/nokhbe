@@ -51,7 +51,7 @@ export default function Announcements() {
                                 return (
                                     <Grid item xs={12} className="grid-item" key={item.id}>
                                         <Link href={`/announcements/${item.id}`}>
-                                            <NewsComponent src={item.imageURL} date={new Intl.DateTimeFormat('fa-IR').format(new Date(item.createdAt))} title={item.title} />
+                                            <NewsComponent src={item.imagesURL[0]} date={new Intl.DateTimeFormat('fa-IR').format(new Date(item.createdAt))} title={item.title} />
                                         </Link>
                                     </Grid>
                                 )

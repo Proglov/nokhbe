@@ -50,7 +50,7 @@ export default function Pagination({ lastPage }) {
                     className={`p-1 me-1 hover:bg-sky-500`}
                     style={{
                         borderRadius: '50%',
-                        border: `${page === currentPage ? '1px solid green' : ''}`,
+                        border: `${page === currentPage ? '1px solid #58ff00' : ''}`,
                         fontSize: '10px',
                         width: '30px',
                         height: '30px',
@@ -67,7 +67,7 @@ export default function Pagination({ lastPage }) {
     }
 
     return (
-        <div className='flex' dir='ltr'>
+        <div className='flex text-white' dir='ltr'>
             <BiSolidChevronsLeft
                 color={`${currentPage === 1 ? 'gray' : ''}`}
                 className={`p-1 me-1 hover:bg-sky-500`}

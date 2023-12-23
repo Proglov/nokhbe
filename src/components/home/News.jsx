@@ -55,7 +55,7 @@ export default function News() {
                         <>
                             <div className='mt-2 p-3'>
                                 <Link href={`/news/${news[0].id}`}>
-                                    <NewsTop src={news[0].imageURL} date={new Intl.DateTimeFormat('fa-IR').format(new Date(news[0].createdAt))} title={news[0].title} desc={news[0].description} />
+                                    <NewsTop src={news[0].imagesURL[0]} date={new Intl.DateTimeFormat('fa-IR').format(new Date(news[0].createdAt))} title={news[0].title} desc={news[0].description} />
                                 </Link>
                             </div>
                             <div>
@@ -65,7 +65,7 @@ export default function News() {
                                             return (
                                                 <Grid item xs={12} sm={12} md={6} lg={6} className="grid-item" key={item.id}>
                                                     <Link href={`/news/${item.id}`}>
-                                                        <NewsComponent src={item.imageURL} date={new Intl.DateTimeFormat('fa-IR').format(new Date(item.createdAt))} title={item.title} />
+                                                        <NewsComponent src={item.imagesURL[0]} date={new Intl.DateTimeFormat('fa-IR').format(new Date(item.createdAt))} title={item.title} />
                                                     </Link>
                                                 </Grid>
                                             )

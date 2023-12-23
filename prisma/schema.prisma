@@ -15,7 +15,7 @@ model News {
   telegram    Boolean  @default(false)
   views       Int      @default(0)
   status      Boolean  @default(false)
-  imageURL    String
+  imagesURL   String[]
   createdBy   String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -29,7 +29,7 @@ model Announcements {
   telegram    Boolean  @default(false)
   views       Int      @default(0)
   status      Boolean  @default(false)
-  imageURL    String
+  imagesURL   String[]
   createdBy   String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -43,7 +43,7 @@ model Events {
   telegram    Boolean  @default(false)
   views       Int      @default(0)
   status      Boolean  @default(false)
-  imageURL    String
+  imagesURL   String[]
   createdBy   String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
