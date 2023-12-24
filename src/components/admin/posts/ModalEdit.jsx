@@ -8,7 +8,6 @@ import { Button } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
@@ -18,8 +17,9 @@ import 'react-quill/dist/quill.snow.css';
 import CustomQuill from '../CustomQuill';
 import { ModalEditContext } from './InfoPage';
 import Image from 'next/image';
-import { SingleImageDropzone } from '../single-image-dropzone';
+import { MultiFileDropzone } from '../multi-image-dropzone';
 import { tags as tagOptions } from '@/utils/tagsAndRoles'
+import { useEdgeStore } from '../../../lib/edgestore';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -57,6 +57,7 @@ const ModalStyle = {
 export default function ModalEdit() {
     const theme = useTheme();
     const checkBoxRef = useRef();
+    const { edgestore } = useEdgeStore();
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -84,8 +85,13 @@ export default function ModalEdit() {
         }
     };
 
-    const { isModalEditOpen, setIsModalEditOpen, type, selectedItem, setSelectedItem, file, setFile, editItem } = useContext(ModalEditContext)
-    const handleClose = () => setIsModalEditOpen(false);
+    const { isModalEditOpen, setIsModalEditOpen, type, selectedItem, setSelectedItem, fileStates,
+        setFileStates, setUploadRes, updateFileProgress, editItem, setImagesToDelete } = useContext(ModalEditContext)
+    const handleClose = () => {
+        setIsModalEditOpen(false);
+        setFileStates([]);
+        setUploadRes([]);
+    };
 
     const itemType = type === 'events' ? "رویداد" : type === 'news' ? "خبر" : "اطلاعیه"
 
@@ -134,13 +140,11 @@ export default function ModalEdit() {
                                 </Grid>
 
                                 <Grid item xs={12} className="mt-2">
-                                    <InputLabel
-                                        id="demo-multiple-chip-label"
-                                        className="absolute"
-                                        sx={{ right: '8%', top: '24%' }}
-                                    >
-                                        برچسب ها
-                                    </InputLabel>
+                                    <div>
+                                        <label className="block text-gray-800 mb-1 pr-4" htmlFor="idemo-multiple-chip">
+                                            برچسب ها
+                                        </label>
+                                    </div>
                                     <Select
                                         name="tags"
                                         className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight bg-white focus:bg-white focus:border-purple-500`}
@@ -172,6 +176,96 @@ export default function ModalEdit() {
                                 </Grid>
 
                                 <Grid item xs={12}>
+                                    <div className='mt-2'>
+                                        تصویر ارسال شده:
+                                        <div>
+                                            {
+                                                selectedItem.imagesURL.map((url, i) => {
+                                                    return (
+                                                        <div className='bg-blue-50' style={{ width: '300px' }}>
+                                                            <Image
+                                                                key={i}
+                                                                src={url}
+                                                                blurDataURL={'img/wait.png'}
+                                                                placeholder="blur"
+                                                                alt='عکس ارسال شده'
+                                                                width={300}
+                                                                height={200} />
+
+                                                            <Button variant='outlined' color='error' className='mt-1 mb-4 w-full'
+                                                                onClick={() => {
+                                                                    setImagesToDelete(prev => ({
+                                                                        ...prev,
+                                                                        url
+                                                                    }));
+                                                                    setSelectedItem(prev => ({
+                                                                        ...prev,
+                                                                        imagesURL: prev.imagesURL.filter(theUrl => theUrl !== url)
+                                                                    }))
+                                                                }}
+                                                            >
+                                                                حذف عکس بالا
+                                                            </Button>
+
+                                                            <br />
+                                                        </div>
+                                                    )
+                                                })
+
+                                            }
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <label
+                                        className="block mt-2 mb-1  text-gray-800" htmlFor="inline-image-upload">
+                                        افزودن تصویر:
+                                    </label>
+                                    <div className='bg-slate-300 overflow-hidden0 rounded'>
+                                        <MultiFileDropzone
+                                            width={100}
+                                            height={100}
+                                            value={fileStates}
+                                            onChange={(files) => {
+                                                setFileStates(files);
+                                            }}
+                                            onFilesAdded={async (addedFiles) => {
+                                                setFileStates([...fileStates, ...addedFiles]);
+                                                await Promise.all(
+                                                    addedFiles.map(async (addedFileState) => {
+                                                        try {
+                                                            const res = await edgestore.myPublicImages.upload({
+                                                                file: addedFileState.file,
+                                                                options: {
+                                                                    temporary: true
+                                                                },
+                                                                onProgressChange: async (progress) => {
+                                                                    updateFileProgress(addedFileState.key, progress);
+                                                                    if (progress === 100) {
+                                                                        // wait 1 second to set it to complete
+                                                                        // so that the user can see the progress bar at 100%
+                                                                        await new Promise((resolve) => setTimeout(resolve, 1000));
+                                                                        updateFileProgress(addedFileState.key, 'COMPLETE');
+                                                                    }
+                                                                },
+                                                            });
+                                                            setUploadRes((uploadRes) => [
+                                                                ...uploadRes,
+                                                                {
+                                                                    url: res.url,
+                                                                    filename: addedFileState.file.name,
+                                                                },
+                                                            ]);
+                                                        } catch (err) {
+                                                            updateFileProgress(addedFileState.key, 'ERROR');
+                                                        }
+                                                    }),
+                                                );
+                                            }}
+                                        />
+                                    </div>
+                                </Grid>
+
+                                <Grid item xs={12}>
                                     <CustomQuill
                                         onChange={(value) => handleChange({ target: { name: 'quillValue', value } })}
                                         value={selectedItem.description}
@@ -189,45 +283,6 @@ export default function ModalEdit() {
                                         checked={selectedItem.telegram}
                                         onChange={handleChange}
                                     />
-                                </Grid>
-
-                                <Grid item xs={12}>
-                                    <div className='mt-2'>
-                                        تصویر ارسال شده:
-                                        <div>
-                                            {
-                                                !!selectedItem?.imageURL ?
-                                                    <div className='bg-black' style={{ width: '200px' }}>
-                                                        <Image
-                                                            src={selectedItem.imageURL}
-                                                            blurDataURL={'img/wait.png'}
-                                                            placeholder="blur"
-                                                            alt='عکس ارسال شده'
-                                                            width={200}
-                                                            height={200} />
-                                                    </div>
-                                                    : <div className='text-sm text-red-400'>تصویری موجود نمیباشد</div>
-                                            }
-                                        </div>
-                                    </div>
-                                    <br />
-                                    <label
-                                        className="block mt-2 mb-1  text-gray-800" htmlFor="inline-image-upload">
-                                        ویرایش تصویر:
-                                    </label>
-                                    <div className='bg-slate-300 overflow-visible rounded' style={{ width: '200px' }}>
-                                        <SingleImageDropzone
-                                            width={200}
-                                            height={200}
-                                            value={file}
-                                            dropzoneOptions={{
-                                                maxSize: 1024 * 1024 * 2
-                                            }}
-                                            onChange={(file) => {
-                                                setFile(file);
-                                            }}
-                                        />
-                                    </div>
                                 </Grid>
 
                             </Grid>

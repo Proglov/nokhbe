@@ -8,12 +8,12 @@ export const POST = async (req) => {
         if (sessiion.user.role !== process.env.ADMIN_ROLE)
             return NextResponse.json({ message: "Unuthorized", error }, { status: 400 })
         const body = await req.json()
-        const { title, description, imageURL, tags, createdBy, telegram } = body;
+        const { title, description, imagesURL, tags, createdBy, telegram } = body;
         const newNews = await prisma.news.create({
             data: {
                 title,
                 description,
-                imageURL,
+                imagesURL,
                 tags,
                 createdBy,
                 telegram

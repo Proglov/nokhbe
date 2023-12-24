@@ -8,6 +8,7 @@ import { useContext } from 'react';
 import { Button } from '@mui/material';
 import { ModalConfirmContext } from './InfoPage';
 import Image from 'next/image';
+import IdPageSwiper from "@/components/news/IdPageSwiper"
 
 const ModalStyle = {
     position: 'absolute',
@@ -23,7 +24,7 @@ const ModalStyle = {
     p: 4,
 };
 
-export default function ModalConfirm({ type, id, title, description, imageURL, tags, createdBy }) {
+export default function ModalConfirm({ type, id, title, description, imagesURL, tags, createdBy }) {
     const { isModalConfirmOpen, setIsModalConfirmOpen, confirmItem } = useContext(ModalConfirmContext)
     const handleClose = () => setIsModalConfirmOpen(false);
 
@@ -75,16 +76,18 @@ export default function ModalConfirm({ type, id, title, description, imageURL, t
                         <div className='mt-2'>
                             تصویر ارسال شده:
                             {
-                                !!imageURL ?
-                                    <div className='bg-black' style={{ width: '200px' }}>
-                                        <Image
-                                            src={imageURL}
-                                            blurDataURL={'img/wait.png'}
-                                            placeholder="blur"
-                                            alt='عکس ارسال شده'
-                                            width={200}
-                                            height={200} />
-                                    </div>
+                                imagesURL.length !== 0 ?
+                                    imagesURL.length === 1 ?
+                                        <div className='bg-black' style={{ width: '200px' }}>
+                                            <Image
+                                                src={imagesURL[0]}
+                                                blurDataURL={'img/wait.png'}
+                                                placeholder="blur"
+                                                alt='عکس ارسال شده'
+                                                width={200}
+                                                height={200} />
+                                        </div>
+                                        : <div><IdPageSwiper items={imagesURL} /></div>
                                     : <div className='text-sm text-red-400'>تصویری موجود نمیباشد</div>
                             }
 

@@ -11,6 +11,7 @@ import { Grid } from '@mui/material';
 
 export default function Statistics() {
     const { staticProps, setStaticProps } = useContext(useAdminContext)
+    const fontClassName = "sm:text-sm text-xs md:text-base";
 
     useEffect(() => {
         setStaticProps(prevProps => ({ ...prevProps, loadingNews: true }));
@@ -79,10 +80,10 @@ export default function Statistics() {
                     <Table sx={{ maxWidth: 400 }} aria-label="simple table">
                         <TableBody>
                             <TableRow>
-                                <TableCell component="th" scope="row" align='center'>
+                                <TableCell component="th" scope="row" align='center' className={fontClassName}>
                                     تعداد کل اخبار
                                 </TableCell>
-                                <TableCell align="center">
+                                <TableCell align="center" className={fontClassName}>
                                     {staticProps.isErrorNews ? <div>مشکلی رخ داد! لطفا دوباره تلاش کنید :
                                         {staticProps.errorNews}
                                     </div> : staticProps.loadingNews ? (
@@ -91,10 +92,10 @@ export default function Statistics() {
                                 </TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell component="th" scope="row" align='center'>
+                                <TableCell component="th" scope="row" align='center' className={fontClassName}>
                                     اخبار در انتظار تایید
                                 </TableCell>
-                                <TableCell align="center">
+                                <TableCell align="center" className={fontClassName}>
                                     {staticProps.isErrorNews ? <div>مشکلی رخ داد! لطفا دوباره تلاش کنید :
                                         {staticProps.errorNews}
                                     </div> : staticProps.loadingNews ? (
@@ -111,10 +112,10 @@ export default function Statistics() {
                     <Table sx={{ maxWidth: 400 }} aria-label="simple table">
                         <TableBody>
                             <TableRow>
-                                <TableCell component="th" scope="row" align='center'>
+                                <TableCell component="th" scope="row" align='center' className={fontClassName}>
                                     تعداد کل اطلاعیه ها
                                 </TableCell>
-                                <TableCell align="center">
+                                <TableCell align="center" className={fontClassName}>
                                     {staticProps.isErrorAnnouncements ? <div>مشکلی رخ داد! لطفا دوباره تلاش کنید :
                                         {staticProps.errorAnnouncements}
                                     </div> : staticProps.loadingAnnouncements ? (
@@ -123,10 +124,10 @@ export default function Statistics() {
                                 </TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell component="th" scope="row" align='center'>
+                                <TableCell component="th" scope="row" align='center' className={fontClassName}>
                                     اطلاعیه های در انتظار تایید
                                 </TableCell>
-                                <TableCell align="center">
+                                <TableCell align="center" className={fontClassName}>
                                     {staticProps.isErrorAnnouncements ? <div>مشکلی رخ داد! لطفا دوباره تلاش کنید :
                                         {staticProps.errorAnnouncements}
                                     </div> : staticProps.loadingAnnouncements ? (
@@ -143,10 +144,10 @@ export default function Statistics() {
                     <Table sx={{ maxWidth: 400 }} aria-label="simple table">
                         <TableBody>
                             <TableRow>
-                                <TableCell component="th" scope="row" align='center'>
+                                <TableCell component="th" scope="row" align='center' className={fontClassName}>
                                     تعداد کل رویدادها
                                 </TableCell>
-                                <TableCell align="center">
+                                <TableCell align="center" className={fontClassName}>
                                     {staticProps.isErrorEvents ? <div>مشکلی رخ داد! لطفا دوباره تلاش کنید :
                                         {staticProps.errorEvents}
                                     </div> : staticProps.loadingAnnouncements ? (
@@ -155,10 +156,10 @@ export default function Statistics() {
                                 </TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell component="th" scope="row" align='center'>
+                                <TableCell component="th" scope="row" align='center' className={fontClassName}>
                                     رویدادهای در انتظار تایید
                                 </TableCell>
-                                <TableCell align="center">
+                                <TableCell align="center" className={fontClassName}>
                                     {staticProps.isErrorEvents ? <div>مشکلی رخ داد! لطفا دوباره تلاش کنید :
                                         {staticProps.errorEvents}
                                     </div> : staticProps.loadingEvents ? (

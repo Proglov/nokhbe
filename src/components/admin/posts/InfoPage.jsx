@@ -43,7 +43,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function InfoPage({ type }) {
-    const [file, setFile] = useState(null);
+    const [imagesToDelete, setImagesToDelete] = useState([]);
+    const [fileStates, setFileStates] = useState([]);
+    const [uploadRes, setUploadRes] = useState([]);
     const { edgestore } = useEdgeStore();
     const { infoItems, setInfoItems, currentInfoPage, setCurrentInfoPage, lastInfoTablePageNumber, setLastInfoTablePageNumber, infoItemsPerPage, setStaticProps } = useContext(useAdminContext)
     const [isModalConfirmOpen, setIsModalConfirmOpen] = useState(false);
@@ -58,11 +60,23 @@ export default function InfoPage({ type }) {
         id: '',
         title: '',
         description: '',
-        imageURL: '',
+        imagesURL: [],
         tags: [],
         createdBy: '',
         telegram: false
     });
+    function updateFileProgress(key, progress) {
+        setFileStates((fileStates) => {
+            const newFileStates = structuredClone(fileStates);
+            const fileState = newFileStates.find(
+                (fileState) => fileState.key === key,
+            );
+            if (fileState) {
+                fileState.progress = progress;
+            }
+            return newFileStates;
+        });
+    }
 
     useEffect(() => {
         setLoading(true);
@@ -96,29 +110,32 @@ export default function InfoPage({ type }) {
     }, [currentInfoPage]);
 
     const editItem = async (obj) => {
-        setOperatingID(obj.id);
-        if (!!selectedItem.imageURL) {
-            if (!!file) {
-                const imageRes = await edgestore.myPublicImages.upload({
-                    file,
-                    options: {
-                        replaceTargetUrl: obj.imageURL,
-                    }
-                });
-                obj.imageURL = imageRes.url;
-            }
+
+        //confirm the new pics in edgestore
+        const imagesURL = [];
+        for (const obj of uploadRes) {
+            const url = obj.url
+            imagesURL.push(url)
+            await edgestore.myPublicImages.confirmUpload({
+                url
+            })
         }
-        else {
-            if (!!file) {
-                const imageRes = await edgestore.myPublicImages.upload({ file });
-                obj.imageURL = imageRes.url;
-            }
+
+        //add new pics to mongodb
+        const augmentedObj = {
+            ...obj,
+            imagesURL: [...obj.imagesURL, ...imagesURL]
+        }
+
+        //delete the imagesToDelete
+        for (const url of imagesToDelete) {
+            await edgestore.myPublicImages.delete({ url });
         }
 
         fetch(`/api/${type}/${obj.id}`, {
             headers: { 'Content-Type': 'application/json' },
             method: 'PATCH',
-            body: JSON.stringify(obj)
+            body: JSON.stringify(augmentedObj)
         })
             .then((response) => {
                 if (!response.ok) {
@@ -139,7 +156,9 @@ export default function InfoPage({ type }) {
                             return item;
                         })
                     );
-                    setFile(null);
+                    setFileStates([]);
+                    setImagesToDelete([]);
+                    setUploadRes([]);
                 }
             })
             .catch((err) => {
@@ -201,10 +220,12 @@ export default function InfoPage({ type }) {
 
         //delete image from edgestore
         infoItems.map(async (item) => {
-            if (item.id === id && !!item.imageURL) {
-                const imageRes = await edgestore.myPublicImages.delete({
-                    url: item.imageURL
-                });
+            if (item.id === id && item.imagesURL.length !== 0) {
+                for (let i = 0; i < item.imagesURL.length; i++) {
+                    const imageRes = await edgestore.myPublicImages.delete({
+                        url: item.imagesURL[i]
+                    });
+                }
             }
         })
 
@@ -316,7 +337,7 @@ export default function InfoPage({ type }) {
                                                                     id: item.id,
                                                                     description: item.description,
                                                                     title: item.title,
-                                                                    imageURL: item.imageURL,
+                                                                    imagesURL: item.imagesURL,
                                                                     createdBy: item.createdBy,
                                                                     tags: item.tags,
                                                                     telegram: item.telegram
@@ -338,11 +359,11 @@ export default function InfoPage({ type }) {
                                                                     id: item.id,
                                                                     description: item.description,
                                                                     title: item.title,
-                                                                    imageURL: item.imageURL,
+                                                                    imagesURL: item.imagesURL,
                                                                     createdBy: item.createdBy,
                                                                     tags: item.tags,
                                                                     telegram: item.telegram
-                                                                })
+                                                                });
                                                             }}
                                                         >
                                                             ویرایش
@@ -357,7 +378,7 @@ export default function InfoPage({ type }) {
                                                                     id: item.id,
                                                                     description: item.description,
                                                                     title: item.title,
-                                                                    imageURL: item.imageURL,
+                                                                    imagesURL: item.imagesURL,
                                                                     createdBy: item.createdBy,
                                                                     tags: item.tags,
                                                                     telegram: item.telegram
@@ -389,7 +410,7 @@ export default function InfoPage({ type }) {
             )}
 
             <ModalConfirmContext.Provider value={{ isModalConfirmOpen, setIsModalConfirmOpen, confirmItem }}>
-                <ModalConfirm type={type} id={selectedItem.id} title={selectedItem.title} description={selectedItem.description} imageURL={selectedItem.imageURL} tags={selectedItem.tags} createdBy={selectedItem.createdBy} />
+                <ModalConfirm type={type} id={selectedItem.id} title={selectedItem.title} description={selectedItem.description} imagesURL={selectedItem.imagesURL} tags={selectedItem.tags} createdBy={selectedItem.createdBy} />
             </ModalConfirmContext.Provider>
             <ModalDeleteContext.Provider value={{ isModalDeleteOpen, setIsModalDeleteOpen, deleteItem }}>
                 <ModalDelete id={selectedItem.id} type={type} />
@@ -399,10 +420,13 @@ export default function InfoPage({ type }) {
                 setIsModalEditOpen,
                 setSelectedItem,
                 selectedItem,
-                file,
-                setFile,
+                fileStates,
+                setFileStates,
+                setUploadRes,
+                updateFileProgress,
                 editItem,
                 type,
+                setImagesToDelete
             }}>
                 <ModalEdit />
             </ModalEditContext.Provider>

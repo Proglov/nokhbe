@@ -10,6 +10,10 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import UsersSection from './users/UsersSection';
+import { FcStatistics } from "react-icons/fc";
+import { MdAddToPhotos, MdTableChart } from "react-icons/md";
+import { BsPersonVcard } from "react-icons/bs";
+import { GrUserAdmin } from "react-icons/gr";
 
 export default function ClientSidePage() {
     const [expanded, setExpanded] = useState('panel1');
@@ -22,8 +26,11 @@ export default function ClientSidePage() {
 
     return (
         <div className='min-h-screen'>
-            <Typography className="my-3 mr-3" variant="h6" color={'primary'}>
+            <Typography className="my-3 mr-3 flex" variant="h6" color={'primary'}>
                 صفحه ی ادمین
+                <span className='m-2'>
+                    <GrUserAdmin />
+                </span>
             </Typography>
 
             <div>
@@ -32,8 +39,13 @@ export default function ClientSidePage() {
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel1a-content"
                         id="panel1a-header"
+                        className={`${expanded !== 'panel1' ? 'hover:bg-cyan-100' : ''}`}
                     >
-                        <Typography>آمار</Typography>
+                        <Typography className='flex'>آمار
+                            <span className='m-1'>
+                                <FcStatistics />
+                            </span>
+                        </Typography>
                     </AccordionSummary>
                     <AccordionDetails>
                         <useAdminContext.Provider value={adminHooks}>
@@ -47,8 +59,13 @@ export default function ClientSidePage() {
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel2a-content"
                         id="panel2a-header"
+                        className={`${expanded !== 'panel2' ? 'hover:bg-emerald-100' : ''}`}
                     >
-                        <Typography>افزودن پست</Typography>
+                        <Typography className='flex'>افزودن پست
+                            <span className='m-1'>
+                                <MdAddToPhotos />
+                            </span>
+                        </Typography>
                     </AccordionSummary>
                     <AccordionDetails>
                         <useAdminContext.Provider value={adminHooks}>
@@ -62,8 +79,13 @@ export default function ClientSidePage() {
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel2a-content"
                         id="panel2a-header"
+                        className={`${expanded !== 'panel3' ? 'hover:bg-violet-100' : ''}`}
                     >
-                        <Typography>لیست پست ها</Typography>
+                        <Typography className='flex'>لیست پست ها
+                            <span className='m-1'>
+                                <MdTableChart />
+                            </span>
+                        </Typography>
                     </AccordionSummary>
                     <AccordionDetails>
                         <useAdminContext.Provider value={adminHooks}>
@@ -77,8 +99,13 @@ export default function ClientSidePage() {
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel2a-content"
                         id="panel2a-header"
+                        className={`${expanded !== 'panel4' ? 'hover:bg-amber-100' : ''}`}
                     >
-                        <Typography>لیست اعضا</Typography>
+                        <Typography className='flex'>لیست اعضا
+                            <span className='m-1'>
+                                <BsPersonVcard />
+                            </span>
+                        </Typography>
                     </AccordionSummary>
                     <AccordionDetails>
                         <useAdminContext.Provider value={adminHooks}>

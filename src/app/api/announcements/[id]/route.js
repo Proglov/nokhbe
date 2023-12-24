@@ -47,13 +47,13 @@ export const PATCH = async (req, { params }) => {
         if (sessiion.user.role !== process.env.ADMIN_ROLE)
             return NextResponse.json({ message: "Unuthorized", error }, { status: 400 })
         const body = await req.json()
-        const { title, description, imageURL, tags, createdBy, telegram, status, views } = body;
+        const { title, description, imagesURL, tags, createdBy, telegram, status, views } = body;
         const updateAnnouncements = await prisma.announcements.update({
             where: { id },
             data: {
                 title,
                 description,
-                imageURL,
+                imagesURL,
                 tags,
                 createdBy,
                 telegram,

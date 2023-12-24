@@ -15,7 +15,7 @@ import { useRef, useContext } from 'react';
 import { useState } from 'react';
 import { useAdminContext } from '@/hooks/useAdminHooks';
 import { useEdgeStore } from '../../../lib/edgestore';
-import { SingleImageDropzone } from '../single-image-dropzone';
+import { MultiFileDropzone } from '../multi-image-dropzone';
 import { tagOptions } from '@/utils/tagsAndRoles';
 
 const ITEM_HEIGHT = 48;
@@ -42,7 +42,8 @@ export default function AddNew({ type }) {
     const theme = useTheme();
     const checkBoxRef = useRef();
 
-    const [file, setFile] = useState(null);
+    const [fileStates, setFileStates] = useState([]);
+    const [uploadRes, setUploadRes] = useState([]);
     const { edgestore } = useEdgeStore();
 
     const [AddNewData, setAddNewData] = useState({
@@ -60,6 +61,19 @@ export default function AddNew({ type }) {
     const { setStaticProps, setInfoItems, currentInfoPage, controlPanelsPage } = useContext(useAdminContext)
 
     const itemType = type === 'events' ? "رویداد" : type === 'news' ? "خبر" : "اطلاعیه"
+
+    function updateFileProgress(key, progress) {
+        setFileStates((fileStates) => {
+            const newFileStates = structuredClone(fileStates);
+            const fileState = newFileStates.find(
+                (fileState) => fileState.key === key,
+            );
+            if (fileState) {
+                fileState.progress = progress;
+            }
+            return newFileStates;
+        });
+    }
 
     const handleChange = (event) => {
         const { name, value, type, checked } = event.target;
@@ -81,14 +95,6 @@ export default function AddNew({ type }) {
             ...prevProps,
             isSubmitting: true
         }));
-
-        //add the image to the db
-        let imageURL = '';
-        if (!!file) {
-            const imageRes = await edgestore.myPublicImages.upload({ file })
-            imageURL = imageRes.url;
-        }
-
 
         if (AddNewData.formData.title === '') {
             setAddNewData(prevProps => ({
@@ -123,13 +129,21 @@ export default function AddNew({ type }) {
                 error: ''
             })), 5000);
         } else {
+            const imagesURL = [];
+            for (const obj of uploadRes) {
+                const url = obj.url
+                imagesURL.push(url)
+                await edgestore.myPublicImages.confirmUpload({
+                    url
+                })
+            }
             fetch(`/api/${type}`, {
                 headers: { 'Content-Type': 'application/json' },
                 method: 'POST',
                 body: JSON.stringify({
                     "title": AddNewData.formData.title,
                     "description": DOMPurify.sanitize(AddNewData.formData.quillValue),
-                    "imageURL": imageURL,
+                    "imagesURL": imagesURL,
                     "tags": AddNewData.formData.tags,
                     "createdBy": "ADMIN",
                     "telegram": AddNewData.formData.telegram
@@ -160,7 +174,8 @@ export default function AddNew({ type }) {
                             },
                             isSubmitting: false
                         }));
-                        setFile(null);
+                        setFileStates([]);
+                        setUploadRes([]);
 
                         //show success for five seconds
                         setTimeout(() => setAddNewData(prevProps => ({
@@ -181,7 +196,7 @@ export default function AddNew({ type }) {
                                         id: data?.id,
                                         title: AddNewData.formData.title,
                                         description: DOMPurify.sanitize(AddNewData.formData.quillValue),
-                                        imageURL,
+                                        imagesURL,
                                         tags: AddNewData.formData.tags,
                                         createdBy: "ADMIN",
                                         views: 0,
@@ -204,7 +219,7 @@ export default function AddNew({ type }) {
                                         id: data?.id,
                                         title: AddNewData.formData.title,
                                         description: DOMPurify.sanitize(AddNewData.formData.quillValue),
-                                        imageURL,
+                                        imagesURL,
                                         tags: AddNewData.formData.tags,
                                         createdBy: "ADMIN",
                                         views: 0,
@@ -226,7 +241,7 @@ export default function AddNew({ type }) {
                                         id: data?.id,
                                         title: AddNewData.formData.title,
                                         description: DOMPurify.sanitize(AddNewData.formData.quillValue),
-                                        imageURL,
+                                        imagesURL,
                                         tags: AddNewData.formData.tags,
                                         createdBy: "ADMIN",
                                         views: 0,
@@ -314,31 +329,58 @@ export default function AddNew({ type }) {
                     </Grid>
 
                     <Grid item xs={12}>
+                        <label
+                            className="block mt-2 mb-1 text-slate-50" htmlFor="inline-image-upload">
+                            آپلود تصویر
+                        </label>
+
+                        <MultiFileDropzone
+                            value={fileStates}
+                            onChange={(files) => {
+                                setFileStates(files);
+                            }}
+                            onFilesAdded={async (addedFiles) => {
+                                setFileStates([...fileStates, ...addedFiles]);
+                                await Promise.all(
+                                    addedFiles.map(async (addedFileState) => {
+                                        try {
+                                            const res = await edgestore.myPublicImages.upload({
+                                                file: addedFileState.file,
+                                                options: {
+                                                    temporary: true
+                                                },
+                                                onProgressChange: async (progress) => {
+                                                    updateFileProgress(addedFileState.key, progress);
+                                                    if (progress === 100) {
+                                                        // wait 1 second to set it to complete
+                                                        // so that the user can see the progress bar at 100%
+                                                        await new Promise((resolve) => setTimeout(resolve, 1000));
+                                                        updateFileProgress(addedFileState.key, 'COMPLETE');
+                                                    }
+                                                },
+                                            });
+                                            setUploadRes((uploadRes) => [
+                                                ...uploadRes,
+                                                {
+                                                    url: res.url,
+                                                    filename: addedFileState.file.name,
+                                                },
+                                            ]);
+                                        } catch (err) {
+                                            updateFileProgress(addedFileState.key, 'ERROR');
+                                        }
+                                    }),
+                                );
+                            }}
+                        />
+                    </Grid>
+
+                    <Grid item xs={12}>
                         <CustomQuill
                             onChange={(value) => handleChange({ target: { name: 'quillValue', value } })}
                             value={AddNewData.formData.quillValue}
                         />
                     </Grid>
-
-                    <Grid item xs={12}>
-                        <label
-                            className="block mt-2 mb-1  text-slate-50" htmlFor="inline-image-upload">
-                            آپلود تصویر
-                        </label>
-
-                        <SingleImageDropzone
-                            width={200}
-                            height={200}
-                            value={file}
-                            dropzoneOptions={{
-                                maxSize: 1024 * 1024 * 2
-                            }}
-                            onChange={(file) => {
-                                setFile(file);
-                            }}
-                        />
-                    </Grid>
-
 
                     <Grid item xs={12}>
                         <label className="text-slate-50 text-sm ml-2" htmlFor="telegram">
