@@ -182,9 +182,9 @@ export default function ModalEdit() {
                                             {
                                                 selectedItem.imagesURL.map((url, i) => {
                                                     return (
-                                                        <div className='bg-blue-50' style={{ width: '300px' }}>
+                                                        <div className='bg-blue-50' style={{ width: '300px' }}
+                                                            key={i}>
                                                             <Image
-                                                                key={i}
                                                                 src={url}
                                                                 blurDataURL={'img/wait.png'}
                                                                 placeholder="blur"
@@ -194,10 +194,10 @@ export default function ModalEdit() {
 
                                                             <Button variant='outlined' color='error' className='mt-1 mb-4 w-full'
                                                                 onClick={() => {
-                                                                    setImagesToDelete(prev => ({
+                                                                    setImagesToDelete(prev => [
                                                                         ...prev,
                                                                         url
-                                                                    }));
+                                                                    ]);
                                                                     setSelectedItem(prev => ({
                                                                         ...prev,
                                                                         imagesURL: prev.imagesURL.filter(theUrl => theUrl !== url)
@@ -293,7 +293,7 @@ export default function ModalEdit() {
 
                     <div className='mt-2 flex justify-between'>
                         <Button
-                            onClick={() => { handleClose(); editItem(selectedItem) }}
+                            onClick={() => { editItem(selectedItem) }}
                             variant='outlined'
                             className='p-0 m-1'
                             sx={{ color: 'green', borderColor: 'green' }}>

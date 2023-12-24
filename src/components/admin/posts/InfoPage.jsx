@@ -116,9 +116,9 @@ export default function InfoPage({ type }) {
         for (const obj of uploadRes) {
             const url = obj.url
             imagesURL.push(url)
-            await edgestore.myPublicImages.confirmUpload({
-                url
-            })
+            // await edgestore.myPublicImages.confirmUpload({
+            //     url
+            // })
         }
 
         //add new pics to mongodb
@@ -159,10 +159,15 @@ export default function InfoPage({ type }) {
                     setFileStates([]);
                     setImagesToDelete([]);
                     setUploadRes([]);
+                    setIsModalEditOpen(false)
                 }
             })
             .catch((err) => {
                 setOperatingError(err);
+                setFileStates([]);
+                setImagesToDelete([]);
+                setUploadRes([]);
+                setIsModalEditOpen(false)
             });
     };
 

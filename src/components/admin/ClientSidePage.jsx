@@ -39,7 +39,7 @@ export default function ClientSidePage() {
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel1a-content"
                         id="panel1a-header"
-                        className={`${expanded !== 'panel1' ? 'hover:bg-cyan-100' : ''}`}
+                        className={`${expanded !== 'panel1' ? 'hover:bg-emerald-100' : ''}`}
                     >
                         <Typography className='flex'>آمار
                             <span className='m-1'>
@@ -59,7 +59,7 @@ export default function ClientSidePage() {
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel2a-content"
                         id="panel2a-header"
-                        className={`${expanded !== 'panel2' ? 'hover:bg-emerald-100' : ''}`}
+                        className={`${expanded !== 'panel2' ? 'hover:bg-violet-100' : ''}`}
                     >
                         <Typography className='flex'>افزودن پست
                             <span className='m-1'>
@@ -79,7 +79,7 @@ export default function ClientSidePage() {
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel2a-content"
                         id="panel2a-header"
-                        className={`${expanded !== 'panel3' ? 'hover:bg-violet-100' : ''}`}
+                        className={`${expanded !== 'panel3' ? 'hover:bg-cyan-100' : ''}`}
                     >
                         <Typography className='flex'>لیست پست ها
                             <span className='m-1'>
