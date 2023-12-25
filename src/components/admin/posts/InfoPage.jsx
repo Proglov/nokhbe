@@ -130,10 +130,17 @@ export default function InfoPage({ type }) {
         }
 
         //add the added images to the frontend
-        setSelectedItem(prev => ({
-            ...prev,
-            imagesURL: augmentedObj.imagesURL
-        }))
+        setInfoItems(prev => {
+            return prev.map(item => {
+                if (item.id === obj.id) {
+                    return {
+                        ...item,
+                        imagesURL: augmentedObj.imagesURL
+                    }
+                }
+                return item
+            })
+        })
 
         //delete the imagesToDelete
         for (const url of imagesToDelete) {
