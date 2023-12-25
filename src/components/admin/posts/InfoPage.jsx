@@ -110,6 +110,8 @@ export default function InfoPage({ type }) {
     }, [currentInfoPage]);
 
     const editItem = async (obj) => {
+        setOperatingID(obj.id);
+        setIsModalEditOpen(false);
 
         //confirm the new pics in edgestore
         const imagesURL = [];
@@ -126,6 +128,12 @@ export default function InfoPage({ type }) {
             ...obj,
             imagesURL: [...obj.imagesURL, ...imagesURL]
         }
+
+        //add the added images to the frontend
+        setSelectedItem(prev => ({
+            ...prev,
+            imagesURL: augmentedObj.imagesURL
+        }))
 
         //delete the imagesToDelete
         for (const url of imagesToDelete) {
@@ -159,7 +167,6 @@ export default function InfoPage({ type }) {
                     setFileStates([]);
                     setImagesToDelete([]);
                     setUploadRes([]);
-                    setIsModalEditOpen(false)
                 }
             })
             .catch((err) => {
@@ -167,7 +174,6 @@ export default function InfoPage({ type }) {
                 setFileStates([]);
                 setImagesToDelete([]);
                 setUploadRes([]);
-                setIsModalEditOpen(false)
             });
     };
 
