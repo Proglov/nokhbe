@@ -55,3 +55,11 @@ export const convertRoles = role => {
     else if (role === '000000')
         return "تایید نشده"
 }
+
+export const convertEventAt = str => { // 1402-02-25
+    let yr = '', month = '', day = '';
+    for (let i = 0; i < 3; i++) yr += str[i];
+    for (let i = 5; i < 7; i++) month += str[i];
+    for (let i = 8; i < 10; i++) day += str[i];
+    return [yr, month, day]
+}

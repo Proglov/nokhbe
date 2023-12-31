@@ -46,6 +46,8 @@ export default function AddNew({ type }) {
     const [uploadRes, setUploadRes] = useState([]);
     const { edgestore } = useEdgeStore();
 
+    const [eventAt, setEventAt] = useState(['', '', '']);
+
     const [AddNewData, setAddNewData] = useState({
         isSubmitting: false,
         error: '',
@@ -90,6 +92,49 @@ export default function AddNew({ type }) {
         })
     };
 
+    const onEventAtHandler = (event, num) => {
+        const value = parseInt(event.target.value);
+
+        if (!isNaN(value)) {
+            if (num === 1) {
+                if (value >= 1 && value <= 12) {
+                    setEventAt((prevArr) => {
+                        const currArr = [...prevArr];
+                        currArr[1] = value;
+                        return currArr;
+                    });
+                } else {
+                    setEventAt((prevArr) => {
+                        const currArr = [...prevArr];
+                        currArr[1] = 1;
+                        return currArr;
+                    });
+                }
+            } else if (num === 0) {
+                if (value >= 1 && value <= 31) {
+                    setEventAt((prevArr) => {
+                        const currArr = [...prevArr];
+                        currArr[0] = value;
+                        return currArr;
+                    });
+                } else {
+                    setEventAt((prevArr) => {
+                        const currArr = [...prevArr];
+                        currArr[0] = 1;
+                        return currArr;
+                    });
+                }
+            } else {
+                setEventAt((prevArr) => {
+                    const currArr = [...prevArr];
+                    currArr[2] = value;
+                    return currArr;
+                });
+            }
+        }
+
+    };
+
     const onSubmitForm = async () => {
         setAddNewData(prevProps => ({
             ...prevProps,
@@ -128,6 +173,27 @@ export default function AddNew({ type }) {
                 ...prevProps,
                 error: ''
             })), 5000);
+        } else if (type === "events" && (eventAt[0] === "" || eventAt[1] === "" || eventAt[2] === "")) {
+            setAddNewData(prevProps => ({
+                ...prevProps,
+                error: "تاریخ را به صورت عدد وارد کنید",
+                isSubmitting: false
+            }));
+            setTimeout(() => setAddNewData(prevProps => ({
+                ...prevProps,
+                error: ''
+            })), 5000);
+        } else if (type === "events" && eventAt[2] < 1395) {
+            console.log(eventAt)
+            setAddNewData(prevProps => ({
+                ...prevProps,
+                error: "سال رویداد نمیتواند کمتر از 1395 باشد",
+                isSubmitting: false
+            }));
+            setTimeout(() => setAddNewData(prevProps => ({
+                ...prevProps,
+                error: ''
+            })), 5000);
         } else {
             const imagesURL = [];
             for (const obj of uploadRes) {
@@ -137,17 +203,25 @@ export default function AddNew({ type }) {
                     url
                 })
             }
+            let newBody = {};
+            if (type === "events") {
+                const day = eventAt[0] < 10 ? '0' + eventAt[0] : eventAt[0];
+                const month = eventAt[1] < 10 ? '0' + eventAt[1] : eventAt[1];
+                newBody.eventAt = eventAt[2] + '-' + month + '-' + day
+            }
+            newBody = {
+                ...newBody,
+                "title": AddNewData.formData.title,
+                "description": DOMPurify.sanitize(AddNewData.formData.quillValue),
+                "imagesURL": imagesURL,
+                "tags": AddNewData.formData.tags,
+                "createdBy": "ADMIN",
+                "telegram": AddNewData.formData.telegram
+            }
             fetch(`/api/${type}`, {
                 headers: { 'Content-Type': 'application/json' },
                 method: 'POST',
-                body: JSON.stringify({
-                    "title": AddNewData.formData.title,
-                    "description": DOMPurify.sanitize(AddNewData.formData.quillValue),
-                    "imagesURL": imagesURL,
-                    "tags": AddNewData.formData.tags,
-                    "createdBy": "ADMIN",
-                    "telegram": AddNewData.formData.telegram
-                })
+                body: JSON.stringify(newBody)
             })
                 .then((response) => {
                     if (!response.ok) {
@@ -374,6 +448,45 @@ export default function AddNew({ type }) {
                             }}
                         />
                     </Grid>
+
+                    {
+                        type === 'events' &&
+                        <Grid item xs={12}>
+                            <label
+                                className="block mt-2 mb-1 text-slate-50">
+                                تاریخ رویداد
+                            </label>
+                            <div className='flex'>
+                                <input
+                                    className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-1/2 py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 mx-2"
+                                    id="inline-full-name"
+                                    type="number"
+                                    name="title"
+                                    value={eventAt[0]}
+                                    placeholder="روز"
+                                    onChange={e => onEventAtHandler(e, 0)}
+                                />
+                                <input
+                                    className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-1/2 py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 mx-2"
+                                    id="inline-full-name"
+                                    type="number"
+                                    name="title"
+                                    value={eventAt[1]}
+                                    placeholder="ماه"
+                                    onChange={e => onEventAtHandler(e, 1)}
+                                />
+                                <input
+                                    className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-1/2 py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 mx-2"
+                                    id="inline-full-name"
+                                    type="number"
+                                    name="title"
+                                    value={eventAt[2]}
+                                    placeholder="سال"
+                                    onChange={e => onEventAtHandler(e, 2)}
+                                />
+                            </div>
+                        </Grid>
+                    }
 
                     <Grid item xs={12}>
                         <CustomQuill

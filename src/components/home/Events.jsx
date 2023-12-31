@@ -53,7 +53,7 @@ export default function Events() {
                         {events.map(item => (
                             <Grid item xs={12} sm={6} md={4} lg={3} className="grid-item" key={item.id}>
                                 <Link href={`/events/${item.id}`}>
-                                    <EventComponents date={new Intl.DateTimeFormat('fa-IR').format(new Date(item.createdAt))} title={item.title} />
+                                    <EventComponents date={item.eventAt} title={item.title} />
                                 </Link>
                             </Grid>
                         ))}

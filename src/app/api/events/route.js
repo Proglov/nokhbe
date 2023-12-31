@@ -4,11 +4,11 @@ import { NextResponse } from 'next/server'
 
 export const POST = async (req) => {
     try {
-        const sessiion = await getUser()
-        if (sessiion.user.role !== process.env.ADMIN_ROLE)
-            return NextResponse.json({ message: "Unuthorized", error }, { status: 400 })
+        const session = await getUser()
+        if (session.user.role !== process.env.ADMIN_ROLE)
+            return NextResponse.json({ message: "Unauthorized", error }, { status: 400 })
         const body = await req.json()
-        const { title, description, imagesURL, tags, createdBy, telegram } = body;
+        const { title, description, imagesURL, tags, createdBy, telegram, eventAt } = body;
         const newEvents = await prisma.events.create({
             data: {
                 title,
@@ -16,7 +16,8 @@ export const POST = async (req) => {
                 imagesURL,
                 tags,
                 createdBy,
-                telegram
+                telegram,
+                eventAt
             }
         })
         return NextResponse.json(newEvents);

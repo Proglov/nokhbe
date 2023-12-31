@@ -94,7 +94,7 @@ export default function NewsPage({ type }) {
                                     <>
                                         {items.map((item) => (
                                             <Link href={`${type}/${item.id}`} key={item.id}>
-                                                <SingleNews title={item.title} desc={item.description} src={item.imagesURL[0]} date={new Intl.DateTimeFormat('fa-IR').format(new Date(item.createdAt))} key={item.id} />
+                                                <SingleNews title={item.title} desc={item.description} src={item.imagesURL[0]} date={type === 'events' ? item.eventAt : new Intl.DateTimeFormat('fa-IR').format(new Date(item.createdAt))} key={item.id} />
                                             </Link>
                                         ))}
                                     </>

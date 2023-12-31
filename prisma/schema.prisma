@@ -45,6 +45,7 @@ model Events {
   status      Boolean  @default(false)
   imagesURL   String[]
   createdBy   String
+  eventAt     String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

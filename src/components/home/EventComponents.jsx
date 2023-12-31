@@ -1,16 +1,17 @@
 import { PiClockDuotone } from 'react-icons/pi'
-import { giveMeDateInFa } from '@/utils/funcs'
+import { convertEventAt, jalaliMonth } from '@/utils/funcs'
 
 export default function EventComponents({ date, title }) {
+    const arrDate = convertEventAt(date)
     return (
         <div>
             <div className="flex" style={{ alignItems: 'center' }}>
                 <div className='flex flex-col bg-blue-950 text-slate-100 rounded text-center p-2'>
                     <div>
-                        {giveMeDateInFa(date)[2]}
+                        {arrDate[2]}
                     </div>
                     <div className="text-xs">
-                        {giveMeDateInFa(date)[1]}
+                        {jalaliMonth(arrDate[1])}
                     </div>
                 </div>
                 <div className="flex flex-col mr-2">

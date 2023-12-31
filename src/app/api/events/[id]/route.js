@@ -26,9 +26,9 @@ export const GET = async (_req, { params }) => {
 export const DELETE = async (_req, { params }) => {
     const { id } = params;
     try {
-        const sessiion = await getUser()
-        if (sessiion.user.role !== process.env.ADMIN_ROLE)
-            return NextResponse.json({ message: "Unuthorized", error }, { status: 400 })
+        const session = await getUser()
+        if (session.user.role !== process.env.ADMIN_ROLE)
+            return NextResponse.json({ message: "Unauthorized", error }, { status: 400 })
         await prisma.events.delete({
             where: { id }
         })
@@ -41,11 +41,11 @@ export const DELETE = async (_req, { params }) => {
 export const PATCH = async (req, { params }) => {
     const { id } = params;
     try {
-        const sessiion = await getUser()
-        if (sessiion.user.role !== process.env.ADMIN_ROLE)
-            return NextResponse.json({ message: "Unuthorized", error }, { status: 400 })
+        const session = await getUser()
+        if (session.user.role !== process.env.ADMIN_ROLE)
+            return NextResponse.json({ message: "Unauthorized", error }, { status: 400 })
         const body = await req.json()
-        const { title, description, imagesURL, tags, createdBy, telegram, status, views } = body;
+        const { title, description, imagesURL, tags, createdBy, telegram, status, views, eventAt } = body;
         const updateEvents = await prisma.events.update({
             where: { id },
             data: {
@@ -56,7 +56,8 @@ export const PATCH = async (req, { params }) => {
                 createdBy,
                 telegram,
                 status,
-                views
+                views,
+                eventAt
             }
         })
         if (!updateEvents) {
