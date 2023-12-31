@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import React from 'react'
+import { dateInFarsi } from '@/utils/funcs'
 
 export default function SingleNews({ title, date, src, desc }) {
     return (
@@ -9,7 +9,14 @@ export default function SingleNews({ title, date, src, desc }) {
             </div>
             <div className='w-1/2 xs:w-full sm:w-1/2 md:w-1/2 lg:w-2/3 flex flex-col justify-center'>
                 <h2 className='text-lg'>{title}</h2>
-                <small className='mb-1'>{date}</small>
+                <span>
+                    {
+                        date.includes('-') && <small dir='ltr' className='mb-1'>{(dateInFarsi(date))}</small>
+                    }
+                    {
+                        !date.includes('-') && <small className='mb-1'>{date}</small>
+                    }
+                </span>
                 <div dangerouslySetInnerHTML={{ __html: desc }} style={{
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',

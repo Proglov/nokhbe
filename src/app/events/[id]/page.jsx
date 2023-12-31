@@ -30,7 +30,7 @@ export default function Page({ params }) {
                     title: data.title,
                     desc: data.description,
                     imagesURL: data.imagesURL,
-                    date: new Intl.DateTimeFormat('fa-IR').format(new Date(data.createdAt))
+                    date: data.eventAt
                 });
                 setLoading(false);
             })

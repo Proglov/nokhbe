@@ -2,6 +2,7 @@ import { Grid } from "@mui/material";
 import Image from "next/image";
 import { AiOutlineCalendar } from "react-icons/ai";
 import IdPageSwiper from "@/components/news/IdPageSwiper"
+import { dateInFarsi } from "@/utils/funcs";
 
 export default function NewsTop({ src, date, title, desc, showMore }) {
     return (
@@ -25,7 +26,13 @@ export default function NewsTop({ src, date, title, desc, showMore }) {
                     <div className="flex flex-row mt-2">
                         <AiOutlineCalendar style={{ marginTop: '-3px' }} />
                         &nbsp;
-                        <span style={{ lineHeight: '15px' }} >{date}</span>
+                        {
+                            date.includes('-') && <span dir="ltr" style={{ lineHeight: '10px' }} >{(dateInFarsi(date))}</span>
+                        }
+                        {
+                            !date.includes('-') && <span style={{ lineHeight: '10px' }} >{date}</span>
+                        }
+
                     </div>
                     <div className="text-blue-900">
                         {title}
