@@ -55,6 +55,16 @@ const ModalStyle = {
 };
 
 export default function ModalEdit() {
+    const { isModalEditOpen, setIsModalEditOpen, type, selectedItem, setSelectedItem, fileStates,
+        setFileStates, setUploadRes, updateFileProgress, editItem, setImagesToDelete } = useContext(ModalEditContext)
+
+    let dd = '', mm = '', yy = '';
+    if (selectedItem?.eventAt) {
+        for (let i = 0; i < 4; i++) yy += selectedItem?.eventAt[i]
+        for (let i = 5; i < 7; i++) mm += selectedItem?.eventAt[i]
+        for (let i = 8; i < 10; i++) dd += selectedItem?.eventAt[i]
+    }
+
     const theme = useTheme();
     const checkBoxRef = useRef();
     const { edgestore } = useEdgeStore();
@@ -85,12 +95,117 @@ export default function ModalEdit() {
         }
     };
 
-    const { isModalEditOpen, setIsModalEditOpen, type, selectedItem, setSelectedItem, fileStates,
-        setFileStates, setUploadRes, updateFileProgress, editItem, setImagesToDelete } = useContext(ModalEditContext)
     const handleClose = () => {
         setIsModalEditOpen(false);
         setFileStates([]);
         setUploadRes([]);
+    };
+
+    const onEventAtHandler = (event, num) => {
+        const value = parseInt(event.target.value);
+
+        if (!isNaN(value)) {
+            if (num === 1) {
+                if (value >= 1 && value <= 12) {
+                    let newMM = '';
+                    let newStr = (' ' + selectedItem.eventAt).slice(1);
+
+                    if (value < 10) {
+                        newMM += '0' + value;
+                    } else {
+                        newMM += value;
+                    }
+
+                    newStr = newStr.slice(0, 5) + newMM + newStr.slice(7);
+
+                    setSelectedItem(prev => ({
+                        ...prev,
+                        eventAt: newStr
+                    }));
+
+                } else {
+                    let newMM = '01';
+                    let newStr = (' ' + selectedItem.eventAt).slice(1);
+                    newStr = newStr.split('');
+
+                    for (let i = 5; i < 7; i++) {
+                        newStr[i] = newMM[i - 5];
+                    }
+
+                    newStr = newStr.join('');
+
+                    setSelectedItem(prev => ({
+                        ...prev,
+                        eventAt: newStr
+                    }));
+                }
+            } else if (num === 0) {
+                if (value >= 1 && value <= 31) {
+                    let newDD = '';
+                    let newStr = (' ' + selectedItem.eventAt).slice(1);
+                    newStr = newStr.split('');
+
+                    if (value < 10) {
+                        newDD += '0' + value;
+                    } else {
+                        newDD += value;
+                    }
+
+                    for (let i = 8; i < 10; i++) {
+                        newStr[i] = newDD[i - 8];
+                    }
+
+                    newStr = newStr.join('');
+
+                    setSelectedItem(prev => ({
+                        ...prev,
+                        eventAt: newStr
+                    }));
+
+                } else {
+                    let newDD = '01';
+                    let newStr = (' ' + selectedItem.eventAt).slice(1);
+                    newStr = newStr.split('');
+
+                    for (let i = 8; i < 10; i++) {
+                        newStr[i] = newDD[i - 8];
+                    }
+
+                    newStr = newStr.join('');
+
+                    setSelectedItem(prev => ({
+                        ...prev,
+                        eventAt: newStr
+                    }));
+                }
+            } else {
+                const newYY = value.toString();
+                let newStr = (' ' + selectedItem.eventAt).slice(1);
+                newStr = newStr.split('');
+
+                const len = newYY.length;
+                let newNewYY = '';
+
+                for (let i = 0; i < 4 - len; i++) {
+                    newNewYY += '0';
+                }
+
+                newNewYY += newYY;
+
+                for (let i = 0; i < 4; i++) {
+                    newStr[i] = newNewYY[i];
+                }
+
+                newStr = newStr.join('');
+
+                setSelectedItem(prev => ({
+                    ...prev,
+                    eventAt: newStr
+                }));
+
+            }
+        }
+
     };
 
     const itemType = type === 'events' ? "رویداد" : type === 'news' ? "خبر" : "اطلاعیه"
@@ -174,6 +289,45 @@ export default function ModalEdit() {
                                         ))}
                                     </Select>
                                 </Grid>
+
+                                {
+                                    type === 'events' &&
+                                    <Grid item xs={12} className="mt-2">
+                                        <label
+                                            className="block mt-2 mb-1 text-black">
+                                            تاریخ رویداد
+                                        </label>
+                                        <div className='flex'>
+                                            <input
+                                                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-1/2 py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 mx-2"
+                                                id="inline-full-name"
+                                                type="number"
+                                                name="title"
+                                                value={dd}
+                                                placeholder="روز"
+                                                onChange={e => onEventAtHandler(e, 0)}
+                                            />
+                                            <input
+                                                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-1/2 py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 mx-2"
+                                                id="inline-full-name"
+                                                type="number"
+                                                name="title"
+                                                value={mm}
+                                                placeholder="ماه"
+                                                onChange={e => onEventAtHandler(e, 1)}
+                                            />
+                                            <input
+                                                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-1/2 py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 mx-2"
+                                                id="inline-full-name"
+                                                type="number"
+                                                name="title"
+                                                value={yy}
+                                                placeholder="سال"
+                                                onChange={e => onEventAtHandler(e, 2)}
+                                            />
+                                        </div>
+                                    </Grid>
+                                }
 
                                 <Grid item xs={12}>
                                     <div className='mt-2'>

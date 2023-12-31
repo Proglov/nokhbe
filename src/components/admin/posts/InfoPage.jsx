@@ -352,13 +352,7 @@ export default function InfoPage({ type }) {
                                                             <Button onClick={() => {
                                                                 setIsModalConfirmOpen(true);
                                                                 setSelectedItem({
-                                                                    id: item.id,
-                                                                    description: item.description,
-                                                                    title: item.title,
-                                                                    imagesURL: item.imagesURL,
-                                                                    createdBy: item.createdBy,
-                                                                    tags: item.tags,
-                                                                    telegram: item.telegram
+                                                                    ...item
                                                                 })
                                                             }}
                                                                 variant='outlined'
@@ -374,13 +368,7 @@ export default function InfoPage({ type }) {
                                                             onClick={() => {
                                                                 setIsModalEditOpen(true);
                                                                 setSelectedItem({
-                                                                    id: item.id,
-                                                                    description: item.description,
-                                                                    title: item.title,
-                                                                    imagesURL: item.imagesURL,
-                                                                    createdBy: item.createdBy,
-                                                                    tags: item.tags,
-                                                                    telegram: item.telegram
+                                                                    ...item
                                                                 });
                                                             }}
                                                         >
@@ -428,7 +416,7 @@ export default function InfoPage({ type }) {
             )}
 
             <ModalConfirmContext.Provider value={{ isModalConfirmOpen, setIsModalConfirmOpen, confirmItem }}>
-                <ModalConfirm type={type} id={selectedItem.id} title={selectedItem.title} description={selectedItem.description} imagesURL={selectedItem.imagesURL} tags={selectedItem.tags} createdBy={selectedItem.createdBy} />
+                <ModalConfirm type={type} id={selectedItem.id} title={selectedItem.title} description={selectedItem.description} imagesURL={selectedItem.imagesURL} tags={selectedItem.tags} createdBy={selectedItem.createdBy} eventAt={null || selectedItem.eventAt} />
             </ModalConfirmContext.Provider>
             <ModalDeleteContext.Provider value={{ isModalDeleteOpen, setIsModalDeleteOpen, deleteItem }}>
                 <ModalDelete id={selectedItem.id} type={type} />

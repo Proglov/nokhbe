@@ -24,8 +24,16 @@ const ModalStyle = {
     p: 4,
 };
 
-export default function ModalConfirm({ type, id, title, description, imagesURL, tags, createdBy }) {
+export default function ModalConfirm({ type, id, title, description, imagesURL, tags, createdBy, eventAt }) {
     const { isModalConfirmOpen, setIsModalConfirmOpen, confirmItem } = useContext(ModalConfirmContext)
+
+    let dd = '', mm = '', yy = '';
+    if (eventAt) {
+        for (let i = 0; i < 4; i++) yy += eventAt[i]
+        for (let i = 5; i < 7; i++) mm += eventAt[i]
+        for (let i = 8; i < 10; i++) dd += eventAt[i]
+    }
+
     const handleClose = () => setIsModalConfirmOpen(false);
 
     const itemType = type === 'events' ? "رویداد" : type === 'news' ? "خبر" : "اطلاعیه"
@@ -70,6 +78,46 @@ export default function ModalConfirm({ type, id, title, description, imagesURL, 
                                 })}
                             </ul>
                         </Typography>
+
+                        {
+                            type === 'events' &&
+                            <Typography className="mt-2">
+                                <label
+                                    className="block mt-2 mb-1 text-black">
+                                    تاریخ رویداد
+                                </label>
+                                <div className='flex'>
+                                    <input
+                                        className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-1/2 py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 mx-2"
+                                        id="inline-full-name"
+                                        type="number"
+                                        name="title"
+                                        value={dd}
+                                        placeholder="روز"
+                                        readOnly
+                                    />
+                                    <input
+                                        className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-1/2 py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 mx-2"
+                                        id="inline-full-name"
+                                        type="number"
+                                        name="title"
+                                        value={mm}
+                                        placeholder="ماه"
+                                        readOnly
+                                    />
+                                    <input
+                                        className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-1/2 py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 mx-2"
+                                        id="inline-full-name"
+                                        type="number"
+                                        name="title"
+                                        value={yy}
+                                        placeholder="سال"
+                                        readOnly
+                                    />
+                                </div>
+                            </Typography>
+                        }
+
                         <Typography sx={{ mt: 2 }}>
                             ایجاد شده توسط: {createdBy}
                         </Typography>

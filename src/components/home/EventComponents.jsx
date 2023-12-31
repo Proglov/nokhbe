@@ -3,7 +3,7 @@ import { convertEventAt, dateInFarsi, jalaliMonthEn } from '@/utils/funcs'
 
 export default function EventComponents({ date, title }) {
     const arrDate = convertEventAt(date)
-    console.log(arrDate)
+
     return (
         <div>
             <div className="flex" style={{ alignItems: 'center' }}>
