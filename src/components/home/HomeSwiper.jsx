@@ -13,7 +13,7 @@ const items = [
         src: '/img/home-main/IMG_20231004_155303_382.jpg',
     },
     {
-        src: '/img/home-main/IMG_20240128_195205_221.jpg',
+        src: '/img/home-main/IMG_20240128_231618_726.jpg',
     },
     {
         src: '/img/home-main/IMG_20240128_195206_989.jpg',

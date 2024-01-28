@@ -10,47 +10,14 @@ export default function Footer() {
         <Grid container spacing={2} className="p-3 bg-blue-950 text-slate-50">
             <Grid item xs={12} sm={5} className="grid-item">
                 <List>
-                    <Link href='http://farsi.khamenei.ir/index.html' target='_blank'>
+                    <Link href='https://karafarini.shomal.ac.ir' target='_blank'>
                         <ListItem className='py-0'>
                             <ListItemIcon sx={{ color: 'orange' }}>
                                 <GoGoal />
                             </ListItemIcon>
                             <ListItemText
                                 sx={{ textAlign: 'right' }}
-                                primary="دفتر مقام معظم رهبری"
-                            />
-                        </ListItem>
-                    </Link>
-                    <Link href='http://www.president.ir/fa/' target='_blank'>
-                        <ListItem className='py-0'>
-                            <ListItemIcon sx={{ color: 'orange' }}>
-                                <GoGoal />
-                            </ListItemIcon>
-                            <ListItemText
-                                sx={{ textAlign: 'right' }}
-                                primary="دفتر ریاست جمهوری"
-                            />
-                        </ListItem>
-                    </Link>
-                    <Link href='http://www.imam-khomeini.ir/' target='_blank'>
-                        <ListItem className='py-0'>
-                            <ListItemIcon sx={{ color: 'orange' }}>
-                                <GoGoal />
-                            </ListItemIcon>
-                            <ListItemText
-                                sx={{ textAlign: 'right' }}
-                                primary="موسسه تنظیم و نشر آثار امام خمینی (ره)"
-                            />
-                        </ListItem>
-                    </Link>
-                    <Link href='http://www.msrt.ir/fa/pages/Home.aspx' target='_blank'>
-                        <ListItem className='py-0'>
-                            <ListItemIcon sx={{ color: 'orange' }}>
-                                <GoGoal />
-                            </ListItemIcon>
-                            <ListItemText
-                                sx={{ textAlign: 'right' }}
-                                primary="ارتباطات مردمی ریاست جمهوری"
+                                primary="مرکز رشد و کارافرینی و شکوفایی بین المللی دانشگاه شمال"
                             />
                         </ListItem>
                     </Link>
@@ -103,6 +70,13 @@ export default function Footer() {
                 <div className='flex flex-row'>
                     <span>
                         <span className=''>دفتر مرکزی<span style={{ color: 'red' }}>:</span></span> مازندران، آمل، کلیومتر ۵ جاده هراز، دو راهی امامزاده عبدلله
+                    </span>
+                </div>
+                <div className='flex flex-row'>
+                    <span>
+                        <span className=''>دفتر مرکزی تهران<span style={{ color: 'red' }}>:</span></span>
+                        &nbsp;
+                        خیابان کریمخان زند، بین ایرانشهر و خردمند جنوبی، پلاک 108
                     </span>
                 </div>
                 <br />
