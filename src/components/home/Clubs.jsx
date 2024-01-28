@@ -1,6 +1,7 @@
 'use client'
+import LastNews from '../../components/events/LastNews'
 import { useState } from "react";
-import { Box, Container, Grid, Typography } from "@mui/material";
+import { Box, Container, Grid } from "@mui/material";
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -16,42 +17,49 @@ export default function Clubs() {
     };
 
     return (
-        <div>
+        <section className='mt-5' >
             <Container>
-                <Box className='mx-auto md:w-3/5 w-100'>
-                    <FormControl variant="filled" sx={{ m: 1, width: '100%', maxWidth: '500px' }}>
-                        <InputLabel id="demo-simple-select-standard-label">
-                            باشگاه
-                        </InputLabel>
-                        <Select
-                            labelId="demo-simple-select-standard-label"
-                            id="demo-simple-select-standard"
-                            className="bg-white"
-                            value={currentClub}
-                            onChange={handleChange}
-                            label="Age"
-                        >
-                            {
-                                tags.map((v, i) => {
-                                    return <MenuItem key={i} className="mx-2" value={i}>
-                                        {v}
-                                    </MenuItem>
-                                })
-                            }
-                        </Select>
-                    </FormControl>
-                </Box>
+                <Grid container spacing={8} className="p-3">
+                    <Grid item xs={12} sm={7} md={8} className="grid-item">
+                        <Box className='mx-auto md:w-3/5 w-100'>
+                            <FormControl variant="filled" sx={{ m: 1, width: '100%', maxWidth: '500px' }}>
+                                <InputLabel id="demo-simple-select-standard-label">
+                                    باشگاه
+                                </InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-standard-label"
+                                    id="demo-simple-select-standard"
+                                    className="bg-white"
+                                    value={currentClub}
+                                    onChange={handleChange}
+                                    label="Age"
+                                >
+                                    {
+                                        tags.map((v, i) => {
+                                            return <MenuItem key={i} className="mx-2" value={i}>
+                                                {v}
+                                            </MenuItem>
+                                        })
+                                    }
+                                </Select>
+                            </FormControl>
+                        </Box>
 
-                <br />
+                        <br />
 
-                <Box>
-                    <div className="my-2">نام باشگاه: {tags[currentClub]}</div>
-                    <div>نام سرپرست: {supervisors[currentClub]}</div>
-                </Box>
+                        <Box>
+                            <div className="my-2">نام باشگاه: {tags[currentClub]}</div>
+                            <div>نام سرپرست: {supervisors[currentClub]}</div>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12} sm={5} md={4} className="grid-item">
+                        <LastNews type='news' />
+                    </Grid>
+                </Grid>
 
                 <br />
 
             </Container>
-        </div>
+        </section>
     )
 }

@@ -69,7 +69,7 @@ export default function Footer() {
                 <br />
                 <div className='flex flex-row'>
                     <span>
-                        <span className=''>دفتر مرکزی<span style={{ color: 'red' }}>:</span></span> مازندران، آمل، کلیومتر ۵ جاده هراز، دو راهی امامزاده عبدلله
+                        <span className=''>دفتر مرکزی<span style={{ color: 'red' }}>:</span></span> مازندران، آمل، کیلومتر ۵ جاده هراز، دو راهی امامزاده عبدلله، دانشگاه شمال، ساختمان مرکز رشد و کارآفرینی و باشگاه نخبگان جوان
                     </span>
                 </div>
                 <div className='flex flex-row'>

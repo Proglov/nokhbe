@@ -1,10 +1,10 @@
 import LastNews from "@/components/events/LastNews";
 import MenuNav from "@/components/home/MenuNav";
-import { Box, Container, Grid, Typography } from "@mui/material";
+import { Box, Container, Grid } from "@mui/material";
 import Image from "next/image";
 
 export default function page() {
-    const src1 = '/img/home-main/IMG_20240128_231614_116.jpg';
+    const src1 = '/img/home-main/IMG_20240128_231605_077.jpg';
 
     return (
         <div>
@@ -13,15 +13,9 @@ export default function page() {
             </nav>
             <Grid container spacing={8} className="p-3">
                 <Grid item xs={12} sm={7} md={8} className="grid-item">
-                    <div className="mt-4 mr-4">
-                        <Typography variant="h1" sx={{ fontSize: { xs: '18px', sm: '20px', md: '22px' } }}>
-                            اعضا هیئت امنا
-                        </Typography>
-                    </div>
                     <div>
-
                         <Container>
-                            <Box className='mx-auto my-9'>
+                            <Box className='mx-auto w-100 my-9'>
                                 <Image className="mx-auto rounded-xl" src={src1} blurDataURL={'img/wait.png'} placeholder="blur" width={600} height={600} alt="Activities" />
                             </Box>
                         </Container>

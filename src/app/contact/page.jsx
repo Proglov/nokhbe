@@ -21,7 +21,10 @@ export default function page() {
                         </Typography>
                         <Typography variant="p">
                             <div className="mt-2 pt-2 sm:text-base text-sm" style={{ textAlign: 'justify' }}>
-                                دفتر مرکزی : مازندران، آمل، کیلومتر ۵ جاده هراز، دو راهی امامزاده عبدالله،دانشگاه شمال
+                                دفتر مرکزی: مازندران، آمل، کیلومتر ۵ جاده هراز، دو راهی امامزاده عبدلله، دانشگاه شمال، ساختمان مرکز رشد و کارآفرینی و باشگاه نخبگان جوان
+                            </div>
+                            <div className="mt-2 pt-2 sm:text-base text-sm" style={{ textAlign: 'justify' }}>
+                                دفتر مرکزی تهران:  خیابان کریمخان زند، بین ایرانشهر و خردمند جنوبی، پلاک
                             </div>
 
                             <div className="pt-2 sm:text-base text-sm" style={{ textAlign: 'justify' }}>
