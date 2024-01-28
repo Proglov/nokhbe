@@ -88,7 +88,7 @@ export default function MenuNav() {
                         <Divider orientation='vertical' sx={{ backgroundColor: 'white', height: '50%' }} />
 
                         <li className='text-center'>
-                            <Link href="/authentication" className="text-slate-50"> &nbsp; &nbsp;ورود &nbsp;</Link>
+                            <Link href="/authentication" className="text-slate-50"> &nbsp; &nbsp;باشگاه های تخصصی &nbsp;</Link>
                         </li>
 
                         <Divider orientation='vertical' sx={{ backgroundColor: 'white', height: '50%' }} />
@@ -176,10 +176,24 @@ export default function MenuNav() {
                                                     </Link>
                                                 </Box>
                                             </li>
-                                            <li className='py-1 px-5 sm:px-3 md:px-5 lg:px-10'>
+                                            <li className='py-1 px-5 sm:px-3 md:px-5 lg:px-10' style={{ borderBottom: '3px solid black' }}>
                                                 <Box sx={{ fontSize: { xs: '10px', sm: '15px', md: '20px', lg: '23px', paddingX: { xs: '5px', sm: '4px', md: '6px', lg: '8px' } } }} onClick={handleClose}>
                                                     <Link href='/organizational-structure/boss'>
                                                         رئیس باشگاه
+                                                    </Link>
+                                                </Box>
+                                            </li>
+                                            <li className='py-1 px-5 sm:px-3 md:px-5 lg:px-10' style={{ borderBottom: '3px solid black' }}>
+                                                <Box sx={{ fontSize: { xs: '10px', sm: '15px', md: '20px', lg: '23px', paddingX: { xs: '5px', sm: '4px', md: '6px', lg: '8px' } } }} onClick={handleClose}>
+                                                    <Link href='/organizational-structure/boss'>
+                                                        شورای راهبری
+                                                    </Link>
+                                                </Box>
+                                            </li>
+                                            <li className='py-1 px-5 sm:px-3 md:px-5 lg:px-10'>
+                                                <Box sx={{ fontSize: { xs: '10px', sm: '15px', md: '20px', lg: '23px', paddingX: { xs: '5px', sm: '4px', md: '6px', lg: '8px' } } }} onClick={handleClose}>
+                                                    <Link href='/organizational-structure/boss'>
+                                                        شورای راهبردی
                                                     </Link>
                                                 </Box>
                                             </li>
@@ -202,6 +216,12 @@ export default function MenuNav() {
                             <Link href='/contact'>
                                 تماس با ما
                             </Link>
+                        </li>
+
+                        <Divider orientation='vertical' sx={{ backgroundColor: 'white', height: '50%' }} />
+
+                        <li className='text-center'>
+                            <Link href="/authentication" className="text-slate-50"> &nbsp; &nbsp;ورود &nbsp;</Link>
                         </li>
 
                     </ul>

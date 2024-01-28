@@ -10,13 +10,13 @@ import Image from 'next/image';
 
 const items = [
     {
-        src: '/img/home-main/IMG_20231004_155303_382.jpg',
+        src: '/img/home-main/IMG_20240128_195202_440.jpg',
     },
     {
-        src: '/img/home-main/IMG_20231004_155314_303.jpg',
+        src: '/img/home-main/IMG_20240128_195205_221.jpg',
     },
     {
-        src: '/img/home-main/IMG_20231004_155321_237.jpg',
+        src: '/img/home-main/IMG_20240128_195206_989.jpg',
     },
 ];
 
