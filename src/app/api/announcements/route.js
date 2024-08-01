@@ -1,3 +1,4 @@
+import { getTrueImagesUrl } from '@/actions/image';
 import { getUser } from '@/lib/getUser'
 import prisma from '@/lib/prismaDB'
 import { NextResponse } from 'next/server'
@@ -19,7 +20,7 @@ export const POST = async (req) => {
                 telegram
             }
         })
-        return NextResponse.json(newAnnouncements);
+        return NextResponse.json(await getTrueImagesUrl(newAnnouncements));
     } catch (error) {
         return NextResponse.json({ message: "POST A NEW ANNOUNCEMENT ERROR", error }, { status: 500 })
     }
@@ -39,7 +40,7 @@ export const GET = async (req) => {
                         createdAt: 'desc'
                     }
                 })
-                return NextResponse.json(announcements);
+                return NextResponse.json(await getTrueImagesUrl(announcements));
             }
             const announcements = await prisma.announcements.findMany({
                 take: perPage,
@@ -48,7 +49,7 @@ export const GET = async (req) => {
                     createdAt: 'desc'
                 }
             })
-            return NextResponse.json(announcements);
+            return NextResponse.json(await getTrueImagesUrl(announcements));
         }
         //else:
         if (!page || !perPage) {
@@ -60,7 +61,7 @@ export const GET = async (req) => {
                     status: true
                 }
             })
-            return NextResponse.json(announcements);
+            return NextResponse.json(await getTrueImagesUrl(announcements));
         }
         const announcements = await prisma.announcements.findMany({
             take: perPage,
@@ -72,7 +73,7 @@ export const GET = async (req) => {
                 status: true
             }
         })
-        return NextResponse.json(announcements);
+        return NextResponse.json(await getTrueImagesUrl(announcements));
     } catch (error) {
         return NextResponse.json({ message: "GET ANNOUNCEMENT ERROR", error }, { status: 500 })
     }

@@ -14,9 +14,10 @@ import DOMPurify from 'dompurify'
 import { useRef, useContext } from 'react';
 import { useState } from 'react';
 import { useAdminContext } from '@/hooks/useAdminHooks';
-import { useEdgeStore } from '../../../lib/edgestore';
 import { MultiFileDropzone } from '../multi-image-dropzone';
 import { tagOptions } from '@/utils/tagsAndRoles';
+import { uploadImage } from '@/actions/image';
+
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -44,7 +45,6 @@ export default function AddNew({ type }) {
 
     const [fileStates, setFileStates] = useState([]);
     const [uploadRes, setUploadRes] = useState([]);
-    const { edgestore } = useEdgeStore();
 
     const [eventAt, setEventAt] = useState(['', '', '']);
 
@@ -184,7 +184,6 @@ export default function AddNew({ type }) {
                 error: ''
             })), 5000);
         } else if (type === "events" && eventAt[2] < 1395) {
-            console.log(eventAt)
             setAddNewData(prevProps => ({
                 ...prevProps,
                 error: "سال رویداد نمیتواند کمتر از 1395 باشد",
@@ -195,29 +194,25 @@ export default function AddNew({ type }) {
                 error: ''
             })), 5000);
         } else {
-            const imagesURL = [];
-            for (const obj of uploadRes) {
-                const url = obj.url
-                imagesURL.push(url)
-                await edgestore.myPublicImages.confirmUpload({
-                    url
-                })
-            }
+
             let newBody = {};
+
             if (type === "events") {
                 const day = eventAt[0] < 10 ? '0' + eventAt[0] : eventAt[0];
                 const month = eventAt[1] < 10 ? '0' + eventAt[1] : eventAt[1];
                 newBody.eventAt = eventAt[2] + '-' + month + '-' + day
             }
+
             newBody = {
                 ...newBody,
                 "title": AddNewData.formData.title,
                 "description": DOMPurify.sanitize(AddNewData.formData.quillValue),
-                "imagesURL": imagesURL,
+                "imagesURL": uploadRes,
                 "tags": AddNewData.formData.tags,
                 "createdBy": "ADMIN",
                 "telegram": AddNewData.formData.telegram
             }
+
             fetch(`/api/${type}`, {
                 headers: { 'Content-Type': 'application/json' },
                 method: 'POST',
@@ -270,7 +265,7 @@ export default function AddNew({ type }) {
                                         id: data?.id,
                                         title: AddNewData.formData.title,
                                         description: DOMPurify.sanitize(AddNewData.formData.quillValue),
-                                        imagesURL,
+                                        imagesURL: data?.imagesURL,
                                         tags: AddNewData.formData.tags,
                                         createdBy: "ADMIN",
                                         views: 0,
@@ -293,7 +288,7 @@ export default function AddNew({ type }) {
                                         id: data?.id,
                                         title: AddNewData.formData.title,
                                         description: DOMPurify.sanitize(AddNewData.formData.quillValue),
-                                        imagesURL,
+                                        imagesURL: data?.imagesURL,
                                         tags: AddNewData.formData.tags,
                                         createdBy: "ADMIN",
                                         views: 0,
@@ -315,7 +310,7 @@ export default function AddNew({ type }) {
                                         id: data?.id,
                                         title: AddNewData.formData.title,
                                         description: DOMPurify.sanitize(AddNewData.formData.quillValue),
-                                        imagesURL,
+                                        imagesURL: data?.imagesURL,
                                         tags: AddNewData.formData.tags,
                                         createdBy: "ADMIN",
                                         views: 0,
@@ -414,31 +409,26 @@ export default function AddNew({ type }) {
                                 setFileStates(files);
                             }}
                             onFilesAdded={async (addedFiles) => {
-                                setFileStates([...fileStates, ...addedFiles]);
+                                setFileStates(prev => [...prev, ...addedFiles]);
                                 await Promise.all(
                                     addedFiles.map(async (addedFileState) => {
                                         try {
-                                            const res = await edgestore.myPublicImages.upload({
-                                                file: addedFileState.file,
-                                                options: {
-                                                    temporary: true
-                                                },
-                                                onProgressChange: async (progress) => {
-                                                    updateFileProgress(addedFileState.key, progress);
-                                                    if (progress === 100) {
-                                                        // wait 1 second to set it to complete
-                                                        // so that the user can see the progress bar at 100%
-                                                        await new Promise((resolve) => setTimeout(resolve, 1000));
-                                                        updateFileProgress(addedFileState.key, 'COMPLETE');
-                                                    }
-                                                },
-                                            });
+
+                                            //Add an animation
+                                            let temp = 0;
+                                            const interval = setInterval(() => {
+                                                updateFileProgress(addedFileState.key, temp);
+                                                if (++temp === 50) clearInterval(interval)
+                                            }, 10);
+
+                                            const formDate = new FormData()
+                                            formDate.append("images", addedFileState.file)
+                                            const res = await uploadImage(formDate);
+                                            if (interval) clearInterval(interval)
+                                            updateFileProgress(addedFileState.key, 'COMPLETE');
                                             setUploadRes((uploadRes) => [
                                                 ...uploadRes,
-                                                {
-                                                    url: res.url,
-                                                    filename: addedFileState.file.name,
-                                                },
+                                                res?.name
                                             ]);
                                         } catch (err) {
                                             updateFileProgress(addedFileState.key, 'ERROR');

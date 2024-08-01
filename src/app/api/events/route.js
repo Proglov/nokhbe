@@ -1,3 +1,4 @@
+import { getTrueImagesUrl } from '@/actions/image';
 import { getUser } from '@/lib/getUser';
 import prisma from '@/lib/prismaDB'
 import { NextResponse } from 'next/server'
@@ -40,7 +41,7 @@ export const GET = async (req) => {
                         createdAt: 'desc'
                     }
                 })
-                return NextResponse.json(events);
+                return NextResponse.json(await getTrueImagesUrl(events));
             }
             const events = await prisma.events.findMany({
                 take: perPage,
@@ -49,7 +50,7 @@ export const GET = async (req) => {
                     createdAt: 'desc'
                 }
             })
-            return NextResponse.json(events);
+            return NextResponse.json(await getTrueImagesUrl(events));
         }
         //else:
         if (!page || !perPage) {
@@ -61,7 +62,7 @@ export const GET = async (req) => {
                     status: true
                 }
             })
-            return NextResponse.json(events);
+            return NextResponse.json(await getTrueImagesUrl(events));
         }
         const events = await prisma.events.findMany({
             take: perPage,
@@ -73,7 +74,7 @@ export const GET = async (req) => {
                 status: true
             }
         })
-        return NextResponse.json(events);
+        return NextResponse.json(await getTrueImagesUrl(events));
     } catch (error) {
         return NextResponse.json({ message: "GET EVENT ERROR", error }, { status: 500 })
     }

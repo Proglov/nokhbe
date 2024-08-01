@@ -16,7 +16,7 @@ import ModalConfirm from './ModalConfirm';
 import ModalDelete from './ModalDelete';
 import ModalEdit from './ModalEdit';
 import { useAdminContext } from '@/hooks/useAdminHooks';
-import { useEdgeStore } from '@/lib/edgestore';
+import { deleteImages, getImages } from '@/actions/image';
 
 export const NewsContext = createContext();
 export const ModalConfirmContext = createContext();
@@ -46,7 +46,6 @@ export default function InfoPage({ type }) {
     const [imagesToDelete, setImagesToDelete] = useState([]);
     const [fileStates, setFileStates] = useState([]);
     const [uploadRes, setUploadRes] = useState([]);
-    const { edgestore } = useEdgeStore();
     const { infoItems, setInfoItems, currentInfoPage, setCurrentInfoPage, lastInfoTablePageNumber, setLastInfoTablePageNumber, infoItemsPerPage, setStaticProps } = useContext(useAdminContext)
     const [isModalConfirmOpen, setIsModalConfirmOpen] = useState(false);
     const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
@@ -113,39 +112,25 @@ export default function InfoPage({ type }) {
         setOperatingID(obj.id);
         setIsModalEditOpen(false);
 
-        //confirm the new pics in edgestore
-        const imagesURL = [];
-        for (const obj of uploadRes) {
-            const url = obj.url
-            imagesURL.push(url)
-            await edgestore.myPublicImages.confirmUpload({
-                url
-            })
+        //delete images
+        if (imagesToDelete.length !== 0)
+            await deleteImages(imagesToDelete)
+
+        let newImagesName = [];
+        if (obj.imagesName) {
+            newImagesName = [...obj.imagesName];
+        }
+        if (uploadRes) {
+            newImagesName = [...newImagesName, ...uploadRes];
         }
 
         //add new pics to mongodb
         const augmentedObj = {
             ...obj,
-            imagesURL: [...obj.imagesURL, ...imagesURL]
+            imagesURL: newImagesName
         }
 
-        //add the added images to the frontend
-        setInfoItems(prev => {
-            return prev.map(item => {
-                if (item.id === obj.id) {
-                    return {
-                        ...item,
-                        imagesURL: augmentedObj.imagesURL
-                    }
-                }
-                return item
-            })
-        })
-
-        //delete the imagesToDelete
-        for (const url of imagesToDelete) {
-            await edgestore.myPublicImages.delete({ url });
-        }
+        const newImagesUrl = (await getImages(newImagesName)).urls
 
         fetch(`/api/${type}/${obj.id}`, {
             headers: { 'Content-Type': 'application/json' },
@@ -163,14 +148,18 @@ export default function InfoPage({ type }) {
                 if (data?.error?.name === "PrismaClientKnownRequestError") {
                     setOperatingError(data?.message + ' ; ' + data?.error?.meta?.message)
                 } else {
-                    setInfoItems((prevItems) =>
-                        prevItems.map((item) => {
+                    //add the added images to the frontend
+                    setInfoItems(prev => {
+                        return prev.map(item => {
                             if (item.id === obj.id) {
-                                return { ...item, ...obj };
+                                return {
+                                    ...augmentedObj,
+                                    imagesURL: newImagesUrl
+                                }
                             }
-                            return item;
+                            return item
                         })
-                    );
+                    })
                     setFileStates([]);
                     setImagesToDelete([]);
                     setUploadRes([]);
@@ -235,17 +224,6 @@ export default function InfoPage({ type }) {
 
     const deleteItem = (id) => {
         setOperatingID(id);
-
-        //delete image from edgestore
-        infoItems.map(async (item) => {
-            if (item.id === id && item.imagesURL.length !== 0) {
-                for (let i = 0; i < item.imagesURL.length; i++) {
-                    const imageRes = await edgestore.myPublicImages.delete({
-                        url: item.imagesURL[i]
-                    });
-                }
-            }
-        })
 
         fetch(`/api/${type}/${id}`, { method: 'DELETE' })
             .then((response) => {
@@ -432,7 +410,8 @@ export default function InfoPage({ type }) {
                 updateFileProgress,
                 editItem,
                 type,
-                setImagesToDelete
+                setImagesToDelete,
+                imagesToDelete
             }}>
                 <ModalEdit />
             </ModalEditContext.Provider>

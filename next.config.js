@@ -8,7 +8,7 @@ const nextConfig = {
                 port: '3000',
             },
             {
-                hostname: 'files.edgestore.dev'
+                hostname: 'nokhbe-images.storage.c2.liara.space'
             }
         ],
     },

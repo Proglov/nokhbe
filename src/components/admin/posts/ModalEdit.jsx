@@ -19,7 +19,7 @@ import { ModalEditContext } from './InfoPage';
 import Image from 'next/image';
 import { MultiFileDropzone } from '../multi-image-dropzone';
 import { tags as tagOptions } from '@/utils/tagsAndRoles'
-import { useEdgeStore } from '../../../lib/edgestore';
+import { uploadImage } from '@/actions/image';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -56,7 +56,7 @@ const ModalStyle = {
 
 export default function ModalEdit() {
     const { isModalEditOpen, setIsModalEditOpen, type, selectedItem, setSelectedItem, fileStates,
-        setFileStates, setUploadRes, updateFileProgress, editItem, setImagesToDelete } = useContext(ModalEditContext)
+        setFileStates, setUploadRes, updateFileProgress, editItem, setImagesToDelete, imagesToDelete } = useContext(ModalEditContext)
 
     let dd = '', mm = '', yy = '';
     if (selectedItem?.eventAt) {
@@ -67,7 +67,6 @@ export default function ModalEdit() {
 
     const theme = useTheme();
     const checkBoxRef = useRef();
-    const { edgestore } = useEdgeStore();
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -348,13 +347,17 @@ export default function ModalEdit() {
 
                                                             <Button variant='outlined' color='error' className='mt-1 mb-4 w-full'
                                                                 onClick={() => {
-                                                                    setImagesToDelete(prev => [
-                                                                        ...prev,
-                                                                        url
-                                                                    ]);
+                                                                    const idx = imagesToDelete.findIndex((item) => item === selectedItem?.imagesName[i])
+                                                                    if (idx === -1) {
+                                                                        setImagesToDelete(prev => [
+                                                                            ...prev,
+                                                                            selectedItem?.imagesName[i]
+                                                                        ]);
+                                                                    }
                                                                     setSelectedItem(prev => ({
                                                                         ...prev,
-                                                                        imagesURL: prev.imagesURL.filter(theUrl => theUrl !== url)
+                                                                        imagesURL: prev?.imagesURL?.filter(theUrl => theUrl !== url),
+                                                                        imagesName: prev?.imagesName?.filter(theUrl => theUrl !== selectedItem?.imagesName[i]),
                                                                     }))
                                                                 }}
                                                             >
@@ -383,31 +386,26 @@ export default function ModalEdit() {
                                                 setFileStates(files);
                                             }}
                                             onFilesAdded={async (addedFiles) => {
-                                                setFileStates([...fileStates, ...addedFiles]);
+                                                setFileStates(prev => [...prev, ...addedFiles]);
                                                 await Promise.all(
                                                     addedFiles.map(async (addedFileState) => {
                                                         try {
-                                                            const res = await edgestore.myPublicImages.upload({
-                                                                file: addedFileState.file,
-                                                                options: {
-                                                                    temporary: true
-                                                                },
-                                                                onProgressChange: async (progress) => {
-                                                                    updateFileProgress(addedFileState.key, progress);
-                                                                    if (progress === 100) {
-                                                                        // wait 1 second to set it to complete
-                                                                        // so that the user can see the progress bar at 100%
-                                                                        await new Promise((resolve) => setTimeout(resolve, 1000));
-                                                                        updateFileProgress(addedFileState.key, 'COMPLETE');
-                                                                    }
-                                                                },
-                                                            });
+
+                                                            //Add an animation
+                                                            let temp = 0;
+                                                            const interval = setInterval(() => {
+                                                                updateFileProgress(addedFileState.key, temp);
+                                                                if (++temp === 50) clearInterval(interval)
+                                                            }, 10);
+
+                                                            const formDate = new FormData()
+                                                            formDate.append("images", addedFileState.file)
+                                                            const res = await uploadImage(formDate);
+                                                            if (interval) clearInterval(interval)
+                                                            updateFileProgress(addedFileState.key, 'COMPLETE');
                                                             setUploadRes((uploadRes) => [
                                                                 ...uploadRes,
-                                                                {
-                                                                    url: res.url,
-                                                                    filename: addedFileState.file.name,
-                                                                },
+                                                                res?.name
                                                             ]);
                                                         } catch (err) {
                                                             updateFileProgress(addedFileState.key, 'ERROR');

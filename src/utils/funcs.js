@@ -149,3 +149,31 @@ export const convertEventAt = str => { // 1402-02-25
     for (let i = 8; i < 10; i++) day += str[i];
     return [yr, month, day]
 }
+
+export const encString = str => {
+    if (typeof str !== "string") return null
+    let res = []
+    for (let i = 0; i < str.length; i++) {
+        if (i % 2 === 0) {
+            res[i + 1] = str[i]
+        } else {
+            res[i - 1] = str[i]
+        }
+    }
+    return res.join("")
+}
+
+export const extractIdFromFilename = str => {
+    if (typeof str !== "string") return null
+    let res = []
+    for (let i = 0; i < str.length; i++) {
+        if (str[i] === "_") {
+            for (let j = i + 1; j < str.length; j++) {
+                if (str[j] === "_") break
+                res.push(str[j])
+            }
+            break
+        }
+    }
+    return encString(res.join(""))
+}
