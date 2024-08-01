@@ -177,3 +177,7 @@ export const extractIdFromFilename = str => {
     }
     return encString(res.join(""))
 }
+
+export const capitalizeFirstLetter = str => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}

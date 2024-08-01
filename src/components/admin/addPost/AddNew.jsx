@@ -17,6 +17,7 @@ import { useAdminContext } from '@/hooks/useAdminHooks';
 import { MultiFileDropzone } from '../multi-image-dropzone';
 import { tagOptions } from '@/utils/tagsAndRoles';
 import { uploadImage } from '@/actions/image';
+import { capitalizeFirstLetter } from '@/utils/funcs';
 
 
 const ITEM_HEIGHT = 48;
@@ -253,74 +254,23 @@ export default function AddNew({ type }) {
                         })), 5000);
 
                         // Add new negative status in statics
-                        if (type === 'news') {
-                            setStaticProps(prevProps => ({
-                                ...prevProps, newsCount: prevProps.newsCount + 1,
-                                negativeStatusNewsCount: prevProps.negativeStatusNewsCount + 1
-                            }));
+                        setStaticProps(prevProps => ({
+                            ...prevProps,
+                            [`${type}Count`]: prevProps[`${type}Count`] + 1,
+                            [`negativeStatus${capitalizeFirstLetter(type)}Count`]: prevProps[`negativeStatus${capitalizeFirstLetter(type)}Count`] + 1
+                        }));
 
-                            if (currentInfoPage === 1 && controlPanelsPage === 0) {
-                                setInfoItems(prevItems => {
-                                    return [{
-                                        id: data?.id,
-                                        title: AddNewData.formData.title,
-                                        description: DOMPurify.sanitize(AddNewData.formData.quillValue),
-                                        imagesURL: data?.imagesURL,
-                                        tags: AddNewData.formData.tags,
-                                        createdBy: "ADMIN",
-                                        views: 0,
-                                        telegram: AddNewData.formData.telegram,
-                                        createdAt: new Date()
-                                    },
-                                    ...prevItems]
-                                })
-                            }
+                        newBody.id = data?.id
+                        newBody.imagesURL = data?.imagesURL
+                        newBody.imagesName = data?.imagesName
+                        newBody.views = 0
+                        newBody.createdAt = data.createdAt
 
-                        } else if (type === 'events') {
-                            setStaticProps(prevProps => ({
-                                ...prevProps, eventsCount: prevProps.eventsCount + 1,
-                                negativeStatusEventsCount: prevProps.negativeStatusEventsCount + 1
-                            }));
-
-                            if (currentInfoPage === 1 && controlPanelsPage === 2) {
-                                setInfoItems(prevItems => {
-                                    return [{
-                                        id: data?.id,
-                                        title: AddNewData.formData.title,
-                                        description: DOMPurify.sanitize(AddNewData.formData.quillValue),
-                                        imagesURL: data?.imagesURL,
-                                        tags: AddNewData.formData.tags,
-                                        createdBy: "ADMIN",
-                                        views: 0,
-                                        telegram: AddNewData.formData.telegram,
-                                        createdAt: new Date()
-                                    },
-                                    ...prevItems]
-                                })
-                            }
-                        } else {
-                            setStaticProps(prevProps => ({
-                                ...prevProps, announcementsCount: prevProps.announcementsCount + 1,
-                                negativeStatusAnnouncementsCount: prevProps.negativeStatusAnnouncementsCount + 1,
-                            }));
-
-                            if (currentInfoPage === 1 && controlPanelsPage === 1) {
-                                setInfoItems(prevItems => {
-                                    return [{
-                                        id: data?.id,
-                                        title: AddNewData.formData.title,
-                                        description: DOMPurify.sanitize(AddNewData.formData.quillValue),
-                                        imagesURL: data?.imagesURL,
-                                        tags: AddNewData.formData.tags,
-                                        createdBy: "ADMIN",
-                                        views: 0,
-                                        telegram: AddNewData.formData.telegram,
-                                        createdAt: new Date()
-                                    },
-                                    ...prevItems]
-                                })
-                            }
+                        if (currentInfoPage === 1) {
+                            setInfoItems(prevItems => { return [newBody, ...prevItems] })
                         }
+
+                        type === 'events' && setEventAt(['', '', ''])
                     }
                 })
                 .catch((err) => {

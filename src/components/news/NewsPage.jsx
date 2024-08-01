@@ -21,16 +21,6 @@ export default function NewsPage({ type }) {
 
     useEffect(() => {
         setLoading(true);
-        // it should consider the status
-        fetch(`api/${type}/count`, { cache: 'no-store' })
-            .then((response) => response.json())
-            .then((data) => {
-                setLastPageNumber(Math.ceil(data.count / itemsPerPage));
-            })
-            .catch((err) => {
-                setIsError(true);
-                setError(err);
-            });
         fetch(`api/${type}?page=${currentPage}&perPage=${itemsPerPage}&justPositiveStatus=true`, { cache: 'no-store' })
             .then((response) => {
                 if (!response.ok) {
@@ -41,7 +31,8 @@ export default function NewsPage({ type }) {
             .then((data) => {
                 if (data === undefined)
                     throw new Error('لطفا اتصال اینترنت خود را بررسی کنید')
-                setItems(data);
+                setItems(data[type]);
+                setLastPageNumber(Math.ceil(data.count / itemsPerPage));
                 setLoading(false);
             })
             .catch((err) => {

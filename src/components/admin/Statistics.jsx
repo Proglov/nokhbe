@@ -7,70 +7,43 @@ import TableRow from '@mui/material/TableRow';
 import { useEffect, useContext } from 'react';
 import { useAdminContext } from '@/hooks/useAdminHooks';
 import { Grid } from '@mui/material';
+import { capitalizeFirstLetter } from '@/utils/funcs';
 
 
 export default function Statistics() {
     const { staticProps, setStaticProps } = useContext(useAdminContext)
     const fontClassName = "sm:text-sm text-xs md:text-base";
 
-    useEffect(() => {
-        setStaticProps(prevProps => ({ ...prevProps, loadingNews: true }));
-        fetch(`/api/news/count`, { cache: 'no-store' })
+    const commonFunction = type => {
+        setStaticProps(prevProps => ({ ...prevProps, [`loading${capitalizeFirstLetter(type)}`]: true }));
+        fetch(`/api/${type}?onlyCount=true&addNegativeStatusCount=true`, { cache: 'no-store' })
             .then(response => response.json())
             .then(data => {
                 setStaticProps(prevProps => ({
                     ...prevProps,
-                    loadingNews: false,
-                    newsCount: data.count,
-                    negativeStatusNewsCount: data.negativeStatus
+                    [`loading${capitalizeFirstLetter(type)}`]: false,
+                    [`${type}Count`]: data.count,
+                    [`negativeStatus${capitalizeFirstLetter(type)}Count`]: data.negativeStatusCount
                 }));
             }).catch(err => {
                 setStaticProps(prevProps => ({
                     ...prevProps,
-                    isErrorNews: true,
-                    errorNews: err
+                    [`isError${capitalizeFirstLetter(type)}`]: true,
+                    [`error${capitalizeFirstLetter(type)}`]: err
                 }));
             });
+    }
+
+    useEffect(() => {
+        commonFunction('news')
     }, [staticProps.newsCount, setStaticProps]);
 
     useEffect(() => {
-        setStaticProps(prevProps => ({ ...prevProps, loadingEvents: true }));
-        fetch(`/api/events/count`, { cache: 'no-store' })
-            .then(response => response.json())
-            .then(data => {
-                setStaticProps(prevProps => ({
-                    ...prevProps,
-                    loadingEvents: false,
-                    eventsCount: data.count,
-                    negativeStatusEventsCount: data.negativeStatus
-                }));
-            }).catch(err => {
-                setStaticProps(prevProps => ({
-                    ...prevProps,
-                    isErrorEvents: true,
-                    errorEvents: err
-                }));
-            });
+        commonFunction('events')
     }, [staticProps.eventsCount, setStaticProps]);
 
     useEffect(() => {
-        setStaticProps(prevProps => ({ ...prevProps, loadingAnnouncements: true }));
-        fetch(`/api/announcements/count`, { cache: 'no-store' })
-            .then(response => response.json())
-            .then(data => {
-                setStaticProps(prevProps => ({
-                    ...prevProps,
-                    loadingAnnouncements: false,
-                    announcementsCount: data.count,
-                    negativeStatusAnnouncementsCount: data.negativeStatus
-                }));
-            }).catch(err => {
-                setStaticProps(prevProps => ({
-                    ...prevProps,
-                    isErrorAnnouncements: true,
-                    errorAnnouncements: err
-                }));
-            });
+        commonFunction('announcements')
     }, [staticProps.announcementsCount, setStaticProps]);
 
     return (

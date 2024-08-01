@@ -12,7 +12,7 @@ export default function LastNews({ type }) {
 
     useEffect(() => {
         setLoading(true);
-        fetch(`/api/${type}?page=1&perPage=20&justPositiveStatus=true`, { cache: 'no-store' })
+        fetch(`/api/${type}?page=1&perPage=20&justPositiveStatus=true&withoutCount=true`, { cache: 'no-store' })
             .then((response) => {
                 if (!response.ok) {
                     throw new Error('لطفا اتصال اینترنت خود را بررسی کنید');
@@ -22,7 +22,7 @@ export default function LastNews({ type }) {
             .then((data) => {
                 if (data === undefined)
                     throw new Error('لطفا اتصال اینترنت خود را بررسی کنید')
-                setItems(data);
+                setItems(data[type]);
                 setLoading(false);
             })
             .catch((err) => {

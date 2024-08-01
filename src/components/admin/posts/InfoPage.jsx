@@ -79,15 +79,6 @@ export default function InfoPage({ type }) {
 
     useEffect(() => {
         setLoading(true);
-        fetch(`/api/${type}/count`, { cache: 'no-store' })
-            .then((response) => response.json())
-            .then((data) => {
-                setLastInfoTablePageNumber(Math.ceil(data.count / infoItemsPerPage));
-            })
-            .catch((err) => {
-                setIsError(true);
-                setError(err);
-            });
         fetch(`/api/${type}?page=${currentInfoPage}&perPage=${infoItemsPerPage}`, { cache: 'no-store' })
             .then((response) => {
                 if (!response.ok) {
@@ -98,7 +89,8 @@ export default function InfoPage({ type }) {
             .then((data) => {
                 if (data === undefined)
                     throw new Error('لطفا اتصال اینترنت خود را بررسی کنید')
-                setInfoItems(data);
+                setInfoItems(data[type]);
+                setLastInfoTablePageNumber(Math.ceil(data.count / infoItemsPerPage));
                 setLoading(false);
             })
             .catch((err) => {
