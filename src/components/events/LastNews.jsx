@@ -30,7 +30,7 @@ export default function LastNews({ type }) {
                 setIsError(true);
                 setLoading(false);
             });
-    }, []);
+    }, [type]);
 
     return (
         <>

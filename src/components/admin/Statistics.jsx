@@ -31,7 +31,7 @@ export default function Statistics() {
                     errorNews: err
                 }));
             });
-    }, [staticProps.newsCount]);
+    }, [staticProps.newsCount, setStaticProps]);
 
     useEffect(() => {
         setStaticProps(prevProps => ({ ...prevProps, loadingEvents: true }));
@@ -51,7 +51,7 @@ export default function Statistics() {
                     errorEvents: err
                 }));
             });
-    }, [staticProps.eventsCount]);
+    }, [staticProps.eventsCount, setStaticProps]);
 
     useEffect(() => {
         setStaticProps(prevProps => ({ ...prevProps, loadingAnnouncements: true }));
@@ -71,7 +71,7 @@ export default function Statistics() {
                     errorAnnouncements: err
                 }));
             });
-    }, [staticProps.announcementsCount]);
+    }, [staticProps.announcementsCount, setStaticProps]);
 
     return (
         <Grid container className='bg-green-500 mr-5 pl-4' sx={{ borderTopRightRadius: '20px', borderBottomRightRadius: '20px' }}>

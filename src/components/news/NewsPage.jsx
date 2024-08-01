@@ -49,7 +49,7 @@ export default function NewsPage({ type }) {
                 setIsError(true);
                 setLoading(false);
             });
-    }, [currentPage]);
+    }, [currentPage, type]);
 
     return (
         <Stack spacing={2} className='mt-5'>

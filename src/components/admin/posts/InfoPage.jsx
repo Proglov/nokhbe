@@ -106,7 +106,7 @@ export default function InfoPage({ type }) {
                 setIsError(true);
                 setLoading(false);
             });
-    }, [currentInfoPage]);
+    }, [currentInfoPage, infoItemsPerPage, setInfoItems, setLastInfoTablePageNumber, type]);
 
     const editItem = async (obj) => {
         setOperatingID(obj.id);
