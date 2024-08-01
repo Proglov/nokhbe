@@ -22,7 +22,7 @@ export default function News() {
             .then((data) => {
                 if (data === undefined)
                     throw new Error('لطفا اتصال اینترنت خود را بررسی کنید')
-                setNews(data)
+                setNews(data?.news)
             })
             .catch((err) => {
                 setError(err);

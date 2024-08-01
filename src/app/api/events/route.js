@@ -1,6 +1,7 @@
 import { getTrueImagesUrl } from '@/actions/image';
 import { getUser } from '@/lib/getUser';
 import prisma from '@/lib/prismaDB'
+import { getParams, getQueries } from '@/utils/APIUtilities';
 import { NextResponse } from 'next/server'
 
 export const POST = async (req) => {
@@ -28,53 +29,16 @@ export const POST = async (req) => {
 }
 
 export const GET = async (req) => {
-    const serarch = new URL(req.url).search;
-    const params = new URLSearchParams(serarch)
-    const page = parseInt(params.get("page"))
-    const perPage = parseInt(params.get("perPage"))
-    const justPositiveStatus = params.get("justPositiveStatus")
     try {
-        if (!justPositiveStatus || justPositiveStatus === "false") {
-            if (!page || !perPage) {
-                const events = await prisma.events.findMany({
-                    orderBy: {
-                        createdAt: 'desc'
-                    }
-                })
-                return NextResponse.json(await getTrueImagesUrl(events));
-            }
-            const events = await prisma.events.findMany({
-                take: perPage,
-                skip: perPage * (page - 1),
-                orderBy: {
-                    createdAt: 'desc'
-                }
-            })
-            return NextResponse.json(await getTrueImagesUrl(events));
-        }
-        //else:
-        if (!page || !perPage) {
-            const events = await prisma.events.findMany({
-                orderBy: {
-                    createdAt: 'desc'
-                },
-                where: {
-                    status: true
-                }
-            })
-            return NextResponse.json(await getTrueImagesUrl(events));
-        }
-        const events = await prisma.events.findMany({
-            take: perPage,
-            skip: perPage * (page - 1),
-            orderBy: {
-                createdAt: 'desc'
-            },
-            where: {
-                status: true
-            }
-        })
-        return NextResponse.json(await getTrueImagesUrl(events));
+        const { page, perPage, justPositiveStatus } = getParams(req.url)
+        const { queryObj, countObj } = getQueries(page, perPage, justPositiveStatus)
+
+        const events = await prisma.events.findMany(queryObj)
+        const count = await prisma.events.count(countObj);
+
+        const eventsWithTrueImages = await getTrueImagesUrl(events)
+
+        return NextResponse.json({ events: eventsWithTrueImages, count });
     } catch (error) {
         return NextResponse.json({ message: "GET EVENT ERROR", error }, { status: 500 })
     }

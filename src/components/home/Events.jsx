@@ -22,7 +22,7 @@ export default function Events() {
             .then((data) => {
                 if (data === undefined)
                     throw new Error('!لطفا اتصال اینترنت خود را بررسی کنید')
-                setEvents(data)
+                setEvents(data?.events)
             })
             .catch((err) => {
                 setError(err);

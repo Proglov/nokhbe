@@ -1,6 +1,7 @@
 import { getTrueImagesUrl } from '@/actions/image';
 import { getUser } from '@/lib/getUser'
 import prisma from '@/lib/prismaDB'
+import { getParams, getQueries } from '@/utils/APIUtilities';
 import { NextResponse } from 'next/server'
 
 export const POST = async (req) => {
@@ -27,53 +28,16 @@ export const POST = async (req) => {
 }
 
 export const GET = async (req) => {
-    const serarch = new URL(req.url).search;
-    const params = new URLSearchParams(serarch)
-    const page = parseInt(params.get("page"))
-    const perPage = parseInt(params.get("perPage"))
-    const justPositiveStatus = params.get("justPositiveStatus")
     try {
-        if (!justPositiveStatus || justPositiveStatus === "false") {
-            if (!page || !perPage) {
-                const announcements = await prisma.announcements.findMany({
-                    orderBy: {
-                        createdAt: 'desc'
-                    }
-                })
-                return NextResponse.json(await getTrueImagesUrl(announcements));
-            }
-            const announcements = await prisma.announcements.findMany({
-                take: perPage,
-                skip: perPage * (page - 1),
-                orderBy: {
-                    createdAt: 'desc'
-                }
-            })
-            return NextResponse.json(await getTrueImagesUrl(announcements));
-        }
-        //else:
-        if (!page || !perPage) {
-            const announcements = await prisma.announcements.findMany({
-                orderBy: {
-                    createdAt: 'desc'
-                },
-                where: {
-                    status: true
-                }
-            })
-            return NextResponse.json(await getTrueImagesUrl(announcements));
-        }
-        const announcements = await prisma.announcements.findMany({
-            take: perPage,
-            skip: perPage * (page - 1),
-            orderBy: {
-                createdAt: 'desc'
-            },
-            where: {
-                status: true
-            }
-        })
-        return NextResponse.json(await getTrueImagesUrl(announcements));
+        const { page, perPage, justPositiveStatus } = getParams(req.url)
+        const { queryObj, countObj } = getQueries(page, perPage, justPositiveStatus)
+
+        const announcements = await prisma.announcements.findMany(queryObj)
+        const count = await prisma.announcements.count(countObj);
+
+        const announcementsWithTrueImages = await getTrueImagesUrl(announcements)
+
+        return NextResponse.json({ announcements: announcementsWithTrueImages, count });
     } catch (error) {
         return NextResponse.json({ message: "GET ANNOUNCEMENT ERROR", error }, { status: 500 })
     }

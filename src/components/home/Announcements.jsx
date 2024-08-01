@@ -21,7 +21,7 @@ export default function Announcements() {
             .then((data) => {
                 if (data === undefined)
                     throw new Error('لطفا اتصال اینترنت خود را بررسی کنید')
-                setAnnouncements(data)
+                setAnnouncements(data?.announcements)
             })
             .catch((err) => {
                 setError(err);
