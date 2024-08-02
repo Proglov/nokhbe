@@ -8,7 +8,7 @@ import { useContext } from 'react';
 import { Button } from '@mui/material';
 import { ModalConfirmContext } from './InfoPage';
 import Image from 'next/image';
-import IdPageSwiper from "@/components/news/IdPageSwiper"
+import HomeSwiper from '@/components/home/HomeSwiper';
 
 const ModalStyle = {
     position: 'absolute',
@@ -135,7 +135,7 @@ export default function ModalConfirm({ type, id, title, description, imagesURL, 
                                                 width={200}
                                                 height={200} />
                                         </div>
-                                        : <div><IdPageSwiper items={imagesURL} /></div>
+                                        : <div><HomeSwiper sources={imagesURL} /></div>
                                     : <div className='text-sm text-red-400'>تصویری موجود نمیباشد</div>
                             }
 

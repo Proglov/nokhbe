@@ -172,16 +172,16 @@ const MultiFileDropzone = React.forwardRef(
                                             <Trash2Icon className="shrink-0" />
                                         </button>
                                     ) : progress === 'ERROR' ? (
-                                        <LucideFileWarning className="shrink-0 text-red-600" />
+                                        <LucideFileWarning className="shrink-0 text-red-400" />
                                     ) : progress !== 'COMPLETE' ? (
                                         <div>...</div>
                                     ) : (
-                                        <CheckCircleIcon className="shrink-0 text-green-600" />
+                                        <CheckCircleIcon className="shrink-0 text-green-300" />
                                     )}
                                 </div>
                             </div>
                             {typeof progress === 'number' && (
-                                <div className='text-gray-500 text-sm'>
+                                <div className='text-slate-50 text-sm text-center'>
                                     درحال ارسال ...
                                 </div>
                             )}

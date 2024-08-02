@@ -1,24 +1,24 @@
 import { Grid } from "@mui/material";
 import Image from "next/image";
 import { AiOutlineCalendar } from "react-icons/ai";
-import IdPageSwiper from "@/components/news/IdPageSwiper"
 import { dateInFarsi } from "@/utils/funcs";
+import HomeSwiper from "@/components/home/HomeSwiper";
 
 export default function NewsTop({ src, date, title, desc, showMore }) {
     return (
         <Grid container spacing={2} className="p-3" sx={{ alignItems: 'center' }}>
             <Grid item xs={12} md={10} lg={8} className="mt-2 mx-auto">
                 {
-                    showMore && src?.length > 1 &&
-                    <IdPageSwiper items={src} />
-                }
-                {
-                    (showMore && src.length === 1) &&
-                    <Image src={src[0]} className='rounded-md' blurDataURL={'img/wait.png'} placeholder="blur" alt={title} width={1960} height={1080} />
+                    showMore && (
+                        src?.length > 1 ?
+                            <HomeSwiper sources={src} />
+                            :
+                            <Image src={src[0] || '/img/no-pic.png'} className='rounded-md' blurDataURL={'img/wait.png'} placeholder="blur" alt={title} width={1960} height={1080} />
+                    )
                 }
                 {
                     !showMore &&
-                    <Image src={src} className='rounded-md' blurDataURL={'img/wait.png'} placeholder="blur" alt={title} width={1960} height={1080} />
+                    <Image src={src[0] || '/img/no-pic.png'} className='rounded-md' blurDataURL={'img/wait.png'} placeholder="blur" alt={title} width={1960} height={1080} />
                 }
             </Grid>
             <Grid item xs={12} md={10} lg={8} className="mt-2 mx-auto" sx={{ fontSize: { sm: '12px', md: '18px' } }}>

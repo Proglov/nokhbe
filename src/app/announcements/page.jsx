@@ -1,10 +1,10 @@
-import Slider from '../../components/events/Slider'
+import HomeSwiper from '@/components/home/HomeSwiper'
 import NewsPage from '@/components/news/NewsPage'
 
-export default function Page() {
+export default function Announcements() {
     return (
         <>
-            <Slider />
+            <HomeSwiper />
             <NewsPage type='announcements' />
         </>
     )
