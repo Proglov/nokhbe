@@ -10,6 +10,7 @@ import { getServerSession } from 'next-auth';
 import { NextAuthOptions } from '@/lib/NextAuthOptions';
 import ButtonSignOut from './ButtonSignOut';
 import Link from 'next/link';
+import NavbarCalendar from './NavbarCalendar';
 
 const Navbar = async () => {
     const session = await getServerSession(NextAuthOptions);
@@ -65,12 +66,7 @@ const Navbar = async () => {
                         </>
 
 
-                        <>
-                            <Typography sx={{ display: 'flex', alignItems: 'center', backgroundColor: ' #ffffff ', borderRadius: '15px', color: 'black', fontSize: { xs: '10px', sm: '18px', fontFamily: 'Shabnam' } }} className='p-1 opacity-80'>
-                                {new Intl.DateTimeFormat('fa-IR').format(new Date())}
-                                <SlCalender className='m-1' />
-                            </Typography>
-                        </>
+                        <NavbarCalendar />
 
                     </div>
 

@@ -2,6 +2,18 @@ import { getTrueImagesUrl } from '@/actions/image';
 import { getUser } from '@/lib/getUser';
 import prisma from '@/lib/prismaDB'
 
+export const getUserRole = async () => {
+    try {
+        const userId = (await getUser()).user.id
+
+        const user = await prisma.user.findUnique({ where: { id: userId } })
+
+        return user.role
+    } catch (error) {
+        return null
+    }
+}
+
 export const getQueries = (page, perPage, justPositiveStatus) => {
     let countObj = {}
     let queryObj = {
@@ -77,8 +89,8 @@ export const GetRequest = async (type, url) => {
 
 export const PostRequest = async (type, body) => {
     try {
-        const sessiion = await getUser()
-        if (sessiion.user.role !== process.env.ADMIN_ROLE)
+        const userRole = await getUserRole()
+        if (userRole !== "Admin")
             return { message: "Unuthorized", status: 403 }
         const { title, description, imagesURL, tags, createdBy, telegram } = body;
         const obj = { title, description, imagesURL, tags, createdBy, telegram }

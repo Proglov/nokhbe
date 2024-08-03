@@ -1,15 +1,23 @@
 import ClientSidePage from '@/components/admin/ClientSidePage';
-import { getUser } from '@/lib/getUser';
-import { notFound } from 'next/navigation';
+import { getUserRole } from '@/utils/APIUtilities';
+import { headers } from 'next/headers';
+import { notFound, redirect } from 'next/navigation';
+
 
 export default async function AdminPage() {
-    const session = await getUser()
+    const userRole = await getUserRole()
 
-    if (session?.user)
-        return (
-            <>
-                <ClientSidePage />
-            </>
-        );
+    if (userRole === "Admin") return <ClientSidePage />;
+
+    const headersList = headers()
+    const referer = headersList.get('referer')
+    const host = headersList.get('host')
+
+    const userCameFromHomePage = !!referer ? referer.endsWith(host + '/') : false
+
+    if (userCameFromHomePage) {
+        redirect('/')
+    }
+
     notFound();
 }

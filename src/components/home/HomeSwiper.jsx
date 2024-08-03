@@ -83,7 +83,6 @@ export default ({ sources }) => {
 
     const items = sources || defaultSources
 
-    console.log(items);
     return (
         <>
             <div className="navigation-wrapper">

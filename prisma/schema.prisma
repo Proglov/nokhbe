@@ -50,12 +50,17 @@ model Events {
   updatedAt   DateTime @updatedAt
 }
 
+enum Roles {
+  Admin
+  theBoss
+}
+
 model User {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   email        String   @unique
   username     String   @unique
   password     String
-  role         String   @default("000000")
+  role         Roles?
   fullName     String
   nationalCode String
   mobileNumber String
