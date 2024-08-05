@@ -1,6 +1,7 @@
 import { GetRequest, PostRequest } from '@/utils/APIUtilities';
 import { NextResponse } from 'next/server'
 
+
 export const POST = async (req) => {
     const body = await req.json()
     let res = await PostRequest('news', body)

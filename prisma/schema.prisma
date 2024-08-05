@@ -73,3 +73,9 @@ model User {
   club         String[]
   joinedAt     DateTime @default(now())
 }
+
+model TemporaryImage {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  createdAt DateTime @default(now())
+}

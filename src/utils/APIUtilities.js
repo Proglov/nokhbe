@@ -2,6 +2,8 @@ import { getTrueImagesUrl } from '@/actions/image';
 import { getUser } from '@/lib/getUser';
 import prisma from '@/lib/prismaDB'
 
+export const debugServerActionError = obj => JSON.parse(JSON.stringify(obj))
+
 export const getUserRole = async () => {
     try {
         const userId = (await getUser()).user.id

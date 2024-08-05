@@ -5,9 +5,9 @@ import { getUser } from '@/lib/getUser'
 import sharp from 'sharp';
 import { encString, extractIdFromFilename } from '@/utils/funcs';
 import crypto from 'crypto'
-// import { revalidatePath } from 'next/cache';
+import { debugServerActionError, getUserRole } from '@/utils/APIUtilities';
+import { addTemporaryImage } from './temporaryImage';
 
-const debugError = obj => JSON.parse(JSON.stringify(obj))
 
 const s3 = new S3Client({
     region: "default",
@@ -22,15 +22,16 @@ const s3 = new S3Client({
 export const uploadImage = async (formData) => {
     try {
         //check if they're admin
-        const sessiion = await getUser()
-        if (sessiion.user.role !== process.env.ADMIN_ROLE)
-            return debugError({ message: "Unuthorized", name: null, status: 403 })
+        const userRole = await getUserRole()
+        const session = await getUser()
+        if (userRole !== 'Admin')
+            return debugServerActionError({ message: "Unauthorized", name: null, status: 403 })
 
         const file = formData.get("images")
 
-        if (file.size === 0) return debugError({ message: 'please send an image!', name: null, status: 404 }
+        if (file.size === 0) return debugServerActionError({ message: 'please send an image!', name: null, status: 404 }
         )
-        if (file.size > 5 * 1024 * 1024) return debugError({ message: 'image should be at most 5 MB', name: null, status: 404 })
+        if (file.size > 5 * 1024 * 1024) return debugServerActionError({ message: 'image should be at most 5 MB', name: null, status: 404 })
 
         const buffer = Buffer.from(await file.arrayBuffer())
 
@@ -39,7 +40,7 @@ export const uploadImage = async (formData) => {
         //name
         const date = new Date();
         const now = date.getTime();
-        const imageName = now + "_" + encString(sessiion.user?.id) + "_" + crypto.randomBytes(32).toString('hex');
+        const imageName = now + "_" + encString(session.user?.id) + "_" + crypto.randomBytes(32).toString('hex');
         const params = {
             Body: newBuffer,
             Bucket: process.env.LIARA_BUCKET_NAME,
@@ -49,12 +50,14 @@ export const uploadImage = async (formData) => {
 
         await s3.send(new PutObjectCommand(params));
 
+        //add in the temporary image
+        await addTemporaryImage(imageName)
 
         // revalidatePath('/ADMIN')
-        return debugError({ message: "Successfully Added", name: imageName, status: 201 })
+        return debugServerActionError({ message: "Successfully Added", name: imageName, status: 201 })
 
     } catch (error) {
-        return debugError({ message: error, name: null, status: 500 })
+        return debugServerActionError({ message: error, name: null, status: 500 })
     }
 }
 
@@ -68,14 +71,14 @@ export const getImage = async (filename) => {
 
         const command = new GetObjectCommand(params);
         const url = await getSignedUrl(s3, command);
-        return debugError({
+        return debugServerActionError({
             url,
             message: "success full",
             status: 200
         })
 
     } catch (error) {
-        return debugError({
+        return debugServerActionError({
             url: null,
             message: error,
             status: 500
@@ -98,7 +101,7 @@ export const getImages = async (filenames) => {
             const url = await getSignedUrl(s3, command);
             urls.push(url)
         }
-        return debugError({
+        return debugServerActionError({
             urls,
             message: "success full",
             status: 200
@@ -106,7 +109,7 @@ export const getImages = async (filenames) => {
 
 
     } catch (error) {
-        return debugError({
+        return debugServerActionError({
             urls: null,
             message: error,
             status: 500
@@ -116,9 +119,10 @@ export const getImages = async (filenames) => {
 
 export const deleteImage = async (filename) => {
     try {
-        const sessiion = await getUser()
-        if (sessiion.user.role !== process.env.ADMIN_ROLE && extractIdFromFilename(filename) !== sessiion.user.id)
-            return debugError({ message: "Unuthorized", status: 403 })
+        const userRole = await getUserRole()
+        const session = await getUser()
+        if (userRole !== 'Admin' && extractIdFromFilename(filename) !== session.user.id)
+            return debugServerActionError({ message: "Unauthorized", status: 403 })
 
         const params = {
             Bucket: process.env.LIARA_BUCKET_NAME,
@@ -127,12 +131,12 @@ export const deleteImage = async (filename) => {
 
         await s3.send(new DeleteObjectCommand(params));
 
-        return debugError({
+        return debugServerActionError({
             status: 201,
             message: "Successfully Deleted"
         })
     } catch (error) {
-        return debugError({
+        return debugServerActionError({
             status: 500,
             message: error
         })
@@ -142,13 +146,14 @@ export const deleteImage = async (filename) => {
 
 export const deleteImages = async (filenames) => {
     try {
-        const sessiion = await getUser()
-        if (sessiion.user.role !== process.env.ADMIN_ROLE)
-            return debugError({ message: "Unuthorized", status: 403 })
+        const userRole = await getUserRole()
+        const session = await getUser()
+        if (userRole !== 'Admin')
+            return debugServerActionError({ message: "Unauthorized", status: 403 })
 
         for (const filename of filenames) {
-            if (extractIdFromFilename(filename) !== sessiion.user.id) {
-                return debugError({
+            if (extractIdFromFilename(filename) !== session.user.id) {
+                return debugServerActionError({
                     status: 403,
                     message: "you are not authorized"
                 })
@@ -170,12 +175,12 @@ export const deleteImages = async (filenames) => {
 
         await s3.send(new DeleteObjectsCommand(params));
 
-        return debugError({
+        return debugServerActionError({
             status: 201,
             message: "Successfully Deleted"
         })
     } catch (error) {
-        return debugError({
+        return debugServerActionError({
             status: 500,
             message: error,
         })

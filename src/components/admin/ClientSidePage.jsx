@@ -14,6 +14,7 @@ import { FcStatistics } from "react-icons/fc";
 import { MdAddToPhotos, MdTableChart } from "react-icons/md";
 import { BsPersonVcard } from "react-icons/bs";
 import { GrUserAdmin } from "react-icons/gr";
+import CronjobButtons from './CronjobButtons';
 
 export default function ClientSidePage() {
     const [expanded, setExpanded] = useState('panel1');
@@ -32,6 +33,8 @@ export default function ClientSidePage() {
                     <GrUserAdmin />
                 </span>
             </Typography>
+
+            <CronjobButtons />
 
             <div>
                 <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
