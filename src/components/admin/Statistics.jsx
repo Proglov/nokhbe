@@ -36,15 +36,15 @@ export default function Statistics() {
 
     useEffect(() => {
         commonFunction('news')
-    }, [staticProps.newsCount, setStaticProps]);
+    }, [staticProps.newsCount, setStaticProps, commonFunction]);
 
     useEffect(() => {
         commonFunction('events')
-    }, [staticProps.eventsCount, setStaticProps]);
+    }, [staticProps.eventsCount, setStaticProps, commonFunction]);
 
     useEffect(() => {
         commonFunction('announcements')
-    }, [staticProps.announcementsCount, setStaticProps]);
+    }, [staticProps.announcementsCount, setStaticProps, commonFunction]);
 
     return (
         <Grid container className='bg-green-500 mr-5 pl-4' sx={{ borderTopRightRadius: '20px', borderBottomRightRadius: '20px' }}>
