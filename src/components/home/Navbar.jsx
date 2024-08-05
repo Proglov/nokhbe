@@ -2,7 +2,6 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { SlCalender } from 'react-icons/sl'
 import { Box } from '@mui/material';
 import Image from 'next/image';
 import { LiaSignOutAltSolid, LiaSignInAltSolid } from "react-icons/lia";
@@ -34,37 +33,22 @@ const Navbar = async () => {
                     </Box>
 
                     <div className='flex'>
-
-                        <>
-                            {
-                                session?.user?.role === process.env.ADMIN_ROLE &&
-                                <Typography sx={{ display: 'flex', alignItems: 'center', backgroundColor: ' #ffffff ', borderRadius: '15px', color: 'black', fontSize: { xs: '10px', sm: '10px', md: '15px', fontFamily: 'Shabnam' }, minWidth: '50px' }} className='px-2 opacity-80 mx-1'>
-                                    <Link href={'/ADMIN'}>
-                                        پنل ادمین
-                                    </Link>
-                                </Typography>
-                            }
-                        </>
-
-                        <>
-                            {
-                                session?.user &&
-                                <Typography sx={{ display: 'flex', alignItems: 'center', backgroundColor: 'red', borderRadius: '15px', color: 'black', fontSize: { xs: '10px', sm: '10px', md: '15px', fontFamily: 'Shabnam' }, padding: { xs: '0', sm: '2px', md: '5px' } }} className='text-slate-50 opacity-80 mx-1'>
-                                    <ButtonSignOut />
-                                    <LiaSignOutAltSolid style={{ fontSize: '25px' }} />
-                                </Typography>
-                            }
-                            {
-                                !session?.user &&
-                                <Typography sx={{ display: 'flex', alignItems: 'center', backgroundColor: ' #ffffff ', borderRadius: '15px', color: 'black', fontSize: { xs: '10px', sm: '10px', md: '15px', fontFamily: 'Shabnam' }, minWidth: '50px' }} className='px-2 opacity-80 mx-1'>
-                                    <Link href={'/authentication'}>
-                                        ورود
-                                    </Link>
-                                    <LiaSignInAltSolid style={{ fontSize: '25px' }} />
-                                </Typography>
-                            }
-                        </>
-
+                        {
+                            session?.user &&
+                            <Typography sx={{ display: 'flex', alignItems: 'center', backgroundColor: 'red', borderRadius: '15px', color: 'black', fontSize: { xs: '10px', sm: '10px', md: '15px', fontFamily: 'Shabnam' }, padding: { xs: '0', sm: '2px', md: '5px' } }} className='text-slate-50 opacity-80 mx-1'>
+                                <ButtonSignOut />
+                                <LiaSignOutAltSolid style={{ fontSize: '25px' }} />
+                            </Typography>
+                        }
+                        {
+                            !session?.user &&
+                            <Typography sx={{ display: 'flex', alignItems: 'center', backgroundColor: ' #ffffff ', borderRadius: '15px', color: 'black', fontSize: { xs: '10px', sm: '10px', md: '15px', fontFamily: 'Shabnam' }, minWidth: '50px' }} className='px-2 opacity-80 mx-1'>
+                                <Link href={'/authentication'}>
+                                    ورود
+                                </Link>
+                                <LiaSignInAltSolid style={{ fontSize: '25px' }} />
+                            </Typography>
+                        }
 
                         <NavbarCalendar />
 
