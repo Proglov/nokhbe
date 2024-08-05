@@ -69,15 +69,6 @@ export default function UsersSection() {
 
     useEffect(() => {
         setLoading(true);
-        fetch(`/api/user/count`, { cache: 'no-store' })
-            .then((response) => response.json())
-            .then((data) => {
-                setLastPageNumber(Math.ceil(data / usersPerPage));
-            })
-            .catch((err) => {
-                setIsError(true);
-                setError(err);
-            });
         fetch(`/api/user?page=${currentPage}&perPage=${usersPerPage}`, { cache: 'no-store' })
             .then((response) => {
                 if (!response.ok) {
@@ -88,7 +79,8 @@ export default function UsersSection() {
             .then((data) => {
                 if (data === undefined)
                     throw new Error('لطفا اتصال اینترنت خود را بررسی کنید')
-                setUsers(data);
+                setUsers(data?.users);
+                setLastPageNumber(Math.ceil(data?.count / usersPerPage));
                 setLoading(false);
             })
             .catch((err) => {
@@ -232,7 +224,7 @@ export default function UsersSection() {
                                                                 })
                                                             }}
                                                         >
-                                                            نمایش
+                                                            نمایش و ویرایش
                                                         </Button>
                                                         <Button
                                                             variant='outlined'

@@ -104,9 +104,9 @@ export default function ModalEdit() {
         } else if (name === 'role') {
             let r;
             if (value === 'ادمین')
-                r = "111010"
+                r = "Admin"
             else if (value === "کاربر عادی")
-                r = "000101"
+                r = "normal"
             setSelectedItem(prevSelectedItem => ({
                 ...prevSelectedItem,
                 role: r,

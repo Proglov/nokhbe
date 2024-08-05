@@ -1,4 +1,4 @@
-import { getTrueImagesUrl } from '@/actions/image';
+import { deleteImages, getTrueImagesUrl } from '@/actions/image';
 import { getUser } from '@/lib/getUser';
 import prisma from '@/lib/prismaDB'
 
@@ -93,16 +93,106 @@ export const PostRequest = async (type, body) => {
     try {
         const userRole = await getUserRole()
         if (userRole !== "Admin")
-            return { message: "Unuthorized", status: 403 }
-        const { title, description, imagesURL, tags, createdBy, telegram } = body;
-        const obj = { title, description, imagesURL, tags, createdBy, telegram }
+            return { message: "Unauthorized", status: 403 }
 
-        if (type === 'events') obj.eventAt = body.eventAt
+        const data = {
+            title: body?.title,
+            description: body?.description,
+            imagesURL: body?.imagesURL,
+            tags: body?.tags,
+            createdBy: body?.createdBy,
+            telegram: body?.telegram
+        }
 
-        const newData = await prisma[type].create({ data: obj })
+        if (type === 'events') data.eventAt = body?.eventAt
+
+        const newData = await prisma[type].create({ DataView })
         const dataWithTrueImages = await getTrueImagesUrl(newData)
         return { data: dataWithTrueImages }
     } catch (error) {
         return { message: `POST A NEW ${type.toUpperCase()} ERROR`, error, status: 500 }
+    }
+}
+
+export const GetByIdRequest = async (type, id) => {
+    try {
+        const data = await prisma[type].findUnique({
+            where: { id }
+        })
+        if (!data) {
+            return { message: `${type.toUpperCase()} ${id} NOT FOUND`, status: 404 }
+        }
+
+        // Increment views by 1
+        await prisma[data].update({
+            where: { id },
+            data: { views: data.views + 1 }
+        });
+
+        const dataWithTrueImages = await getTrueImagesUrl(data)
+
+        return { data: dataWithTrueImages, status: 200 }
+    } catch (error) {
+        return { message: `GET ${type.toUpperCase()} ${id} ERROR`, error, status: 500 }
+    }
+}
+
+export const DeleteByIdRequest = async (type, id) => {
+    try {
+        const userRole = await getUserRole()
+        if (userRole !== "Admin")
+            return { message: "Unauthorized", error, status: 400 }
+
+        const data = await prisma[type].findUnique({
+            where: { id }
+        })
+        if (!data) {
+            return { message: `${type.toUpperCase()} ${id} NOT FOUND`, status: 404 }
+        }
+
+        // Call deleteImages with the URLs of the images associated with the data
+        if (data?.imagesURL?.length > 0) await deleteImages(data.imagesURL);
+
+        await prisma[data].delete({
+            where: { id }
+        })
+        return { message: `${type.toUpperCase()} HAS BEEN DELETED`, status: 200 }
+    } catch (error) {
+        return { message: `DELETE ${type.toUpperCase()} ${id} ERROR`, error, status: 500 }
+    }
+}
+
+export const PatchByIdRequest = async (type, body, id) => {
+    try {
+        const userRole = await getUserRole()
+        if (userRole !== "Admin")
+            return { message: "Unauthorized", status: 400 }
+
+        const data = {
+            title: body?.title,
+            description: body?.description,
+            imagesURL: body?.imagesURL,
+            tags: body?.tags,
+            createdBy: body?.createdBy,
+            telegram: body?.telegram,
+            status: body?.status,
+            views: body?.views,
+        }
+
+        if (type === 'events') data.eventAt = body?.eventAt
+
+        const updateData = await prisma[data].update({
+            where: { id },
+            data
+        })
+        if (!updateData) {
+            return { message: `${type.toUpperCase()} ${id} NOT FOUND`, status: 404 }
+        }
+
+        const dataWithTrueImages = await getTrueImagesUrl(updateData)
+        return { data: dataWithTrueImages, status: 200 }
+
+    } catch (error) {
+        return { message: `PATCH ${type.toUpperCase()} ${id} ERROR`, error, status: 500 }
     }
 }

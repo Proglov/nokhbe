@@ -1,13 +1,14 @@
-import { getUser } from '@/lib/getUser';
 import prisma from '@/lib/prismaDB'
+import { getUserRole } from '@/utils/APIUtilities';
 import { NextResponse } from 'next/server'
 
 export const DELETE = async (_req, { params }) => {
     const { id } = params;
     try {
-        const sessiion = await getUser()
-        if (sessiion.user.role !== process.env.ADMIN_ROLE)
-            return NextResponse.json({ message: "Unuthorized", error }, { status: 400 })
+        const userRole = await getUserRole()
+        if (userRole !== "Admin")
+            return NextResponse.json({ message: "Unauthorized", error }, { status: 400 })
+
         await prisma.user.delete({
             where: { id }
         })
@@ -20,44 +21,35 @@ export const DELETE = async (_req, { params }) => {
 export const PATCH = async (req, { params }) => {
     const { id } = params;
     try {
-        const sessiion = await getUser()
-        if (sessiion.user.role !== process.env.ADMIN_ROLE)
-            return NextResponse.json({ message: "Unuthorized", error }, { status: 400 })
+        const session = await getUser()
+        const userRole = await getUserRole()
+        if (userRole !== "Admin" && session?.user?.id !== id)
+            return NextResponse.json({ message: "Unauthorized", error }, { status: 400 })
+
         const body = await req.json()
-        const {
-            email,
-            username,
-            role,
-            fullName,
-            nationalCode,
-            mobileNumber,
-            phoneNumber,
-            address,
-            postalCode,
-            biography,
-            education,
-            abilities,
-            club,
-            joinedAt,
-        } = body;
+        const data = {
+            email: body?.email,
+            username: body?.username,
+            role: body?.role,
+            fullName: body?.fullName,
+            nationalCode: body?.nationalCode,
+            mobileNumber: body?.mobileNumber,
+            phoneNumber: body?.phoneNumber,
+            address: body?.address,
+            postalCode: body?.postalCode,
+            biography: body?.biography,
+            education: body?.education,
+            abilities: body?.abilities,
+            club: body?.club,
+            joinedAt: body?.joinedAt,
+        }
+
+        //only admin can change the role
+        if (userRole === "Admin" && !!data?.role) data.role = role
+
         const updatedUser = await prisma.user.update({
             where: { id },
-            data: {
-                email,
-                username,
-                role,
-                fullName,
-                nationalCode,
-                mobileNumber,
-                phoneNumber,
-                address,
-                postalCode,
-                biography,
-                education,
-                abilities,
-                club,
-                joinedAt,
-            }
+            data
         })
         if (!updatedUser) {
             return NextResponse.json({ message: `USER ${id} NOT FOUND` }, { status: 404 })

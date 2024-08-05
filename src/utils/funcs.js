@@ -134,12 +134,11 @@ export const giveMeDateInFa = (str) => {
 };
 
 export const convertRoles = role => {
-    if (role === '111010')
-        return "ادمین"
-    else if (role === '000101')
+    if (!role || role === 'normal')
         return "کاربر عادی"
-    else if (role === '000000')
-        return "تایید نشده"
+    else if (role === 'Admin')
+        return "ادمین"
+    else return "تایید نشده"
 }
 
 export const convertEventAt = str => { // 1402-02-25
