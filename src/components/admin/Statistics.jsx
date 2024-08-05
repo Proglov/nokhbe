@@ -36,15 +36,18 @@ export default function Statistics() {
 
     useEffect(() => {
         commonFunction('news')
-    }, [staticProps.newsCount, setStaticProps, commonFunction]);
+        // eslint-expect-warning-next-line
+    }, [staticProps.newsCount, setStaticProps]);
 
     useEffect(() => {
         commonFunction('events')
-    }, [staticProps.eventsCount, setStaticProps, commonFunction]);
+        // eslint-expect-warning-next-line
+    }, [staticProps.eventsCount, setStaticProps]);
 
     useEffect(() => {
         commonFunction('announcements')
-    }, [staticProps.announcementsCount, setStaticProps, commonFunction]);
+        // eslint-expect-warning-next-line
+    }, [staticProps.announcementsCount, setStaticProps]);
 
     return (
         <Grid container className='bg-green-500 mr-5 pl-4' sx={{ borderTopRightRadius: '20px', borderBottomRightRadius: '20px' }}>
