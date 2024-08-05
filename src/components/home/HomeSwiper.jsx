@@ -34,7 +34,7 @@ function Arrow(props) {
 }
 
 
-export default HomeSwiper = ({ sources }) => {
+export default function HomeSwiper({ sources }) {
     const [currentSlide, setCurrentSlide] = useState(0)
     const [loaded, setLoaded] = useState(false)
 
