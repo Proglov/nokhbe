@@ -7,9 +7,7 @@ export default function ButtonSignOut() {
     return (
         <Link href={'/'}>
             <button onClick={() => {
-                setTimeout(() => {
-                    signOut();
-                }, 100);
+                signOut({ redirectTo: "/", redirect: true })
             }}>
                 خروج از حساب
             </button>

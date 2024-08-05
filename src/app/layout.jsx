@@ -4,8 +4,8 @@ import Navbar from '../components/home/Navbar'
 import Footer from '../components/home/Footer'
 
 export const metadata = {
-  title: 'نخبگان',
-  description: 'سایت نخبگان',
+  title: 'باشگاه نخبگان جوان و فرهیختگان دانشگاه شمال',
+  description: 'سایت نخبگان جوان و فرهیختگان دانشگاه شمال'
 }
 
 export default function RootLayout({ children }) {
