@@ -1,5 +1,4 @@
 import LastNews from "@/components/events/LastNews";
-import MenuNav from "@/components/home/MenuNav";
 import { Box, Container, Grid } from "@mui/material";
 import Image from "next/image";
 
@@ -8,9 +7,6 @@ export default function page() {
 
     return (
         <div>
-            <nav className="mt-1">
-                <MenuNav />
-            </nav>
             <Grid container spacing={8} className="p-3">
                 <Grid item xs={12} sm={7} md={8} className="grid-item">
                     <div>
