@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from '@/lib/prismaDB'
 import { setMailOptions, transporter } from "@/lib/nodemailer";
-import { compare, hash } from "bcrypt"
+import { hash } from "bcrypt"
 
 
 function generateRandomString() {
@@ -20,7 +20,7 @@ function generateRandomString() {
 
 async function changePassword(body) {
     try {
-        const { email, oldPassword, newPassword } = body;
+        const { email, newPassword } = body;
 
         // validation goes here!
         if (newPassword.length < 8) {
@@ -32,12 +32,8 @@ async function changePassword(body) {
             where: { email }
         })
         if (!existingUserByEmail)
-            return { message: "کاربری با این ایمیل موجود نمیباشد", status: 409 }
+            return { message: "کاربری با این ایمیل موجود نمیباشد", status: 404 }
 
-        const passwordIsTrue = await compare(oldPassword, existingUserByEmail.password)
-
-        if (!passwordIsTrue)
-            return { message: "رمز فعلی وارد شده صحیح نمیباشد", status: 409 }
 
         const hashedPassword = await hash(newPassword, 10)
 
@@ -93,7 +89,6 @@ export async function POST(req) {
 
         const res = await changePassword({
             email: existingUser.email,
-            oldPassword: existingUser.password,
             newPassword: newPass
         })
 

@@ -5,13 +5,12 @@ import Events from "../components/home/Events";
 import News from "../components/home/News";
 import Announcements from "../components/home/Announcements";
 import { Grid } from "@mui/material";
-import styles from './styles.module.css'
 
 
 export default function Home() {
   return (
     <>
-      <nav className={`${styles.smallScreenNav} my-1`}>
+      <nav className="my-1">
         <MenuNav />
       </nav>
       <main>
@@ -20,9 +19,6 @@ export default function Home() {
       <section>
         <SecondSwiper />
       </section>
-      <nav className={`static ${styles.mdScreenNav}`}>
-        <MenuNav />
-      </nav>
       <section className='mt-5' >
         <Events />
       </section>

@@ -36,71 +36,6 @@ export default function MenuNav() {
                 <div className="flex justify-space-evenly">
                     <ul className={`flex flex-row space-x-2 ${styles.customSize}`} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
 
-                        <li className='ml-2 text-center'>
-                            <Button
-                                id="dropdownDelayButton1"
-                                aria-controls="dropdownDelay1"
-                                aria-haspopup="true"
-                                aria-expanded={Boolean(anchorEl1)}
-                                onClick={handleClick1}
-                                className="text-white pt-6 text-center inline-flex items-center"
-                                style={{ color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
-
-                            >
-                                <span className={styles.customSize}>اخبار و رویدادها</span>
-                                <IoMdArrowDropdown style={{ fontSize: '18px' }} />
-                            </Button>
-                            <Menu
-                                id="dropdownDelay1"
-                                anchorEl={anchorEl1}
-                                open={Boolean(anchorEl1)}
-                                onClose={handleClose}
-                                MenuListProps={{
-                                    'aria-labelledby': 'dropdownDelayButton1'
-                                }}
-                                style={{ marginTop: '-10px' }}
-                            >
-                                <Box sx={{ bgcolor: 'linear-gradient(to bottom, #090072 40%, #ff9d33)' }}>
-                                    <li className='px-5 py-1 sm:px-3 md:px-5 lg:px-10' style={{ borderBottom: '3px solid black', textAlign: 'center' }}>
-                                        <Box sx={{ fontSize: { xs: '10px', sm: '15px', md: '20px', lg: '23px', paddingX: { xs: '5px', sm: '4px', md: '6px', lg: '8px' } } }} onClick={handleClose}>
-                                            <Link href='/events'>
-                                                رویداد ها
-                                            </Link>
-                                        </Box>
-                                    </li>
-                                    <li className='py-1 px-5 sm:px-3 md:px-5 lg:px-10' style={{ borderBottom: '3px solid black', textAlign: 'center' }}>
-                                        <Box sx={{ fontSize: { xs: '10px', sm: '15px', md: '20px', lg: '23px', paddingX: { xs: '5px', sm: '4px', md: '6px', lg: '8px' } } }} onClick={handleClose}>
-                                            <Link href='/news'>
-                                                اخبار
-                                            </Link>
-                                        </Box>
-                                    </li>
-                                    <li className='py-1 px-5 sm:px-3 md:px-5 lg:px-10' style={{ textAlign: 'center' }}>
-                                        <Box sx={{ fontSize: { xs: '10px', sm: '15px', md: '20px', lg: '23px', paddingX: { xs: '5px', sm: '4px', md: '6px', lg: '8px' } } }} onClick={handleClose}>
-                                            <Link href='/announcements'>
-                                                اطلاعیه ها
-                                            </Link>
-                                        </Box>
-                                    </li></Box>
-                            </Menu>
-                        </li>
-
-                        <Divider orientation='vertical' sx={{ backgroundColor: 'white', height: '50%' }} />
-
-                        <li className='text-center'>
-                            <Link href="/clubs" className="text-slate-50"> &nbsp; &nbsp;باشگاه های تخصصی &nbsp;</Link>
-                        </li>
-
-                        <Divider orientation='vertical' sx={{ backgroundColor: 'white', height: '50%' }} />
-
-                        <li className='text-center'>
-                            <Link href='/joining' className="text-slate-50">
-                                خدمات و عضویت
-                            </Link>
-                        </li>
-
-                        <Divider orientation='vertical' sx={{ backgroundColor: 'white', height: '50%' }} />
-
                         <li>
                             <Button
                                 id="dropdownDelayButton2"
@@ -212,10 +147,81 @@ export default function MenuNav() {
 
                         <Divider orientation='vertical' sx={{ backgroundColor: 'white', height: '50%' }} />
 
+                        <li className='text-center'>
+                            <Link href="/clubs" className="text-slate-50"> &nbsp; &nbsp;باشگاه های تخصصی &nbsp;</Link>
+                        </li>
+
+                        <Divider orientation='vertical' sx={{ backgroundColor: 'white', height: '50%' }} />
+
+                        <li className='text-center'>
+                            <Link href='/joining' className="text-slate-50">
+                                خدمات و عضویت
+                            </Link>
+                        </li>
+
+                        <Divider orientation='vertical' sx={{ backgroundColor: 'white', height: '50%' }} />
+
+                        <li className='ml-2 text-center'>
+                            <Button
+                                id="dropdownDelayButton1"
+                                aria-controls="dropdownDelay1"
+                                aria-haspopup="true"
+                                aria-expanded={Boolean(anchorEl1)}
+                                onClick={handleClick1}
+                                className="text-white pt-6 text-center inline-flex items-center"
+                                style={{ color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+
+                            >
+                                <span className={styles.customSize}>اخبار و رویدادها</span>
+                                <IoMdArrowDropdown style={{ fontSize: '18px' }} />
+                            </Button>
+                            <Menu
+                                id="dropdownDelay1"
+                                anchorEl={anchorEl1}
+                                open={Boolean(anchorEl1)}
+                                onClose={handleClose}
+                                MenuListProps={{
+                                    'aria-labelledby': 'dropdownDelayButton1'
+                                }}
+                                style={{ marginTop: '-10px' }}
+                            >
+                                <Box sx={{ bgcolor: 'linear-gradient(to bottom, #090072 40%, #ff9d33)' }}>
+                                    <li className='px-5 py-1 sm:px-3 md:px-5 lg:px-10' style={{ borderBottom: '3px solid black', textAlign: 'center' }}>
+                                        <Box sx={{ fontSize: { xs: '10px', sm: '15px', md: '20px', lg: '23px', paddingX: { xs: '5px', sm: '4px', md: '6px', lg: '8px' } } }} onClick={handleClose}>
+                                            <Link href='/events'>
+                                                رویداد ها
+                                            </Link>
+                                        </Box>
+                                    </li>
+                                    <li className='py-1 px-5 sm:px-3 md:px-5 lg:px-10' style={{ borderBottom: '3px solid black', textAlign: 'center' }}>
+                                        <Box sx={{ fontSize: { xs: '10px', sm: '15px', md: '20px', lg: '23px', paddingX: { xs: '5px', sm: '4px', md: '6px', lg: '8px' } } }} onClick={handleClose}>
+                                            <Link href='/news'>
+                                                اخبار
+                                            </Link>
+                                        </Box>
+                                    </li>
+                                    <li className='py-1 px-5 sm:px-3 md:px-5 lg:px-10' style={{ textAlign: 'center' }}>
+                                        <Box sx={{ fontSize: { xs: '10px', sm: '15px', md: '20px', lg: '23px', paddingX: { xs: '5px', sm: '4px', md: '6px', lg: '8px' } } }} onClick={handleClose}>
+                                            <Link href='/announcements'>
+                                                اطلاعیه ها
+                                            </Link>
+                                        </Box>
+                                    </li></Box>
+                            </Menu>
+                        </li>
+
+                        <Divider orientation='vertical' sx={{ backgroundColor: 'white', height: '50%' }} />
+
                         <li className='text-center text-slate-50'>
                             <Link href='/contact'>
                                 تماس با ما
                             </Link>
+                        </li>
+
+                        <Divider orientation='vertical' sx={{ backgroundColor: 'white', height: '50%' }} />
+
+                        <li className='text-center'>
+                            <Link href="/authentication" className="text-slate-50"> &nbsp; &nbsp;ورود &nbsp;</Link>
                         </li>
 
                         <Divider orientation='vertical' sx={{ backgroundColor: 'white', height: '50%' }} />
