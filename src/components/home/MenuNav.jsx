@@ -200,13 +200,21 @@ export default function MenuNav() {
                                             </Link>
                                         </Box>
                                     </li>
-                                    <li className='py-1 px-5 sm:px-3 md:px-5 lg:px-10' style={{ textAlign: 'center' }}>
+                                    <li className='py-1 px-5 sm:px-3 md:px-5 lg:px-10' style={{ borderBottom: '3px solid black', textAlign: 'center' }}>
                                         <Box sx={{ fontSize: { xs: '10px', sm: '15px', md: '20px', lg: '23px', paddingX: { xs: '5px', sm: '4px', md: '6px', lg: '8px' } } }} onClick={handleClose}>
                                             <Link href='/announcements'>
                                                 اطلاعیه ها
                                             </Link>
                                         </Box>
-                                    </li></Box>
+                                    </li>
+                                    <li className='py-1 px-5 sm:px-3 md:px-5 lg:px-10' style={{ textAlign: 'center' }}>
+                                        <Box sx={{ fontSize: { xs: '10px', sm: '15px', md: '20px', lg: '23px', paddingX: { xs: '5px', sm: '4px', md: '6px', lg: '8px' } } }} onClick={handleClose}>
+                                            <Link href='/announcements'>
+                                                آرشیو تصاویر
+                                            </Link>
+                                        </Box>
+                                    </li>
+                                </Box>
                             </Menu>
                         </li>
 
@@ -216,12 +224,6 @@ export default function MenuNav() {
                             <Link href='/contact'>
                                 تماس با ما
                             </Link>
-                        </li>
-
-                        <Divider orientation='vertical' sx={{ backgroundColor: 'white', height: '50%' }} />
-
-                        <li className='text-center'>
-                            <Link href="/authentication" className="text-slate-50"> &nbsp; &nbsp;ورود &nbsp;</Link>
                         </li>
 
                         <Divider orientation='vertical' sx={{ backgroundColor: 'white', height: '50%' }} />

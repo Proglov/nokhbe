@@ -17,7 +17,7 @@ export default function page() {
                     </div>
                     <div>
 
-                        <Container>
+                        <Container className="mr-3">
                             <Box className='mx-auto w-100 my-9'>
                                 <Typography variant="h1" sx={{ fontSize: { xs: '16px', sm: '18px', md: '20px' } }}>
                                     :: فعالیت های باشگاه

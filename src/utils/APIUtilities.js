@@ -122,9 +122,8 @@ export const GetByIdRequest = async (type, id) => {
         if (!data) {
             return { message: `${type.toUpperCase()} ${id} NOT FOUND`, status: 404 }
         }
-
         // Increment views by 1
-        await prisma[data].update({
+        await prisma[type].update({
             where: { id },
             data: { views: data.views + 1 }
         });
@@ -153,7 +152,7 @@ export const DeleteByIdRequest = async (type, id) => {
         // Call deleteImages with the URLs of the images associated with the data
         if (data?.imagesURL?.length > 0) await deleteImages(data.imagesURL);
 
-        await prisma[data].delete({
+        await prisma[type].delete({
             where: { id }
         })
         return { message: `${type.toUpperCase()} HAS BEEN DELETED`, status: 200 }
@@ -181,7 +180,7 @@ export const PatchByIdRequest = async (type, body, id) => {
 
         if (type === 'events') data.eventAt = body?.eventAt
 
-        const updateData = await prisma[data].update({
+        const updateData = await prisma[type].update({
             where: { id },
             data
         })

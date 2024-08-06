@@ -343,7 +343,7 @@ export default function SignUp() {
 
                                 <div>
 
-                                    <textarea class="resize-none rounded-md border border-solid mغ-2 w-full" name="biography" id="biography" placeholder="بیوگرافی و رزومه شخصی / مجموعه" required onChange={handleFormChange2} value={formData2.biography} />
+                                    <textarea class="resize-none rounded-md border border-solid pt-2 pr-2 w-full" name="biography" id="biography" placeholder="بیوگرافی و رزومه شخصی / مجموعه" required onChange={handleFormChange2} value={formData2.biography} />
                                 </div>
 
                                 <div>
@@ -355,6 +355,12 @@ export default function SignUp() {
                                 </div>
 
                                 <div>
+                                    <div className="text-sm text-gray-400">
+                                        <span className="text-red-600 ml-1">*</span>
+                                        توجه!
+                                        جهت شرکت در کارگاه و دوره های آموزشی و جلسات، باشگاه برگزار کننده را انتخاب کنید
+                                        <span className="text-red-600 ml-1">:</span>
+                                    </div>
                                     <InputLabel
                                         id="demo-multiple-chip-label">
                                         باشگاه و کارگروه جهت فعالیت و عضویت
@@ -388,6 +394,7 @@ export default function SignUp() {
                                         ))}
                                     </Select>
                                 </div>
+
 
                                 <div className="flex">
                                     <Button

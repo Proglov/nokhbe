@@ -1,7 +1,10 @@
 import LastNews from "@/components/events/LastNews";
 import MenuNav from "@/components/home/MenuNav";
-import { Box, Container, Grid, Typography } from "@mui/material";
+import { convertToFarsiNum } from "@/utils/funcs";
+import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import Image from "next/image";
+import Link from "next/link";
+import { GiClick } from "react-icons/gi";
 
 export default function page() {
     const src = '/img/home-main/IMG_20231004_155303_382.jpg'
@@ -29,19 +32,15 @@ export default function page() {
                                     </div>
 
                                     <div className="pt-2 sm:text-base text-sm" style={{ textAlign: 'justify' }}>
-                                        1)داشتن حداکثر 35 سال سن
+                                        {convertToFarsiNum('1')}) داشتن صلاحیت عمومی پذیرش دانشجو و اعضای هیات علمی که در آیین نامه صلاحیت عمومی دانشگاه ارائه شده است.
                                     </div>
 
                                     <div className="pt-2 sm:text-base text-sm" style={{ textAlign: 'justify' }}>
-                                        2)داشتن صلاحیت عمومی پذیرش دانشجو و اعضای هیات علمی که در آیین نامه صلاحیت عمومی دانشگاه ارائه شده است.
+                                        {convertToFarsiNum('2')}) اعضا بنیاد ملی نخبگان در اولویت می باشند.
                                     </div>
 
                                     <div className="pt-2 sm:text-base text-sm" style={{ textAlign: 'justify' }}>
-                                        3)اعضا بنیاد ملی نخبگان در اولویت می باشند.
-                                    </div>
-
-                                    <div className="pt-2 sm:text-base text-sm" style={{ textAlign: 'justify' }}>
-                                        تبصره 1) پذیرش و عضویت از تمامی دانشجویان و اعضا هیات علمی دانشگاه های دولتی و غیر دولتی سراسر کشور امکان پذیر می باشد.
+                                        تبصره {convertToFarsiNum('1')}) پذیرش و عضویت از تمامی دانشجویان و اعضا هیات علمی دانشگاه های دولتی و غیر دولتی سراسر کشور امکان پذیر می باشد.
                                     </div>
 
                                     <div className="pt-2 sm:text-base text-sm" style={{ textAlign: 'justify' }}>
@@ -53,19 +52,31 @@ export default function page() {
                                     </div>
 
                                     <div className="pt-2 sm:text-base text-sm" style={{ textAlign: 'justify' }}>
-                                        1)عضو عادی
+                                        {convertToFarsiNum('1')}) عضو عادی
                                     </div>
 
                                     <div className="pt-2 sm:text-base text-sm" style={{ textAlign: 'justify' }}>
-                                        2)عضو استعدادهای درخشان
+                                        {convertToFarsiNum('2')}) عضو استعدادهای درخشان
                                     </div>
 
                                     <div className="pt-2 sm:text-base text-sm" style={{ textAlign: 'justify' }}>
-                                        3)عضو نخبه
+                                        {convertToFarsiNum('3')}) عضو نخبه
                                     </div>
 
                                     <div className="pt-2 sm:text-base text-sm" style={{ textAlign: 'justify' }}>
-                                        4)عضو افتخاری
+                                        {convertToFarsiNum('4')}) عضو افتخاری
+                                    </div>
+
+                                    <div className="pt-2 sm:text-base text-sm" style={{ textAlign: 'justify' }}>
+                                        {convertToFarsiNum('5')}) عضو دانشجویی
+                                    </div>
+
+                                    <div className="pt-2 sm:text-base text-sm" style={{ textAlign: 'justify' }}>
+                                        {convertToFarsiNum('6')}) عضو دانش آموزی
+                                    </div>
+
+                                    <div className="pt-2 sm:text-base text-sm" style={{ textAlign: 'justify' }}>
+                                        {convertToFarsiNum('7')}) عضو کارشناس
                                     </div>
 
                                     <div className="pt-2 sm:text-base text-sm" style={{ textAlign: 'justify' }}>
@@ -77,20 +88,29 @@ export default function page() {
                                     </div>
 
                                     <div className="pt-2 sm:text-base text-sm" style={{ textAlign: 'justify' }}>
-                                        1)از دست دادن شرایط اختصاصی و عمومی مصوب
+                                        {convertToFarsiNum('1')}) از دست دادن شرایط اختصاصی و عمومی مصوب
                                     </div>
 
                                     <div className="pt-2 sm:text-base text-sm" style={{ textAlign: 'justify' }}>
-                                        2)سپری شدن مدت عضویت
+                                        {convertToFarsiNum('2')}) سپری شدن مدت عضویت
                                     </div>
 
                                     <div className="pt-2 mb-8 sm:text-base text-sm" style={{ textAlign: 'justify' }}>
-                                        3)عدم تبعیت از مقررات باشگاه و آیین نامه های انضباطی
+                                        {convertToFarsiNum('3')}) عدم تبعیت از مقررات باشگاه و آیین نامه های انضباطی
                                     </div>
                                 </Typography>
                             </Box>
                         </Container>
                     </div>
+                    <Link href='/authentication' className='w-full'>
+                        <Button variant='contained' color='info' sx={{ fontSize: { xs: '16px', sm: '18px', md: '20px' } }} className="flex mx-auto">
+                            برای عضویت کلیک
+                            &nbsp;
+                            <GiClick />
+                            &nbsp;
+                            کنید
+                        </Button>
+                    </Link>
                 </Grid>
                 <Grid item xs={12} sm={5} md={4} className="grid-item">
                     <LastNews type='news' />

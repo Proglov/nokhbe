@@ -13,7 +13,7 @@ export default function page() {
             </nav>
             <Grid container spacing={8} className="p-3">
                 <Grid item xs={12} sm={7} md={8} className="grid-item">
-                    <div className="mt-4 mr-4">
+                    <div className="mt-4 mr-8">
                         <Typography variant="h1" sx={{ fontSize: { xs: '18px', sm: '20px', md: '22px' } }}>
                             اعضا هیئت امنا
                         </Typography>

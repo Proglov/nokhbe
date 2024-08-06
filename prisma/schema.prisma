@@ -53,6 +53,9 @@ model Events {
 enum Roles {
   Admin
   theBoss
+  clubBoss
+  workingGroupBoss
+  workingGroupember
 }
 
 model User {
