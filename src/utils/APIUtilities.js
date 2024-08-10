@@ -106,7 +106,7 @@ export const PostRequest = async (type, body) => {
 
         if (type === 'events') data.eventAt = body?.eventAt
 
-        const newData = await prisma[type].create({ DataView })
+        const newData = await prisma[type].create({ data })
         const dataWithTrueImages = await getTrueImagesUrl(newData)
         return { data: dataWithTrueImages }
     } catch (error) {
