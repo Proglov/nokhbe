@@ -6,7 +6,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import { tags, supervisors } from "@/utils/tagsAndRoles";
+import { tags, supervisors, workingGroups } from "@/utils/tagsAndRoles";
 
 export default function Clubs() {
     const [currentClub, setCurrentClub] = useState(0);
@@ -51,6 +51,24 @@ export default function Clubs() {
                             <div className="my-2">نام باشگاه: {tags[currentClub]}</div>
                             <div>نام سرپرست: {supervisors[currentClub]}</div>
                         </Box>
+                        <br />
+                        {
+                            workingGroups[currentClub].length > 0 &&
+                            <>
+                                <h3 className='mb-2'>کارگروه های باشگاه</h3>
+                                <Box>
+                                    {
+                                        workingGroups[currentClub].map((member, index) => (
+                                            <Box className='flex gap-x-2' key={index}>
+                                                <div >{member.name}:</div>
+                                                <div>{member.position}</div>
+                                            </Box>
+                                        ))
+                                    }
+                                </Box>
+                            </>
+                        }
+
                     </Grid>
                     <Grid item xs={12} sm={5} md={4} className="grid-item">
                         <LastNews type='news' />
