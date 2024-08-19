@@ -7,7 +7,7 @@ import Link from "next/link";
 import { GiClick } from "react-icons/gi";
 
 export default function page() {
-    const src = '/img/home-main/IMG_20231004_155303_382.jpg'
+    const src = '/img/home-main/firstImage.jpg'
     return (
         <div>
             <nav className="mt-1">
@@ -20,7 +20,7 @@ export default function page() {
                     </div>
                     <div>
                         <Container>
-                            <Box className='mx-auto w-100 mt-8'>
+                            <Box className='mx-auto w-100 mt-8 lg:mr-20 xl:mr32'>
                                 <Typography variant="h1" sx={{ fontSize: { xs: '16px', sm: '18px', md: '20px' } }}>
                                     :: آیین نامه عضویت باشگاه
                                 </Typography>

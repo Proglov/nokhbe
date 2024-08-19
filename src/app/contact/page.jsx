@@ -3,7 +3,7 @@ import { Box, Container, Typography } from "@mui/material";
 import Image from "next/image";
 
 export default function page() {
-    const src = '/img/home-main/IMG_20231004_155303_382.jpg'
+    const src = '/img/contact.jpg'
     return (
         <div>
             <nav className="mt-1">
@@ -35,8 +35,12 @@ export default function page() {
                                 فکس :   ۰۱۱۴۴۲۰۳۷۵۵
                             </div>
 
-                            <div className="mb-8 pt-2 sm:text-base text-sm" style={{ textAlign: 'justify' }}>
+                            <div className="pt-2 sm:text-base text-sm" style={{ textAlign: 'justify' }}>
                                 پست الکترونیکی: info@yesc.ir
+                            </div>
+
+                            <div className="mb-8 pt-2 sm:text-base text-sm" style={{ textAlign: 'justify' }}>
+                                پشتیبانی سایت: ۰۹١۲۳۰۶۷۶۸۶
                             </div>
 
                         </Typography>

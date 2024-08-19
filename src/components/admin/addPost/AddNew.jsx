@@ -15,7 +15,7 @@ import { useRef, useContext } from 'react';
 import { useState } from 'react';
 import { useAdminContext } from '@/hooks/useAdminHooks';
 import { MultiFileDropzone } from '../multi-image-dropzone';
-import { tagOptions } from '@/utils/tagsAndRoles';
+import { tags } from '@/utils/tagsAndRoles';
 import { uploadImage } from '@/actions/image';
 import { capitalizeFirstLetter } from '@/utils/funcs';
 
@@ -335,7 +335,7 @@ export default function AddNew({ type }) {
                             )}
                             MenuProps={MenuProps}
                         >
-                            {tagOptions.map((tag) => (
+                            {[...tags, 'ادمین', 'رئیس باشگاه'].map((tag) => (
                                 <MenuItem
                                     key={tag}
                                     value={tag}

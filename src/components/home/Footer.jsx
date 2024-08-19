@@ -89,7 +89,22 @@ export default function Footer() {
                 </div>
                 <br />
                 <div className='flex flex-row'>
-                    <span><span className=''>پست الکترونیک<span style={{ color: 'red' }}>:</span></span> info@yesc.ir</span>
+                    <span>
+                        <span className=''>پست الکترونیک
+                            <span style={{ color: 'red' }}>:</span>
+                        </span>
+                        info@yesc.ir
+                    </span>
+                </div>
+                <br />
+                <div className='flex flex-row'>
+                    <span>
+                        <span>
+                            پشتیبانی سایت
+                            <span style={{ color: 'red' }}>:</span>
+                        </span>
+                        ۰۹١۲۳۰۶۷۶۸۶
+                    </span>
                 </div>
             </Grid>
         </Grid>

@@ -13,12 +13,12 @@ export default function page() {
                 <Grid item xs={12} sm={7} md={8} className="grid-item">
                     <br />
                     <div className="mt-2">
-                        <Image className="mx-auto rounded-3xl" src='/img/home-main/IMG_20231004_155303_382.jpg' width={600} height={600} alt="Activities" />
+                        <Image className="mx-auto rounded-3xl" src='/img/home-main/secondImage.jpg' width={600} height={600} alt="Activities" />
                     </div>
                     <div>
 
                         <Container className="mr-3">
-                            <Box className='mx-auto w-100 my-9'>
+                            <Box className='mx-auto w-100 my-9 lg:mr-16 xl:mr-24 2xl:mr-32'>
                                 <Typography variant="h1" sx={{ fontSize: { xs: '16px', sm: '18px', md: '20px' } }}>
                                     :: فعالیت های باشگاه
                                 </Typography>

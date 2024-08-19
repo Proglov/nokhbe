@@ -4,7 +4,7 @@ import { Box, Container, Grid, Typography } from "@mui/material";
 import Image from "next/image";
 
 export default function page() {
-    const src = '/img/home-main/IMG_20231004_155303_382.jpg'
+    const src = '/img/home-slider/IMG_20231004_155759_101.jpg'
 
     return (
         <div>
@@ -19,7 +19,7 @@ export default function page() {
                     <div>
 
                         <Container>
-                            <Box className='mx-auto w-100 mt-8'>
+                            <Box className='mx-auto w-100 mt-8 lg:mr-16 xl:mr-24 2xl:mr-32'>
                                 <Typography variant="h1" sx={{ fontSize: { xs: '16px', sm: '18px', md: '20px' } }}>
                                     :: ماموریت باشگاه
                                 </Typography>
@@ -34,7 +34,7 @@ export default function page() {
                         <br />
 
                         <Container>
-                            <Box className='mx-auto w-100 mt-2 mb-9'>
+                            <Box className='mx-auto w-100 mt-2 mb-9 lg:mr-16 xl:mr-24 2xl:mr-32'>
                                 <Typography variant="h1" sx={{ fontSize: { xs: '16px', sm: '18px', md: '20px' } }}>
                                     :: اهداف باشگاه نخبگان جوان و فرهیختگان دانشگاه شمال
                                 </Typography>

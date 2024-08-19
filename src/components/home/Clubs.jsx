@@ -60,8 +60,8 @@ export default function Clubs() {
                                     {
                                         workingGroups[currentClub].map((member, index) => (
                                             <Box className='flex gap-x-2' key={index}>
-                                                <div >{member.name}:</div>
-                                                <div>{member.position}</div>
+                                                <div>{member.position}:</div>
+                                                <div >مدیر کارگروه {member.name}</div>
                                             </Box>
                                         ))
                                     }

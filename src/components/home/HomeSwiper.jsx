@@ -9,9 +9,9 @@ import "@/styles/Home/HomeSwiper.css"
 
 
 const defaultSources = [
-    '/img/home-main/IMG_20231004_155303_382.jpg',
-    '/img/home-main/IMG_20240128_231618_726.jpg',
-    '/img/home-main/IMG_20240128_195206_989.jpg',
+    '/img/home-main/firstImage.jpg',
+    '/img/home-main/secondImage.jpg',
+    '/img/home-main/thirdImage.jpg',
 ];
 
 function Arrow(props) {
@@ -106,8 +106,8 @@ export default function HomeSwiper({ sources }) {
                                     src={item}
                                     blurDataURL={'img/wait.png'}
                                     placeholder='blur'
-                                    width={1920}
-                                    height={1080}
+                                    width={2500}
+                                    height={1400}
                                     alt="Picture of the university"
                                 />
                             </div>

@@ -383,7 +383,7 @@ export default function SignUp() {
                                         )}
                                         MenuProps={MenuProps}
                                     >
-                                        {tags.map((tag) => (
+                                        {[...tags, 'فاقد باشگاه'].map((tag) => (
                                             <MenuItem
                                                 key={tag}
                                                 value={tag}

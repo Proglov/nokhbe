@@ -7,8 +7,8 @@ import { GiClick } from "react-icons/gi";
 import Link from 'next/link';
 
 export default function page() {
-    const src1 = '/img/home-main/IMG_20231004_155303_382.jpg';
-    const src2 = '/img/home-main/IMG_20231004_155303_382.jpg';
+    const src1 = '/img/home-main/IMG_20240818_223049_632.jpg';
+    const src2 = '/img/home-main/IMG_20240818_223049_994.jpg';
 
     return (
         <div>
@@ -20,7 +20,7 @@ export default function page() {
 
                     <div>
                         <Container>
-                            <Box className='mx-auto w-100 my-9'>
+                            <Box className='mx-auto w-100 my-9 lg:mr-16 xl:mr-28'>
                                 <Typography variant="h1" sx={{ fontSize: { xs: '16px', sm: '18px', md: '20px' } }}>
                                     :: فعالیت های باشگاه
                                 </Typography>
@@ -58,7 +58,7 @@ export default function page() {
                     </div>
                     <div>
                         <Container>
-                            <Box className='mx-auto w-100 my-9'>
+                            <Box className='mx-auto w-100 my-9 lg:mr-16 xl:mr-28'>
                                 <Typography variant="h1" sx={{ fontSize: { xs: '16px', sm: '18px', md: '20px' } }}>
                                     :: خدمات قابل ارائه
                                 </Typography>
@@ -93,7 +93,7 @@ export default function page() {
                     </div>
                     <div>
                         <Container>
-                            <Box className='mx-auto w-100 mt-8'>
+                            <Box className='mx-auto w-100 mt-8 lg:mr-16 xl:mr-28'>
                                 <Typography variant="h1" sx={{ fontSize: { xs: '16px', sm: '18px', md: '20px' } }}>
                                     :: آیین نامه عضویت باشگاه
                                 </Typography>

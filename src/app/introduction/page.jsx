@@ -4,7 +4,7 @@ import { Box, Container, Grid, Typography } from "@mui/material";
 import Image from "next/image";
 
 export default function page() {
-    const src = '/img/home-main/IMG_20231004_155303_382.jpg'
+    const src = '/img/home-main/thirdImage.jpg'
 
     return (
         <div>

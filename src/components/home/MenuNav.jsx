@@ -120,7 +120,7 @@ export default function MenuNav() {
                                             </li>
                                             <li className='py-1 px-5 sm:px-3 md:px-5 lg:px-10' style={{ borderBottom: '3px solid black' }}>
                                                 <Box sx={{ fontSize: { xs: '10px', sm: '15px', md: '20px', lg: '23px', paddingX: { xs: '5px', sm: '4px', md: '6px', lg: '8px' } } }} onClick={handleClose}>
-                                                    <Link href='/organizational-structure/boss'>
+                                                    <Link href='/organizational-structure/rahbari'>
                                                         شورای راهبری
                                                     </Link>
                                                 </Box>
