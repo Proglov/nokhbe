@@ -58,10 +58,23 @@ export default function Clubs() {
                                 <h3 className='mb-2'>کارگروه های باشگاه</h3>
                                 <Box>
                                     {
-                                        workingGroups[currentClub].map((member, index) => (
-                                            <Box className='flex gap-x-2' key={index}>
-                                                <div>{member.position}:</div>
-                                                <div >مدیر کارگروه {member.name}</div>
+                                        workingGroups[currentClub].map((group, index) => (
+                                            <Box key={index} className='my-4'>
+                                                <h2>{group.groupName}:</h2>
+                                                <Box className='mr-3'>
+                                                    <div>مدیر کارگروه: {group.leader}</div>
+                                                    <div className='mt-2'>اعضا:</div>
+                                                    <Box className='mr-3'>
+                                                        {
+                                                            group.members.map((member, i) => (
+                                                                <div key={i + 100}>
+                                                                    {member}
+                                                                </div>
+                                                            ))
+                                                        }
+                                                    </Box>
+                                                </Box>
+
                                             </Box>
                                         ))
                                     }
