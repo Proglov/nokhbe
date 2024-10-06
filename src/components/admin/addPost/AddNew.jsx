@@ -40,7 +40,7 @@ function getStyles(tagOptions, tags, theme) {
     };
 }
 
-export default function AddNew({ type }) {
+export default function AddNew({ type, tag }) {
     const theme = useTheme();
     const checkBoxRef = useRef();
 
@@ -61,7 +61,7 @@ export default function AddNew({ type }) {
         }
     })
 
-    const { setStaticProps, setInfoItems, currentInfoPage, controlPanelsPage } = useContext(useAdminContext)
+    const { setStaticProps, setInfoItems, currentInfoPage } = useContext(useAdminContext)
 
     const itemType = type === 'events' ? "رویداد" : type === 'news' ? "خبر" : "اطلاعیه"
 
@@ -153,7 +153,7 @@ export default function AddNew({ type }) {
                 error: '',
                 isSubmitting: false
             })), 5000);
-        } else if (AddNewData.formData.tags.length === 0) {
+        } else if (!tag && AddNewData.formData.tags.length === 0) {
             setAddNewData(prevProps => ({
                 ...prevProps,
                 error: `انتخاب برچسب ${itemType} ضروری میباشد`,
@@ -209,8 +209,7 @@ export default function AddNew({ type }) {
                 "title": AddNewData.formData.title,
                 "description": DOMPurify.sanitize(AddNewData.formData.quillValue),
                 "imagesURL": uploadRes,
-                "tags": AddNewData.formData.tags,
-                "createdBy": "ADMIN",
+                "tags": tag ? [tag] : AddNewData.formData.tags,
                 "telegram": AddNewData.formData.telegram
             }
 
@@ -274,9 +273,10 @@ export default function AddNew({ type }) {
                     }
                 })
                 .catch((err) => {
+                    console.log(err);
                     setAddNewData(prevProps => ({
                         ...prevProps,
-                        error: err,
+                        error: 'خطایی رخ داده است',
                         isSubmitting: false
                     }));
                 });
@@ -308,44 +308,52 @@ export default function AddNew({ type }) {
                         </div>
                     </Grid>
 
-                    <Grid item xs={12} sm={12} md={12} lg={6} className="mt-2 relative">
-                        <InputLabel
-                            id="demo-multiple-chip-label"
-                            className="absolute"
-                            sx={{ right: { lg: '8%', xs: '15%', sm: '10%', md: '6%' }, top: { lg: '35%', xs: '20%', sm: '19%', md: '30%' } }}
-                        >
-                            برچسب ها
-                        </InputLabel>
-                        <Select
-                            style={{ height: '52px' }}
-                            name="tags"
-                            className={`shadow appearance-none border rounded w-full py-2 px-3 lg:mt-5 text-gray-700 leading-tight bg-white focus:bg-white focus:border-purple-500`}
-                            labelId="demo-multiple-chip-label"
-                            id="demo-multiple-chip"
-                            multiple
-                            value={AddNewData.formData.tags}
-                            onChange={handleChange}
-                            input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-                            renderValue={(selected) => (
-                                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                                    {selected.map((value) => (
-                                        <Chip key={value} label={value} />
-                                    ))}
-                                </Box>
-                            )}
-                            MenuProps={MenuProps}
-                        >
-                            {[...tags, 'ادمین', 'رئیس باشگاه'].map((tag) => (
-                                <MenuItem
-                                    key={tag}
-                                    value={tag}
-                                    style={getStyles(tag, AddNewData.formData.tags, theme)}
+                    {
+                        !!tag ?
+                            <Grid item xs={12} sm={12} md={12} lg={6} className="mt-2 relative">
+                                برچسب: {' '}
+                                {tag}
+                            </Grid>
+                            :
+                            <Grid item xs={12} sm={12} md={12} lg={6} className="mt-2 relative">
+                                <InputLabel
+                                    id="demo-multiple-chip-label"
+                                    className="absolute"
+                                    sx={{ right: { lg: '8%', xs: '15%', sm: '10%', md: '6%' }, top: { lg: '35%', xs: '20%', sm: '19%', md: '30%' } }}
                                 >
-                                    {tag}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </Grid>
+                                    برچسب ها
+                                </InputLabel>
+                                <Select
+                                    style={{ height: '52px' }}
+                                    name="tags"
+                                    className={`shadow appearance-none border rounded w-full py-2 px-3 lg:mt-5 text-gray-700 leading-tight bg-white focus:bg-white focus:border-purple-500`}
+                                    labelId="demo-multiple-chip-label"
+                                    id="demo-multiple-chip"
+                                    multiple
+                                    value={AddNewData.formData.tags}
+                                    onChange={handleChange}
+                                    input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                                    renderValue={(selected) => (
+                                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                            {selected.map((value) => (
+                                                <Chip key={value} label={value} />
+                                            ))}
+                                        </Box>
+                                    )}
+                                    MenuProps={MenuProps}
+                                >
+                                    {[...tags, 'ادمین', 'رئیس باشگاه'].map((tag) => (
+                                        <MenuItem
+                                            key={tag}
+                                            value={tag}
+                                            style={getStyles(tag, AddNewData.formData.tags, theme)}
+                                        >
+                                            {tag}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </Grid>
+                    }
 
                     <Grid item xs={12}>
                         <label

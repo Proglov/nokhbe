@@ -42,7 +42,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 
-export default function InfoPage({ type }) {
+export default function InfoPage({ type, role }) {
     const [imagesToDelete, setImagesToDelete] = useState([]);
     const [fileStates, setFileStates] = useState([]);
     const [uploadRes, setUploadRes] = useState([]);
@@ -274,7 +274,10 @@ export default function InfoPage({ type }) {
                                     <TableRow>
                                         <StyledTableCell align='center'>ردیف</StyledTableCell>
                                         <StyledTableCell align='center'>عنوان</StyledTableCell>
-                                        <StyledTableCell align='center'>ارسال کننده</StyledTableCell>
+                                        {
+                                            role === 'admin' &&
+                                            <StyledTableCell align='center'>ارسال کننده</StyledTableCell>
+                                        }
                                         <StyledTableCell align='center'>بازدیدها</StyledTableCell>
                                         <StyledTableCell align='center'>برچسب ها</StyledTableCell>
                                         <StyledTableCell align='center'>وضعیت</StyledTableCell>
@@ -289,7 +292,10 @@ export default function InfoPage({ type }) {
                                             className='align-middle'>
                                             <StyledTableCell align='center'>{index + 1 + infoItemsPerPage * (currentInfoPage - 1)}</StyledTableCell>
                                             <StyledTableCell align='center'>{item.title}</StyledTableCell>
-                                            <StyledTableCell align='center'>{item.createdBy}</StyledTableCell>
+                                            {
+                                                role === 'admin' &&
+                                                <StyledTableCell align='center'>{item.createdBy}</StyledTableCell>
+                                            }
                                             <StyledTableCell align='center'>{item.views}</StyledTableCell>
                                             <StyledTableCell className='flex flex-col justify-center'>
                                                 <ul className='flex flex-col justify-center align-middle'>
@@ -316,55 +322,74 @@ export default function InfoPage({ type }) {
                                             <StyledTableCell className='flex flex-col justify-center border-b-0 align-middle'>
                                                 {operatingID === item.id ? (
                                                     <div className='text-center mt-2 text-xs'>درحال انجام عملیات</div>
-                                                ) : (
-                                                    <>
-                                                        {!item.status && (
-                                                            <Button onClick={() => {
-                                                                setIsModalConfirmOpen(true);
-                                                                setSelectedItem({
-                                                                    ...item
-                                                                })
-                                                            }}
+                                                ) :
+                                                    role === 'admin' ?
+                                                        (
+                                                            <>
+                                                                {!item.status && (
+                                                                    <Button onClick={() => {
+                                                                        setIsModalConfirmOpen(true);
+                                                                        setSelectedItem({
+                                                                            ...item
+                                                                        })
+                                                                    }}
+                                                                        variant='outlined'
+                                                                        className='p-0 m-1'
+                                                                        sx={{ color: 'green', borderColor: 'green' }}>
+                                                                        تایید
+                                                                    </Button>
+                                                                )}
+                                                                <Button
+                                                                    variant='outlined'
+                                                                    className='p-0 m-1'
+                                                                    sx={{ color: 'primary', borderColor: 'primary' }}
+                                                                    onClick={() => {
+                                                                        setIsModalEditOpen(true);
+                                                                        setSelectedItem({
+                                                                            ...item
+                                                                        });
+                                                                    }}
+                                                                >
+                                                                    ویرایش
+                                                                </Button>
+                                                                <Button
+                                                                    variant='outlined'
+                                                                    sx={{ color: 'red', borderColor: 'red' }}
+                                                                    className='p-0 m-1'
+                                                                    onClick={() => {
+                                                                        setIsModalDeleteOpen(true);
+                                                                        setSelectedItem({
+                                                                            id: item.id,
+                                                                            description: item.description,
+                                                                            title: item.title,
+                                                                            imagesURL: item.imagesURL,
+                                                                            createdBy: item.createdBy,
+                                                                            tags: item.tags,
+                                                                            telegram: item.telegram
+                                                                        })
+                                                                    }}
+                                                                >
+                                                                    حذف
+                                                                </Button>
+                                                            </>
+                                                        )
+                                                        :
+                                                        (
+                                                            <Button
                                                                 variant='outlined'
                                                                 className='p-0 m-1'
-                                                                sx={{ color: 'green', borderColor: 'green' }}>
-                                                                تایید
+                                                                sx={{ color: 'primary', borderColor: 'primary' }}
+                                                                onClick={() => {
+                                                                    setIsModalEditOpen(true);
+                                                                    setSelectedItem({
+                                                                        ...item
+                                                                    });
+                                                                }}
+                                                            >
+                                                                مشاهده بیشتر
                                                             </Button>
-                                                        )}
-                                                        <Button
-                                                            variant='outlined'
-                                                            className='p-0 m-1'
-                                                            sx={{ color: 'primary', borderColor: 'primary' }}
-                                                            onClick={() => {
-                                                                setIsModalEditOpen(true);
-                                                                setSelectedItem({
-                                                                    ...item
-                                                                });
-                                                            }}
-                                                        >
-                                                            ویرایش
-                                                        </Button>
-                                                        <Button
-                                                            variant='outlined'
-                                                            sx={{ color: 'red', borderColor: 'red' }}
-                                                            className='p-0 m-1'
-                                                            onClick={() => {
-                                                                setIsModalDeleteOpen(true);
-                                                                setSelectedItem({
-                                                                    id: item.id,
-                                                                    description: item.description,
-                                                                    title: item.title,
-                                                                    imagesURL: item.imagesURL,
-                                                                    createdBy: item.createdBy,
-                                                                    tags: item.tags,
-                                                                    telegram: item.telegram
-                                                                })
-                                                            }}
-                                                        >
-                                                            حذف
-                                                        </Button>
-                                                    </>
-                                                )}
+                                                        )
+                                                }
                                                 {operatingID === item.id && operatingError !== '' ? (
                                                     <div>مشکلی پیش امده است. لطفا اتصال اینترنت را بررسی کنید</div>
                                                 ) : ''}
@@ -385,12 +410,17 @@ export default function InfoPage({ type }) {
                     </div>
             )}
 
-            <ModalConfirmContext.Provider value={{ isModalConfirmOpen, setIsModalConfirmOpen, confirmItem }}>
-                <ModalConfirm type={type} id={selectedItem.id} title={selectedItem.title} description={selectedItem.description} imagesURL={selectedItem.imagesURL} tags={selectedItem.tags} createdBy={selectedItem.createdBy} eventAt={null || selectedItem.eventAt} />
-            </ModalConfirmContext.Provider>
-            <ModalDeleteContext.Provider value={{ isModalDeleteOpen, setIsModalDeleteOpen, deleteItem }}>
-                <ModalDelete id={selectedItem.id} type={type} />
-            </ModalDeleteContext.Provider>
+            {
+                role === 'admin' &&
+                <>
+                    <ModalConfirmContext.Provider value={{ isModalConfirmOpen, setIsModalConfirmOpen, confirmItem }}>
+                        <ModalConfirm type={type} id={selectedItem.id} title={selectedItem.title} description={selectedItem.description} imagesURL={selectedItem.imagesURL} tags={selectedItem.tags} createdBy={selectedItem.createdBy} eventAt={null || selectedItem.eventAt} />
+                    </ModalConfirmContext.Provider>
+                    <ModalDeleteContext.Provider value={{ isModalDeleteOpen, setIsModalDeleteOpen, deleteItem }}>
+                        <ModalDelete id={selectedItem.id} type={type} />
+                    </ModalDeleteContext.Provider>
+                </>
+            }
             <ModalEditContext.Provider value={{
                 isModalEditOpen,
                 setIsModalEditOpen,
@@ -405,7 +435,7 @@ export default function InfoPage({ type }) {
                 setImagesToDelete,
                 imagesToDelete
             }}>
-                <ModalEdit />
+                <ModalEdit isAdmin={role === 'admin'} />
             </ModalEditContext.Provider>
 
         </Stack>

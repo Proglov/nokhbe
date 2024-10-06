@@ -30,7 +30,7 @@ function a11yProps(index) {
     };
 }
 
-export default function AddSegment() {
+export default function AddSegment({ tag }) {
     const { addSegmentsPage, setAddSegmentsPage } = useContext(useAdminContext)
 
     const handleChange = (_event, newAddSegmentsPage) => {
@@ -78,7 +78,7 @@ export default function AddSegment() {
                         <div className='text-center'>
                             افزودن خبر
                         </div>
-                        <AddNew type='news' />
+                        <AddNew type='news' tag={tag} />
                     </div>
                 </TabPanel>
                 <TabPanel value={addSegmentsPage} index={1}>
@@ -86,7 +86,7 @@ export default function AddSegment() {
                         <div className='text-center'>
                             افزودن اطلاعیه
                         </div>
-                        <AddNew type='announcements' />
+                        <AddNew type='announcements' tag={tag} />
                     </div>
                 </TabPanel>
                 <TabPanel value={addSegmentsPage} index={2}>
@@ -94,7 +94,7 @@ export default function AddSegment() {
                         <div className='text-center'>
                             افزودن رویداد
                         </div>
-                        <AddNew type='events' />
+                        <AddNew type='events' tag={tag} />
                     </div>
                 </TabPanel>
             </div>

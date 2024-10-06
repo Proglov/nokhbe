@@ -20,6 +20,8 @@ import Image from 'next/image';
 import { MultiFileDropzone } from '../multi-image-dropzone';
 import { tags as tagOptions } from '@/utils/tagsAndRoles'
 import { uploadImage } from '@/actions/image';
+import { FaCheck } from 'react-icons/fa';
+import { RxCross2 } from 'react-icons/rx';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -54,7 +56,7 @@ const ModalStyle = {
     p: 4,
 };
 
-export default function ModalEdit() {
+export default function ModalEdit({ isAdmin }) {
     const { isModalEditOpen, setIsModalEditOpen, type, selectedItem, setSelectedItem, fileStates,
         setFileStates, setUploadRes, updateFileProgress, editItem, setImagesToDelete, imagesToDelete } = useContext(ModalEditContext)
 
@@ -227,7 +229,14 @@ export default function ModalEdit() {
             <Fade in={isModalEditOpen}>
                 <Box sx={ModalStyle} className='rounded-3xl'>
                     <Typography id="transition-modal-title" variant="h6" component="h2">
-                        ویرایش {itemType}
+                        {
+                            isAdmin ?
+                                'ویرایش'
+                                :
+                                'مشاهده'
+                        }
+                        {' '}
+                        {itemType}
                     </Typography>
 
                     <div className="mt-5">
@@ -249,6 +258,7 @@ export default function ModalEdit() {
                                             value={selectedItem.title}
                                             placeholder="عنوان خبر را وارد کنید"
                                             onChange={handleChange}
+                                            disabled={!isAdmin}
                                         />
                                     </div>
                                 </Grid>
@@ -275,6 +285,7 @@ export default function ModalEdit() {
                                                 ))}
                                             </Box>
                                         )}
+                                        disabled={!isAdmin}
                                         MenuProps={MenuProps}
                                     >
                                         {tagOptions.map((tag) => (
@@ -305,6 +316,7 @@ export default function ModalEdit() {
                                                 value={dd}
                                                 placeholder="روز"
                                                 onChange={e => onEventAtHandler(e, 0)}
+                                                disabled={!isAdmin}
                                             />
                                             <input
                                                 className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-1/2 py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 mx-2"
@@ -314,6 +326,7 @@ export default function ModalEdit() {
                                                 value={mm}
                                                 placeholder="ماه"
                                                 onChange={e => onEventAtHandler(e, 1)}
+                                                disabled={!isAdmin}
                                             />
                                             <input
                                                 className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-1/2 py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 mx-2"
@@ -323,6 +336,7 @@ export default function ModalEdit() {
                                                 value={yy}
                                                 placeholder="سال"
                                                 onChange={e => onEventAtHandler(e, 2)}
+                                                disabled={!isAdmin}
                                             />
                                         </div>
                                     </Grid>
@@ -330,91 +344,104 @@ export default function ModalEdit() {
 
                                 <Grid item xs={12}>
                                     <div className='mt-2'>
-                                        تصویر ارسال شده:
+                                        تصاویر ارسال شده:
                                         <div>
                                             {
-                                                selectedItem.imagesURL.map((url, i) => {
-                                                    return (
-                                                        <div className='bg-blue-50' style={{ width: '300px' }}
-                                                            key={i}>
-                                                            <Image
-                                                                src={url}
-                                                                blurDataURL={'img/wait.png'}
-                                                                placeholder="blur"
-                                                                alt='عکس ارسال شده'
-                                                                width={300}
-                                                                height={200} />
+                                                !selectedItem.imagesURL?.length ?
+                                                    <>
+                                                        تصویری موجود نیست
+                                                    </>
+                                                    :
+                                                    selectedItem.imagesURL.map((url, i) => {
+                                                        return (
+                                                            <div className='bg-blue-50' style={{ width: '300px' }}
+                                                                key={i}>
+                                                                <Image
+                                                                    src={url}
+                                                                    blurDataURL={'img/wait.png'}
+                                                                    placeholder="blur"
+                                                                    alt='عکس ارسال شده'
+                                                                    width={300}
+                                                                    height={200} />
 
-                                                            <Button variant='outlined' color='error' className='mt-1 mb-4 w-full'
-                                                                onClick={() => {
-                                                                    const idx = imagesToDelete.findIndex((item) => item === selectedItem?.imagesName[i])
-                                                                    if (idx === -1) {
-                                                                        setImagesToDelete(prev => [
-                                                                            ...prev,
-                                                                            selectedItem?.imagesName[i]
-                                                                        ]);
-                                                                    }
-                                                                    setSelectedItem(prev => ({
-                                                                        ...prev,
-                                                                        imagesURL: prev?.imagesURL?.filter(theUrl => theUrl !== url),
-                                                                        imagesName: prev?.imagesName?.filter(theUrl => theUrl !== selectedItem?.imagesName[i]),
-                                                                    }))
-                                                                }}
-                                                            >
-                                                                حذف عکس بالا
-                                                            </Button>
+                                                                {
+                                                                    isAdmin &&
+                                                                    <Button variant='outlined' color='error' className='mt-1 mb-4 w-full'
+                                                                        onClick={() => {
+                                                                            const idx = imagesToDelete.findIndex((item) => item === selectedItem?.imagesName[i])
+                                                                            if (idx === -1) {
+                                                                                setImagesToDelete(prev => [
+                                                                                    ...prev,
+                                                                                    selectedItem?.imagesName[i]
+                                                                                ]);
+                                                                            }
+                                                                            setSelectedItem(prev => ({
+                                                                                ...prev,
+                                                                                imagesURL: prev?.imagesURL?.filter(theUrl => theUrl !== url),
+                                                                                imagesName: prev?.imagesName?.filter(theUrl => theUrl !== selectedItem?.imagesName[i]),
+                                                                            }))
+                                                                        }}
+                                                                    >
+                                                                        حذف عکس بالا
+                                                                    </Button>
+                                                                }
 
-                                                            <br />
-                                                        </div>
-                                                    )
-                                                })
+                                                                <br />
+                                                            </div>
+                                                        )
+                                                    })
 
                                             }
                                         </div>
                                     </div>
                                     <br />
-                                    <label
-                                        className="block mt-2 mb-1  text-gray-800" htmlFor="inline-image-upload">
-                                        افزودن تصویر:
-                                    </label>
-                                    <div className='bg-slate-300 overflow-hidden0 rounded'>
-                                        <MultiFileDropzone
-                                            width={100}
-                                            height={100}
-                                            value={fileStates}
-                                            onChange={(files) => {
-                                                setFileStates(files);
-                                            }}
-                                            onFilesAdded={async (addedFiles) => {
-                                                setFileStates(prev => [...prev, ...addedFiles]);
-                                                await Promise.all(
-                                                    addedFiles.map(async (addedFileState) => {
-                                                        try {
+                                    {
+                                        isAdmin &&
+                                        <>
+                                            <label
+                                                className="block mt-2 mb-1  text-gray-800" htmlFor="inline-image-upload">
+                                                افزودن تصویر:
+                                            </label>
+                                            <div className='bg-slate-300 overflow-hidden0 rounded'>
+                                                <MultiFileDropzone
+                                                    width={100}
+                                                    height={100}
+                                                    value={fileStates}
+                                                    onChange={(files) => {
+                                                        setFileStates(files);
+                                                    }}
+                                                    onFilesAdded={async (addedFiles) => {
+                                                        setFileStates(prev => [...prev, ...addedFiles]);
+                                                        await Promise.all(
+                                                            addedFiles.map(async (addedFileState) => {
+                                                                try {
 
-                                                            //Add an animation
-                                                            let temp = 0;
-                                                            const interval = setInterval(() => {
-                                                                updateFileProgress(addedFileState.key, temp);
-                                                                if (++temp === 50) clearInterval(interval)
-                                                            }, 10);
+                                                                    //Add an animation
+                                                                    let temp = 0;
+                                                                    const interval = setInterval(() => {
+                                                                        updateFileProgress(addedFileState.key, temp);
+                                                                        if (++temp === 50) clearInterval(interval)
+                                                                    }, 10);
 
-                                                            const formDate = new FormData()
-                                                            formDate.append("images", addedFileState.file)
-                                                            const res = await uploadImage(formDate);
-                                                            if (interval) clearInterval(interval)
-                                                            updateFileProgress(addedFileState.key, 'COMPLETE');
-                                                            setUploadRes((uploadRes) => [
-                                                                ...uploadRes,
-                                                                res?.name
-                                                            ]);
-                                                        } catch (err) {
-                                                            updateFileProgress(addedFileState.key, 'ERROR');
-                                                        }
-                                                    }),
-                                                );
-                                            }}
-                                        />
-                                    </div>
+                                                                    const formDate = new FormData()
+                                                                    formDate.append("images", addedFileState.file)
+                                                                    const res = await uploadImage(formDate);
+                                                                    if (interval) clearInterval(interval)
+                                                                    updateFileProgress(addedFileState.key, 'COMPLETE');
+                                                                    setUploadRes((uploadRes) => [
+                                                                        ...uploadRes,
+                                                                        res?.name
+                                                                    ]);
+                                                                } catch (err) {
+                                                                    updateFileProgress(addedFileState.key, 'ERROR');
+                                                                }
+                                                            }),
+                                                        );
+                                                    }}
+                                                />
+                                            </div>
+                                        </>
+                                    }
                                 </Grid>
 
                                 <Grid item xs={12}>
@@ -424,38 +451,56 @@ export default function ModalEdit() {
                                     />
                                 </Grid>
 
-                                <Grid item xs={12}>
+                                <Grid item xs={12} className='flex items-center'>
                                     <label className="text-gray-800 text-sm font-bold ml-2" htmlFor="telegram">
-                                        ارسال به شبکه های اجتماعی
+                                        ارسال به شبکه های اجتماعی:
                                     </label>
-                                    <input
-                                        type="checkbox"
-                                        ref={checkBoxRef}
-                                        name="telegram"
-                                        checked={selectedItem.telegram}
-                                        onChange={handleChange}
-                                    />
+                                    {
+                                        isAdmin ?
+                                            <input
+                                                type="checkbox"
+                                                ref={checkBoxRef}
+                                                name="telegram"
+                                                checked={selectedItem.telegram}
+                                                onChange={handleChange}
+                                                disabled={!isAdmin}
+                                            />
+                                            :
+                                            !!selectedItem.telegram ?
+                                                <FaCheck color='green' />
+                                                :
+                                                <RxCross2 color='red' size='20px' />
+                                    }
                                 </Grid>
 
                             </Grid>
                         </FormControl>
                     </div>
 
-
-
-                    <div className='mt-2 flex justify-between'>
-                        <Button
-                            onClick={() => { editItem(selectedItem) }}
-                            variant='outlined'
-                            className='p-0 m-1'
-                            sx={{ color: 'green', borderColor: 'green' }}>
-                            تایید
-                        </Button>
-                        <Button onClick={handleClose} variant='outlined'
-                            className='p-0 m-1'
-                            sx={{ color: 'red', borderColor: 'red' }}>
-                            لغو
-                        </Button>
+                    <div className={`mt-2 flex ${isAdmin ? 'justify-between' : 'justify-end'}`}>
+                        {
+                            isAdmin ?
+                                <>
+                                    <Button
+                                        onClick={() => { editItem(selectedItem) }}
+                                        variant='outlined'
+                                        className='p-0 m-1'
+                                        sx={{ color: 'green', borderColor: 'green' }}>
+                                        تایید
+                                    </Button>
+                                    <Button onClick={handleClose} variant='outlined'
+                                        className='p-0 m-1'
+                                        sx={{ color: 'red', borderColor: 'red' }}>
+                                        لغو
+                                    </Button>
+                                </>
+                                :
+                                <Button onClick={handleClose} variant='outlined'
+                                    className='p-0 m-1'
+                                    sx={{ color: 'red', borderColor: 'red' }}>
+                                    بازگشت
+                                </Button>
+                        }
                     </div>
                 </Box>
             </Fade>

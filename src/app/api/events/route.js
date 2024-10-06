@@ -6,7 +6,7 @@ export const POST = async (req) => {
     let res = await PostRequest('events', body)
     if (res?.status === 500 || res?.status === 403) {
         const { status, ...rest } = res
-        return NextResponse.json(...rest, { status })
+        return NextResponse.json({ ...rest }, { status })
     }
     return NextResponse.json(res.data);
 }

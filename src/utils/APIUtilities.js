@@ -16,6 +16,18 @@ export const getUserRole = async () => {
     }
 }
 
+export const getUserRoleAndClubs = async () => {
+    try {
+        const userId = (await getUser()).user.id
+
+        const user = await prisma.user.findUnique({ where: { id: userId } })
+
+        return { clubs: user.club, role: user.role }
+    } catch (error) {
+        return {}
+    }
+}
+
 export const getQueries = (page, perPage, justPositiveStatus) => {
     let countObj = {}
     let queryObj = {
@@ -92,7 +104,7 @@ export const GetRequest = async (type, url) => {
 export const PostRequest = async (type, body) => {
     try {
         const userRole = await getUserRole()
-        if (userRole !== "Admin")
+        if (userRole !== "Admin" && userRole !== 'clubBoss')
             return { message: "Unauthorized", status: 403 }
 
         const data = {
@@ -100,7 +112,7 @@ export const PostRequest = async (type, body) => {
             description: body?.description,
             imagesURL: body?.imagesURL,
             tags: body?.tags,
-            createdBy: body?.createdBy,
+            createdBy: userRole,
             telegram: body?.telegram
         }
 

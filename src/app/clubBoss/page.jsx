@@ -1,13 +1,13 @@
 import ClientSidePage from '@/components/admin/ClientSidePage';
-import { getUserRole } from '@/utils/APIUtilities';
+import { getUserRoleAndClubs } from '@/utils/APIUtilities';
 import { headers } from 'next/headers';
 import { notFound, redirect } from 'next/navigation';
 
 
 export default async function AdminPage() {
-    const userRole = await getUserRole()
+    const { role, clubs } = await getUserRoleAndClubs()
 
-    if (userRole === "Admin") return <ClientSidePage role='admin' />;
+    if (role === "clubBoss") return <ClientSidePage role='clubBoss' clubs={clubs} />;
 
     const headersList = headers()
     const referer = headersList.get('referer')
