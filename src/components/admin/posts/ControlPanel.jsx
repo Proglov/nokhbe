@@ -33,7 +33,7 @@ function a11yProps(index) {
     };
 }
 
-export default function ControlPanel({ role }) {
+export default function ControlPanel({ role, tag }) {
     const { controlPanelsPage, setControlPanelsPage, setCurrentInfoPage } = useContext(useAdminContext)
 
     const handleChange = (_event, newControlPanelsPage) => {
@@ -76,19 +76,19 @@ export default function ControlPanel({ role }) {
                     <div className='text-center'>
                         اخبار
                     </div>
-                    <InfoPage type='news' role={role} />
+                    <InfoPage type='news' role={role} tag={tag} />
                 </TabPanel>
                 <TabPanel value={controlPanelsPage} index={1}>
                     <div className='text-center'>
                         اطلاعیه
                     </div>
-                    <InfoPage type='announcements' role={role} />
+                    <InfoPage type='announcements' role={role} tag={tag} />
                 </TabPanel>
                 <TabPanel value={controlPanelsPage} index={2}>
                     <div className='text-center'>
                         رویداد
                     </div>
-                    <InfoPage type='events' role={role} />
+                    <InfoPage type='events' role={role} tag={tag} />
                 </TabPanel>
             </div>
         </Box>

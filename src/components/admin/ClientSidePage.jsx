@@ -97,7 +97,7 @@ export default function ClientSidePage({ role, clubs }) {
                     </AccordionSummary>
                     <AccordionDetails>
                         <useAdminContext.Provider value={adminHooks}>
-                            <ControlPanel role={role} />
+                            <ControlPanel role={role} tag={clubs ? clubs[0] : undefined} />
                         </useAdminContext.Provider>
                     </AccordionDetails>
                 </Accordion>

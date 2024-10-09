@@ -42,7 +42,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 
-export default function InfoPage({ type, role }) {
+export default function InfoPage({ type, role, tag }) {
     const [imagesToDelete, setImagesToDelete] = useState([]);
     const [fileStates, setFileStates] = useState([]);
     const [uploadRes, setUploadRes] = useState([]);
@@ -79,7 +79,7 @@ export default function InfoPage({ type, role }) {
 
     useEffect(() => {
         setLoading(true);
-        fetch(`/api/${type}?page=${currentInfoPage}&perPage=${infoItemsPerPage}`, { cache: 'no-store' })
+        fetch(`/api/${type}?page=${currentInfoPage}&perPage=${infoItemsPerPage}${!!tag ? '&tag=' + tag : ''}`, { cache: 'no-store' })
             .then((response) => {
                 if (!response.ok) {
                     throw new Error('لطفا اتصال اینترنت خود را بررسی کنید');

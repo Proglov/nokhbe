@@ -28,7 +28,7 @@ export const getUserRoleAndClubs = async () => {
     }
 }
 
-export const getQueries = (page, perPage, justPositiveStatus) => {
+export const getQueries = (page, perPage, justPositiveStatus, tags) => {
     let countObj = {}
     let queryObj = {
         orderBy: {
@@ -52,7 +52,26 @@ export const getQueries = (page, perPage, justPositiveStatus) => {
 
         countObj = { where: { status: true } }
     }
+    if (Array.isArray(tags) && !!tags.length) {
+        queryObj = {
+            ...queryObj,
+            where: {
+                ...queryObj.where,
+                tags: {
+                    hasSome: tags
+                }
+            }
+        }
+    }
     return { queryObj, countObj }
+}
+
+export const getTags = obj => {
+    const newObj = Object.fromEntries(obj)
+    return Object.keys(newObj).map(key => {
+        if (key.startsWith('tag'))
+            return newObj[key]
+    }).filter(v => v !== undefined)
 }
 
 export const getParams = url => {
@@ -64,13 +83,14 @@ export const getParams = url => {
     const onlyCount = params.get("onlyCount")
     const withoutCount = params.get("withoutCount")
     const addNegativeStatusCount = params.get("addNegativeStatusCount")
-    return { page, perPage, justPositiveStatus, onlyCount, withoutCount, addNegativeStatusCount }
+    const tags = getTags(params)
+    return { page, perPage, justPositiveStatus, onlyCount, withoutCount, addNegativeStatusCount, tags }
 }
 
 export const GetRequest = async (type, url) => {
     try {
-        const { page, perPage, justPositiveStatus, onlyCount, withoutCount, addNegativeStatusCount } = getParams(url)
-        const { queryObj, countObj } = getQueries(page, perPage, justPositiveStatus)
+        const { page, perPage, justPositiveStatus, onlyCount, withoutCount, addNegativeStatusCount, tags } = getParams(url)
+        const { queryObj, countObj } = getQueries(page, perPage, justPositiveStatus, tags)
 
         if (!!onlyCount && onlyCount === "true") {
             const count = await prisma[type].count(countObj);
