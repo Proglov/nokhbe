@@ -2,6 +2,7 @@ import { FormControl, Grid } from '@mui/material';
 import { headers } from 'next/headers';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
+import { GrUserAdmin } from 'react-icons/gr';
 
 const getMe = async () => {
     try {
@@ -30,18 +31,24 @@ export default async function Profile() {
 
                 {
                     user.role === 'clubBoss' ?
-                        <Link href='/clubBoss'>
+                        <Link href='/clubBoss' className='text-cyan-700 text-lg underline flex items-center gap-2'>
                             ورود به پنل مدیریت
+                            <GrUserAdmin />
                         </Link>
                         :
                         user.role === 'Admin' &&
-                        <Link href='/ADMIN'>
+                        <Link href='/ADMIN' className='text-cyan-700 text-lg underline flex items-center gap-2'>
                             ورود به پنل مدیریت
+                            <GrUserAdmin />
                         </Link>
                 }
 
 
-                <Grid item xs={12} sm={12} md={12} lg={6}>
+                <Grid item xs={12} className='text-center text-red-500'>
+                    مشخصات من
+                </Grid>
+
+                <Grid item xs={12}>
                     <div className='text-start text-sm mb-1'>
                         نام کاربری
                     </div>
@@ -54,7 +61,7 @@ export default async function Profile() {
                     />
                 </Grid>
 
-                <Grid item xs={12} sm={12} md={12} lg={6}>
+                <Grid item xs={12}>
                     <div className='text-start text-sm mb-1'>
                         ایمیل
                     </div>
@@ -67,7 +74,7 @@ export default async function Profile() {
                     />
                 </Grid>
 
-                <Grid item xs={12} sm={12} md={12} lg={6}>
+                <Grid item xs={12}>
                     <div className='text-start text-sm mb-1'>
                         نام کامل
                     </div>
@@ -80,7 +87,7 @@ export default async function Profile() {
                     />
                 </Grid>
 
-                <Grid item xs={12} sm={12} md={12} lg={6}>
+                <Grid item xs={12}>
                     <div className='text-start text-sm mb-1'>
                         کد ملی
                     </div>
@@ -93,7 +100,7 @@ export default async function Profile() {
                     />
                 </Grid>
 
-                <Grid item xs={12} sm={12} md={12} lg={6}>
+                <Grid item xs={12}>
                     <div className='text-start text-sm mb-1'>
                         شماره همراه
                     </div>
@@ -106,7 +113,7 @@ export default async function Profile() {
                     />
                 </Grid>
 
-                <Grid item xs={12} sm={12} md={12} lg={6}>
+                <Grid item xs={12}>
                     <div className='text-start text-sm mb-1'>
                         شماره تلفن
                     </div>
@@ -119,7 +126,7 @@ export default async function Profile() {
                     />
                 </Grid>
 
-                <Grid item xs={12} sm={12} md={12} lg={6}>
+                <Grid item xs={12}>
                     <div className='text-start text-sm mb-1'>
                         آدرس
                     </div>
@@ -132,7 +139,7 @@ export default async function Profile() {
                     />
                 </Grid>
 
-                <Grid item xs={12} sm={12} md={12} lg={6}>
+                <Grid item xs={12}>
                     <div className='text-start text-sm mb-1'>
                         کد پستی
                     </div>
@@ -145,7 +152,7 @@ export default async function Profile() {
                     />
                 </Grid>
 
-                <Grid item xs={12} sm={12} md={12} lg={6}>
+                <Grid item xs={12}>
                     <div className='text-start text-sm mb-1'>
                         بیوگرافی
                     </div>
@@ -158,7 +165,7 @@ export default async function Profile() {
                     />
                 </Grid>
 
-                <Grid item xs={12} sm={12} md={12} lg={6}>
+                <Grid item xs={12}>
                     <div className='text-start text-sm mb-1'>
                         تحصیلات
                     </div>
@@ -171,7 +178,7 @@ export default async function Profile() {
                     />
                 </Grid>
 
-                <Grid item xs={12} sm={12} md={12} lg={6}>
+                <Grid item xs={12}>
                     <div className='text-start text-sm mb-1'>
                         توانایی ها
                     </div>
@@ -184,7 +191,7 @@ export default async function Profile() {
                     />
                 </Grid>
 
-                <Grid item xs={12} sm={12} md={12} lg={6}>
+                <Grid item xs={12}>
                     <div className='text-start text-sm mb-1'>
                         کارگروه (ها)
                     </div>
