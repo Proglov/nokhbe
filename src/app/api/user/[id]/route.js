@@ -1,3 +1,4 @@
+import { getUser } from '@/lib/getUser';
 import prisma from '@/lib/prismaDB'
 import { getUserRole } from '@/utils/APIUtilities';
 import { NextResponse } from 'next/server'
@@ -45,7 +46,7 @@ export const PATCH = async (req, { params }) => {
         }
 
         //only admin can change the role
-        if (userRole === "Admin" && !!data?.role) data.role = role
+        if (userRole !== "Admin" && !!data?.role) delete data.role
 
         const updatedUser = await prisma.user.update({
             where: { id },
@@ -56,6 +57,7 @@ export const PATCH = async (req, { params }) => {
         }
         return NextResponse.json(updatedUser);
     } catch (error) {
+        console.log(error);
         return NextResponse.json({ message: `PATCH USER ${id} ERROR`, error }, { status: 500 })
     }
 }

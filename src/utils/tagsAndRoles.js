@@ -117,4 +117,4 @@ export const workingGroups = [
     ],
 ]
 
-export const roles = ["ادمین", "کاربر عادی"];
+export const roles = ["ادمین", "کاربر عادی", "مدیر کارگروه"];
