@@ -1,33 +1,33 @@
-'use client'
-import { Button, Divider, Grid, Skeleton, Typography } from '@mui/material'
+import { Button, Divider, Grid, Typography } from '@mui/material'
 import Link from 'next/link'
 import { BsFillCircleFill } from 'react-icons/bs'
 import NewsTop from './NewsTop'
 import NewsComponent from './NewsComponent'
 import { AiOutlineArrowDown } from 'react-icons/ai'
-import { useState, useEffect } from 'react'
+import { getTagsSearchParams } from '@/utils/funcs'
+import { getUserRoleAndClubs } from '@/utils/APIUtilities'
 
-export default function News() {
-    const [error, setError] = useState('')
-    const [news, setNews] = useState([])
 
-    useEffect(() => {
-        fetch(`api/news?page=1&perPage=13&justPositiveStatus=true`, { cache: 'no-store' })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('لطفا اتصال اینترنت خود را بررسی کنید');
-                }
-                return response.json();
-            })
-            .then((data) => {
-                if (data === undefined)
-                    throw new Error('لطفا اتصال اینترنت خود را بررسی کنید')
-                setNews(data?.news)
-            })
-            .catch((err) => {
-                setError(err);
-            });
-    }, []);
+export async function getData() {
+    try {
+        const { clubs: tags } = await getUserRoleAndClubs()
+        const resNews = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/news?homePage=true${!!tags ? getTagsSearchParams(tags) : ''}`, { cache: 'no-store' });
+
+        if (!resNews.ok) {
+            throw new Error('Failed to fetch data');
+        }
+
+        const news = await resNews.json();
+
+        return news.news;
+    } catch (error) {
+        return []
+    }
+}
+
+export default async function News() {
+    const news = await getData()
+
     return (
         <div>
 
@@ -75,23 +75,10 @@ export default function News() {
                             </div>
                         </>
                     ) : (
-                        <Grid container spacing={2} className="p-6 shadow-lg shadow-green-100">
-                            <Skeleton variant="rectangular" width="100%" height={200} />
-                            {Array.from({ length: 12 }).map((_, index) => (
-                                <Grid item xs={12} sm={6} md={4} lg={3} className="grid-item" key={index}>
-                                    <Skeleton variant="rectangular" width="100%" height={200} />
-                                </Grid>
-                            ))}
-                        </Grid>
+                        <div className='pr-3 pt-3'>
+                            اطلاعاتی جهت نمایش موجود نیست
+                        </div>
                     )
-                }
-                {
-                    error !== '' ?
-                        (
-                            <div className="text-center mt-2">{error.toString()}</div>
-                        )
-                        :
-                        ''
                 }
             </div>
         </div>

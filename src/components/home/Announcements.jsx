@@ -1,32 +1,30 @@
-'use client'
-import { Button, Divider, Grid, Skeleton, Typography } from '@mui/material'
+import { Button, Divider, Grid, Typography } from '@mui/material'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
 import { AiOutlineArrowLeft } from 'react-icons/ai'
 import NewsComponent from './NewsComponent'
+import { getUserRoleAndClubs } from '@/utils/APIUtilities'
+import { getTagsSearchParams } from '@/utils/funcs'
 
-export default function Announcements() {
+export async function getData() {
+    try {
+        const { clubs: tags } = await getUserRoleAndClubs()
+        const resAnnouncements = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/announcements?homePage=true${!!tags ? getTagsSearchParams(tags) : ''}`, { cache: 'no-store' });
 
-    const [error, setError] = useState('')
-    const [announcements, setAnnouncements] = useState([])
+        if (!resAnnouncements.ok) {
+            throw new Error('Failed to fetch data');
+        }
 
-    useEffect(() => {
-        fetch(`api/announcements?page=1&perPage=8&justPositiveStatus=true`, { cache: 'no-store' })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('لطفا اتصال اینترنت خود را بررسی کنید');
-                }
-                return response.json();
-            })
-            .then((data) => {
-                if (data === undefined)
-                    throw new Error('لطفا اتصال اینترنت خود را بررسی کنید')
-                setAnnouncements(data?.announcements)
-            })
-            .catch((err) => {
-                setError(err);
-            });
-    }, []);
+        const announcements = await resAnnouncements.json();
+
+        return announcements.announcements;
+    } catch (error) {
+        return []
+    }
+}
+
+export default async function Announcements() {
+    const announcements = await getData()
+
     return (
         <div>
             <div className="flex justify-between px-6 py-2">
@@ -58,23 +56,10 @@ export default function Announcements() {
                             })}
                         </Grid>
                     ) : (
-                        <Grid container spacing={2} className="p-6 shadow-lg shadow-red-100">
-                            <Skeleton variant="rectangular" width="100%" height={200} />
-                            {Array.from({ length: 6 }).map((_, index) => (
-                                <Grid item xs={12} className="grid-item" key={index}>
-                                    <Skeleton variant="rectangular" width="100%" height={200} />
-                                </Grid>
-                            ))}
-                        </Grid>
+                        <div className='pr-1'>
+                            اطلاعاتی جهت نمایش موجود نیست
+                        </div>
                     )
-                }
-                {
-                    error !== '' ?
-                        (
-                            <div className="text-center mt-2">{error.toString()}</div>
-                        )
-                        :
-                        ''
                 }
             </div>
         </div>

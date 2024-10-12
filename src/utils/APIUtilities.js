@@ -83,13 +83,67 @@ export const getParams = url => {
     const onlyCount = params.get("onlyCount")
     const withoutCount = params.get("withoutCount")
     const addNegativeStatusCount = params.get("addNegativeStatusCount")
+    const homePage = params.get("homePage")
     const tags = getTags(params)
-    return { page, perPage, justPositiveStatus, onlyCount, withoutCount, addNegativeStatusCount, tags }
+    return { page, perPage, justPositiveStatus, onlyCount, withoutCount, addNegativeStatusCount, homePage, tags }
 }
 
 export const GetRequest = async (type, url) => {
     try {
-        const { page, perPage, justPositiveStatus, onlyCount, withoutCount, addNegativeStatusCount, tags } = getParams(url)
+        const { page, perPage, justPositiveStatus, onlyCount, withoutCount, addNegativeStatusCount, tags, homePage } = getParams(url)
+
+        if (!!homePage && homePage === 'true') {
+            if (!!tags && !!tags.length) {
+                const query = {
+                    orderBy: {
+                        createdAt: 'desc'
+                    },
+                    take: 6,
+                    skip: 0,
+                    where: {
+                        status: true
+                    }
+                }
+                const data = await prisma[type].findMany({
+                    ...query, where: {
+                        ...query.where,
+                        tags: {
+                            hasSome: tags
+                        }
+                    }
+                })
+                const data2 = await prisma[type].findMany({
+                    ...query, where: {
+                        ...query.where,
+                        NOT: {
+                            tags: {
+                                hasSome: tags
+                            }
+                        }
+                    }
+                })
+                const dataWithTrueImages = await getTrueImagesUrl([...data, ...data2])
+
+                return { data: dataWithTrueImages }
+            }
+            else {
+                const query = {
+                    orderBy: {
+                        createdAt: 'desc'
+                    },
+                    take: 12,
+                    skip: 0,
+                    where: {
+                        status: true
+                    }
+                }
+                const data = await prisma[type].findMany(query)
+                const dataWithTrueImages = await getTrueImagesUrl(data)
+
+                return { data: dataWithTrueImages }
+            }
+        }
+
         const { queryObj, countObj } = getQueries(page, perPage, justPositiveStatus, tags)
 
         if (!!onlyCount && onlyCount === "true") {

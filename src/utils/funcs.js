@@ -141,6 +141,8 @@ export const convertRoles = role => {
     else return "تایید نشده"
 }
 
+export const getTagsSearchParams = tags => '&' + tags.map((tag, i) => 'tag' + i + '=' + tag).join('&')
+
 export const convertEventAt = str => { // 1402-02-25
     let yr = '', month = '', day = '';
     for (let i = 0; i < 4; i++) yr += str[i];
