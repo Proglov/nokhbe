@@ -6,8 +6,8 @@ export default function EventComponents({ date, title }) {
 
     return (
         <div>
-            <div className="flex" style={{ alignItems: 'center' }}>
-                <div className='flex flex-col bg-blue-950 text-slate-100 rounded text-center p-2'>
+            <div className="flex" style={{ alignItems: 'flex-start' }}>
+                <div className='flex flex-col bg-blue-950 text-slate-100 rounded text-center p-2 mt-2'>
                     <div>
                         {dateInFarsi(arrDate[2])}
                     </div>

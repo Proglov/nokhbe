@@ -5,11 +5,11 @@ import Box from "@mui/material/Box";
 
 export default function NewsComponent({ src, date, title }) {
     return (
-        <Grid container spacing={2} className="p-3" sx={{ alignItems: "center" }}>
-            <Grid item xs={12} sm={5} className="grid-item">
+        <Grid container spacing={2} className="p-3">
+            <Grid item xs={12} sm={5}>
                 <Image src={src} blurDataURL={'img/wait.png'} placeholder="blur" alt={title} width={1960} height={1080} />
             </Grid>
-            <Grid item xs={12} sm={7} className="grid-item">
+            <Grid item xs={12} sm={7}>
                 <Box className="flex flex-col" sx={{ fontSize: { xs: '18px', sm: '12px', md: '16px', lg: '20px' } }}>
                     <div className="flex flex-row mt-2">
                         <AiOutlineCalendar style={{ marginTop: '-4px' }} />
