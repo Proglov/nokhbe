@@ -99,5 +99,5 @@ model Document {
   writer   String
   magazine String
   category String
-  Link     String?
+  link     String?
 }

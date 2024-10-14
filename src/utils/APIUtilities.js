@@ -200,6 +200,52 @@ export const PostRequest = async (type, body) => {
     }
 }
 
+export const GetRequestDocumentAndBook = async (type, url) => {
+    try {
+        const { page, perPage } = getParams(url)
+
+
+        const { queryObj, countObj } = getQueries(page, perPage)
+
+        const data = await prisma[type].findMany(queryObj)
+
+        const count = await prisma[type].count(countObj);
+
+        return { data, count }
+    } catch (error) {
+        return { message: `GET ${type.toUpperCase()} ERROR`, error, status: 500 }
+    }
+}
+
+export const PostRequestDocumentAndBook = async (type, body) => {
+    try {
+        const userRole = await getUserRole()
+        if (userRole !== "Admin")
+            return { message: "Unauthorized", status: 403 }
+
+        const { name, writer, magazine, publisher, category, link } = body
+        if (!name || !writer || !category || (!magazine && type === 'document') || (!publisher && type === 'book'))
+            return { message: "invalid credentials", status: 400 }
+
+        const data = {
+            name,
+            writer,
+            category
+        }
+
+        if (!!link) data.link = link
+
+        if (type === 'document') data.magazine = magazine
+        else data.publisher = publisher
+
+        const newData = await prisma[type].create({ data })
+        return { data: newData }
+    } catch (error) {
+        console.log(error);
+        return { message: `POST A NEW ${type.toUpperCase()} ERROR`, error, status: 500 }
+    }
+}
+
 export const GetByIdRequest = async (type, id) => {
     try {
         const data = await prisma[type].findUnique({

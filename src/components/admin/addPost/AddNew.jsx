@@ -58,12 +58,19 @@ export default function AddNew({ type, tag }) {
             title: '',
             telegram: false,
             quillValue: ''
+        },
+        formData2: {
+            name: '',
+            writer: '',
+            category: '',
+            link: '',
+            pubOrMag: '',
         }
     })
 
-    const { setStaticProps, setInfoItems, currentInfoPage } = useContext(useAdminContext)
+    const { setStaticProps, setInfoItems, currentInfoPage, addSegmentsPage, controlPanelsPage } = useContext(useAdminContext)
 
-    const itemType = type === 'events' ? "رویداد" : type === 'news' ? "خبر" : "اطلاعیه"
+    const itemType = type === 'events' ? "رویداد" : type === 'news' ? "خبر" : type === 'document' ? 'مقاله' : type === 'book' ? "کتاب" : "اطلاعیه"
 
     function updateFileProgress(key, progress) {
         setFileStates((fileStates) => {
@@ -87,6 +94,21 @@ export default function AddNew({ type, tag }) {
                 formData: {
                     ...prevProps.formData,
                     [name]: type === 'checkbox' ? checked : value,
+                },
+                error: ''
+            }
+        })
+    };
+
+    const handleChange2 = (event) => {
+        const { name, value } = event.target;
+
+        setAddNewData(prevProps => {
+            return {
+                ...prevProps,
+                formData2: {
+                    ...prevProps.formData2,
+                    [name]: value,
                 },
                 error: ''
             }
@@ -265,15 +287,14 @@ export default function AddNew({ type, tag }) {
                         newBody.views = 0
                         newBody.createdAt = data.createdAt
 
-                        if (currentInfoPage === 1) {
+                        if (addSegmentsPage === controlPanelsPage && currentInfoPage === 1) {
                             setInfoItems(prevItems => { return [newBody, ...prevItems] })
                         }
 
                         type === 'events' && setEventAt(['', '', ''])
                     }
                 })
-                .catch((err) => {
-                    console.log(err);
+                .catch((_err) => {
                     setAddNewData(prevProps => ({
                         ...prevProps,
                         error: 'خطایی رخ داده است',
@@ -283,6 +304,256 @@ export default function AddNew({ type, tag }) {
         }
 
     };
+
+    const onSubmitForm2 = async () => {
+        setAddNewData(prevProps => ({
+            ...prevProps,
+            isSubmitting: true
+        }));
+
+        if (AddNewData.formData2.name === '') {
+            setAddNewData(prevProps => ({
+                ...prevProps,
+                error: `عنوان ${itemType} ضروری میباشد`,
+                isSubmitting: false
+            }));
+            setTimeout(() => setAddNewData(prevProps => ({
+                ...prevProps,
+                error: '',
+                isSubmitting: false
+            })), 5000);
+        } else if (AddNewData.formData2.writer === '') {
+            setAddNewData(prevProps => ({
+                ...prevProps,
+                error: `نویسنده ${itemType} ضروری میباشد`,
+                isSubmitting: false
+            }));
+            setTimeout(() => setAddNewData(prevProps => ({
+                ...prevProps,
+                error: ''
+            })), 5000);
+        } else if (AddNewData.formData2.category === '') {
+            setAddNewData(prevProps => ({
+                ...prevProps,
+                error: `دسته بندی ${itemType} ضروری میباشد`,
+                isSubmitting: false
+            }));
+            setTimeout(() => setAddNewData(prevProps => ({
+                ...prevProps,
+                error: ''
+            })), 5000);
+        } else if (AddNewData.formData2.pubOrMag === '') {
+            setAddNewData(prevProps => ({
+                ...prevProps,
+                error: `${type === 'document' ? "نام مجله" : "انتشارات"} ضروری میباشد`,
+                isSubmitting: false
+            }));
+            setTimeout(() => setAddNewData(prevProps => ({
+                ...prevProps,
+                error: ''
+            })), 5000);
+        } else {
+
+            let newBody = {};
+
+            newBody = {
+                ...newBody,
+                "name": AddNewData.formData2.name,
+                "writer": AddNewData.formData2.writer,
+                "category": AddNewData.formData2.category
+            }
+
+            if (type === 'document')
+                newBody.magazine = AddNewData.formData2.pubOrMag
+            else newBody.publisher = AddNewData.formData2.pubOrMag
+
+            if (!!AddNewData.formData2.link) newBody.link = AddNewData.formData2.link
+
+            fetch(`/api/${type}`, {
+                headers: { 'Content-Type': 'application/json' },
+                method: 'POST',
+                body: JSON.stringify(newBody)
+            })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('لطفا اتصال اینترنت خود را بررسی کنید');
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    if (data?.error?.name === "PrismaClientKnownRequestError") {
+                        setAddNewData(prevProps => ({
+                            ...prevProps,
+                            isSubmitting: false,
+                            error: data?.message + ' ; ' + data?.error?.meta?.message
+                        }));
+                    } else {
+                        setAddNewData(prevProps => ({
+                            ...prevProps,
+                            success: `${itemType} با موفقیت اضافه شد!`,
+                            formData2: {
+                                name: '',
+                                writer: '',
+                                category: '',
+                                link: '',
+                                pubOrMag: '',
+                            },
+                            isSubmitting: false
+                        }));
+
+                        //show success for five seconds
+                        setTimeout(() => setAddNewData(prevProps => ({
+                            ...prevProps,
+                            success: ''
+                        })), 5000);
+
+                        newBody.id = data?.id
+
+                        if (addSegmentsPage === controlPanelsPage && currentInfoPage === 1) {
+                            setInfoItems(prevItems => { return [newBody, ...prevItems] })
+                        }
+                    }
+                })
+                .catch((_err) => {
+                    setAddNewData(prevProps => ({
+                        ...prevProps,
+                        error: 'خطایی رخ داده است',
+                        isSubmitting: false
+                    }));
+                });
+        }
+
+    };
+
+    if (type === 'document' || type === 'book') return (
+        <div className="mt-5">
+            <FormControl className="w-full">
+                <Grid container spacing={2}>
+
+                    <Grid item xs={12} sm={12} md={12} lg={6}>
+                        <div>
+                            <label className="block text-white mb-1 pr-4" htmlFor="inline-full-name">
+                                عنوان {itemType}
+                            </label>
+                        </div>
+                        <div>
+                            <input
+                                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                                id="inline-full-name"
+                                type="text"
+                                name="name"
+                                value={AddNewData.formData2.name}
+                                placeholder={`عنوان ${itemType} را وارد کنید`}
+                                onChange={handleChange2}
+                            />
+                        </div>
+                    </Grid>
+
+                    <Grid item xs={12} sm={12} md={12} lg={6}>
+                        <div>
+                            <label className="block text-white mb-1 pr-4" htmlFor="inline-full-name">
+                                نویسنده
+                            </label>
+                        </div>
+                        <div>
+                            <input
+                                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                                id="inline-full-name"
+                                type="text"
+                                name="writer"
+                                value={AddNewData.formData2.writer}
+                                placeholder={`نویسنده ${itemType} را وارد کنید`}
+                                onChange={handleChange2}
+                            />
+                        </div>
+                    </Grid>
+
+                    <Grid item xs={12} sm={12} md={12} lg={6}>
+                        <div>
+                            <label className="block text-white mb-1 pr-4" htmlFor="inline-full-name">
+                                دسته بندی
+                            </label>
+                        </div>
+                        <div>
+                            <input
+                                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                                id="inline-full-name"
+                                type="text"
+                                name="category"
+                                value={AddNewData.formData2.category}
+                                placeholder={`دسته بندی ${itemType} را وارد کنید`}
+                                onChange={handleChange2}
+                            />
+                        </div>
+                    </Grid>
+
+                    <Grid item xs={12} sm={12} md={12} lg={6}>
+                        <div>
+                            <label className="block text-white mb-1 pr-4" htmlFor="inline-full-name">
+                                {
+                                    type === 'document' ? "نام مجله" : "انتشارات"
+                                }
+                            </label>
+                        </div>
+                        <div>
+                            <input
+                                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                                id="inline-full-name"
+                                type="text"
+                                name="pubOrMag"
+                                value={AddNewData.formData2.pubOrMag}
+                                placeholder={`${type === 'document' ? "نام مجله" : "انتشارات"} را وارد کنید`}
+                                onChange={handleChange2}
+                            />
+                        </div>
+                    </Grid>
+
+                    <Grid item xs={12} sm={12} md={12} lg={6}>
+                        <div>
+                            <label className="block text-white mb-1 pr-4" htmlFor="inline-full-name">
+                                لینک
+                            </label>
+                        </div>
+                        <div>
+                            <input
+                                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                                id="inline-full-name"
+                                type="text"
+                                name="link"
+                                value={AddNewData.formData2.link}
+                                placeholder={`لینک ${itemType} را وارد کنید`}
+                                onChange={handleChange2}
+                            />
+                        </div>
+                    </Grid>
+
+
+                    <Grid item xs={12}>
+                        <Button
+                            variant='contained'
+                            className='mt-2 bg-blue-600 hover:bg-blue-500 text-white py-2 px-4 rounded'
+                            type="submit"
+                            disabled={AddNewData.isSubmitting}
+                            onClick={onSubmitForm2}
+                        >
+                            ارسال
+                        </Button>
+                    </Grid>
+                </Grid>
+
+            </FormControl>
+            <div className='w-full text-center'>
+                {AddNewData.isSubmitting && <div className='text-green-700 bg-slate-200 mt-3 rounded-xl text-center'>
+                    در حال ارسال ...
+                </div>}
+                {AddNewData.success !== '' ? <div className='text-green-700 mt-3 bg-slate-200 text-center rounded-xl'>
+                    {AddNewData.success}
+                </div> : AddNewData.error !== '' ? <div className='text-red-600 mt-3 bg-slate-200 text-center rounded-xl'>
+                    {AddNewData.error}
+                </div> : ''}
+            </div>
+        </div>
+    )
 
     return (
         <div className="mt-5">
@@ -455,6 +726,7 @@ export default function AddNew({ type, tag }) {
                             onChange={handleChange}
                         />
                     </Grid>
+
 
                     <Grid item xs={12}>
                         <Button

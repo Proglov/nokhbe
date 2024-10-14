@@ -58,6 +58,8 @@ export default function AddSegment({ tag }) {
                 <Tab label="اخبار" {...a11yProps(0)} sx={{ color: 'white' }} />
                 <Tab label="اطلاعیه" {...a11yProps(1)} />
                 <Tab label="رویداد" {...a11yProps(2)} />
+                <Tab label="کتاب" {...a11yProps(3)} />
+                <Tab label="مقاله" {...a11yProps(4)} />
             </Tabs>
             <Tabs
                 className='lg:block hidden self-start'
@@ -71,6 +73,8 @@ export default function AddSegment({ tag }) {
                 <Tab label="اخبار" {...a11yProps(0)} />
                 <Tab label="اطلاعیه" {...a11yProps(1)} />
                 <Tab label="رویداد" {...a11yProps(2)} />
+                <Tab label="کتاب" {...a11yProps(3)} />
+                <Tab label="مقاله" {...a11yProps(4)} />
             </Tabs>
             <div style={{ width: '100%' }}>
                 <TabPanel value={addSegmentsPage} index={0}>
@@ -95,6 +99,22 @@ export default function AddSegment({ tag }) {
                             افزودن رویداد
                         </div>
                         <AddNew type='events' tag={tag} />
+                    </div>
+                </TabPanel>
+                <TabPanel value={addSegmentsPage} index={3}>
+                    <div>
+                        <div className='text-center'>
+                            افزودن کتاب
+                        </div>
+                        <AddNew type='book' tag={tag} />
+                    </div>
+                </TabPanel>
+                <TabPanel value={addSegmentsPage} index={4}>
+                    <div>
+                        <div className='text-center'>
+                            افزودن مقاله
+                        </div>
+                        <AddNew type='document' tag={tag} />
                     </div>
                 </TabPanel>
             </div>

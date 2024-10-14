@@ -33,6 +33,7 @@ export default function ClientSidePage({ role, clubs }) {
                     <GrUserAdmin />
                 </span>
             </Typography>
+
             {
                 role == 'admin' &&
                 <CronjobButtons />
@@ -48,10 +49,11 @@ export default function ClientSidePage({ role, clubs }) {
                             id="panel1a-header"
                             className={`${expanded !== 'panel1' ? 'hover:bg-emerald-100' : ''}`}
                         >
-                            <Typography className='flex'>آمار
+                            <Typography className='flex'>
                                 <span className='m-1'>
                                     <FcStatistics />
                                 </span>
+                                آمار
                             </Typography>
                         </AccordionSummary>
                         <AccordionDetails>
@@ -69,10 +71,11 @@ export default function ClientSidePage({ role, clubs }) {
                         id="panel2a-header"
                         className={`${expanded !== 'panel2' ? 'hover:bg-violet-100' : ''}`}
                     >
-                        <Typography className='flex'>افزودن پست
+                        <Typography className='flex'>
                             <span className='m-1'>
                                 <MdAddToPhotos />
                             </span>
+                            افزودن پست
                         </Typography>
                     </AccordionSummary>
                     <AccordionDetails>
@@ -89,10 +92,11 @@ export default function ClientSidePage({ role, clubs }) {
                         id="panel2a-header"
                         className={`${expanded !== 'panel3' ? 'hover:bg-cyan-100' : ''}`}
                     >
-                        <Typography className='flex'>لیست پست ها
+                        <Typography className='flex'>
                             <span className='m-1'>
                                 <MdTableChart />
                             </span>
+                            لیست پست ها
                         </Typography>
                     </AccordionSummary>
                     <AccordionDetails>
@@ -111,10 +115,11 @@ export default function ClientSidePage({ role, clubs }) {
                             id="panel2a-header"
                             className={`${expanded !== 'panel4' ? 'hover:bg-amber-100' : ''}`}
                         >
-                            <Typography className='flex'>لیست اعضا
+                            <Typography className='flex'>
                                 <span className='m-1'>
                                     <BsPersonVcard />
                                 </span>
+                                لیست اعضا
                             </Typography>
                         </AccordionSummary>
                         <AccordionDetails>
