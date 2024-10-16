@@ -2,6 +2,8 @@ import SignAndLog from "@/components/authentication/SignAndLog";
 
 export default function page() {
     return (
-        <SignAndLog />
+        <div className="mt-20">
+            <SignAndLog />
+        </div>
     );
 }

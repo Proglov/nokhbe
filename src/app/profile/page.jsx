@@ -8,6 +8,10 @@ import { getUser } from '@/lib/getUser';
 
 export default async function Profile() {
     const userId = (await getUser())?.user?.id
+
+    if (!userId)
+        redirect('/authentication')
+
     const user = await prisma.user.findUnique({ where: { id: userId } })
 
     if (!user.id)

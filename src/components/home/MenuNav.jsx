@@ -2,13 +2,11 @@ import { Divider } from '@mui/material';
 import styles from '../../styles/Home/MenuNav.module.css'
 import Link from 'next/link';
 import { Introduction, NewsAndEvents } from './MenuNavClientComponents';
-import { getUserRole } from '@/utils/APIUtilities';
 
 export default async function MenuNav() {
-    const userRole = await getUserRole()
 
     return (
-        <nav className="sticky bg-blue-950">
+        <nav className="sticky bg-blue-950 mt-20 lg:mt-24">
             <div className="max-w-screen-xl px-4 mx-auto" style={{ display: 'flex', justifyContent: 'center', position: 'relative', height: '62px' }}>
                 <div className="flex justify-space-evenly">
                     <ul className={`flex flex-row space-x-2 ${styles.customSize}`} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -40,18 +38,6 @@ export default async function MenuNav() {
                                 تماس با ما
                             </Link>
                         </li>
-
-
-                        {
-                            userRole !== null &&
-                            <>
-                                <Divider orientation='vertical' sx={{ backgroundColor: 'white', height: '50%' }} />
-                                <li className='text-center'>
-                                    <Link href="/profile" className="text-slate-50"> &nbsp; &nbsp;پروفایل &nbsp;</Link>
-                                </li>
-                            </>
-                        }
-
 
                     </ul>
                 </div>
