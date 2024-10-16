@@ -1,26 +1,14 @@
 import { FormControl, Grid } from '@mui/material';
-import { headers } from 'next/headers';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { GrUserAdmin } from 'react-icons/gr';
+import prisma from '@/lib/prismaDB'
+import { getUser } from '@/lib/getUser';
 
-const getMe = async () => {
-    try {
-        const resUser = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user/getMe`, { cache: 'no-store', method: 'GET', headers: headers() });
-
-        if (!resUser.ok) {
-            throw new Error('Failed to fetch data');
-        }
-
-        const user = await resUser.json();
-        return user.user;
-    } catch (error) {
-        return {}
-    }
-}
 
 export default async function Profile() {
-    const user = await getMe()
+    const userId = (await getUser())?.user?.id
+    const user = await prisma.user.findUnique({ where: { id: userId } })
 
     if (!user.id)
         redirect('/authentication')

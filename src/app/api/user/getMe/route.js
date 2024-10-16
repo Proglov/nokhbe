@@ -5,7 +5,7 @@ import { NextResponse } from 'next/server'
 
 export const GET = async (req) => {
     try {
-        const userId = (await getUser()).user.id
+        const userId = (await getUser())?.user?.id
 
         if (!userId) return NextResponse.json({ message: "You are Not Authorized" }, { status: 401 })
 
