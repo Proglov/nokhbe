@@ -1,5 +1,5 @@
 "use client"
-import { Button, Stack } from '@mui/material';
+import { Button, Pagination, Stack } from '@mui/material';
 import { useEffect, useState, createContext, useContext } from 'react';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
@@ -9,7 +9,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import Pagination from './Pagination';
 import { RxCross2 } from 'react-icons/rx';
 import { FcCheckmark } from 'react-icons/fc';
 import ModalConfirm from './ModalConfirm';
@@ -400,9 +399,9 @@ export default function InfoPage({ type, role, tag }) {
                             </Table>
                         </TableContainer>
                         <div className='flex justify-center' style={{ marginTop: '25px' }}>
-                            <NewsContext.Provider value={{ currentInfoPage, setCurrentInfoPage }}>
-                                <Pagination lastPage={lastInfoTablePageNumber} />
-                            </NewsContext.Provider>
+                            <Pagination dir='ltr' color='primary' variant='outlined' count={lastInfoTablePageNumber} page={currentInfoPage} onChange={(_e, page) => {
+                                if (currentInfoPage !== page) setCurrentInfoPage(page)
+                            }} />
                         </div>
                     </div>
                     : <div>

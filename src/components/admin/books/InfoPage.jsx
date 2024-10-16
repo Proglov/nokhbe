@@ -107,10 +107,8 @@ export default function InfoPage({ type }) {
                             </Table>
                         </TableContainer>
                         <div className='flex justify-center' style={{ marginTop: '25px' }}>
-                            <Pagination dir='ltr' color='info' variant='outlined' count={lastPage} page={currentPage} onChange={(_e, page) => {
-                                if (currentPage !== page) {
-                                    dispatch(setCurrentPage(page))
-                                }
+                            <Pagination dir='ltr' color='primary' variant='outlined' count={lastPage} page={currentPage} onChange={(_e, page) => {
+                                if (currentPage !== page) setCurrentPage(page)
                             }} />
                         </div>
                     </div>

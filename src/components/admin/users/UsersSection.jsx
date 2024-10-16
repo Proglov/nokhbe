@@ -1,5 +1,5 @@
 "use client"
-import { Button, Stack } from '@mui/material';
+import { Button, Pagination, Stack } from '@mui/material';
 import { useEffect, useState, createContext } from 'react';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
@@ -9,7 +9,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import Pagination from './Pagination';
 import { convertRoles } from '@/utils/funcs';
 import ModalEdit from './ModalEdit';
 import ModalDelete from './ModalDelete';
@@ -267,9 +266,9 @@ export default function UsersSection() {
                         </TableContainer>
 
                         <div className='flex justify-center' style={{ marginTop: '25px' }}>
-                            <UsersContext.Provider value={{ currentPage, setCurrentPage }}>
-                                <Pagination lastPage={lastPageNumber} />
-                            </UsersContext.Provider>
+                            <Pagination dir='ltr' color='primary' variant='' count={lastPageNumber} page={currentPage} onChange={(_e, page) => {
+                                if (currentPage !== page) setCurrentPage(page)
+                            }} />
                         </div>
 
                     </div>

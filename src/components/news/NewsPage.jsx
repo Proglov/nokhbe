@@ -1,6 +1,5 @@
 "use client"
-import { Grid, Skeleton, Stack } from '@mui/material'
-import Pagination from './Pagination';
+import { Grid, Pagination, Skeleton, Stack } from '@mui/material'
 import { createContext, useEffect, useState } from 'react'
 import SingleNews from '../events/SingleNews';
 import NewsTop from './NewsTop';
@@ -100,7 +99,9 @@ export default function NewsPage({ type }) {
                 lastPageNumber > 1 ?
                     <div className='flex justify-center' style={{ marginTop: '25px' }}>
                         <NewsContext.Provider value={{ currentPage, setCurrentPage }}>
-                            <Pagination lastPage={lastPageNumber} />
+                            <Pagination dir='ltr' color='primary' variant='outlined' count={lastPageNumber} page={currentPage} onChange={(_e, page) => {
+                                if (currentPage !== page) setCurrentPage(page)
+                            }} />
                         </NewsContext.Provider>
                     </div>
                     : ' '
