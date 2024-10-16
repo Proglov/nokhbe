@@ -70,7 +70,7 @@ export default function AddNew({ type, tag }) {
 
     const { setStaticProps, setInfoItems, currentInfoPage, addSegmentsPage, controlPanelsPage } = useContext(useAdminContext)
 
-    const itemType = type === 'events' ? "رویداد" : type === 'news' ? "خبر" : type === 'document' ? 'مقاله' : type === 'book' ? "کتاب" : "اطلاعیه"
+    const itemType = type === 'events' ? "رویداد" : type === 'news' ? "خبر" : type === 'documents' ? 'مقاله' : type === 'books' ? "کتاب" : "اطلاعیه"
 
     function updateFileProgress(key, progress) {
         setFileStates((fileStates) => {
@@ -345,7 +345,7 @@ export default function AddNew({ type, tag }) {
         } else if (AddNewData.formData2.pubOrMag === '') {
             setAddNewData(prevProps => ({
                 ...prevProps,
-                error: `${type === 'document' ? "نام مجله" : "انتشارات"} ضروری میباشد`,
+                error: `${type === 'documents' ? "نام مجله" : "انتشارات"} ضروری میباشد`,
                 isSubmitting: false
             }));
             setTimeout(() => setAddNewData(prevProps => ({
@@ -363,7 +363,7 @@ export default function AddNew({ type, tag }) {
                 "category": AddNewData.formData2.category
             }
 
-            if (type === 'document')
+            if (type === 'documents')
                 newBody.magazine = AddNewData.formData2.pubOrMag
             else newBody.publisher = AddNewData.formData2.pubOrMag
 
@@ -425,7 +425,7 @@ export default function AddNew({ type, tag }) {
 
     };
 
-    if (type === 'document' || type === 'book') return (
+    if (type === 'documents' || type === 'books') return (
         <div className="mt-5">
             <FormControl className="w-full">
                 <Grid container spacing={2}>
@@ -491,7 +491,7 @@ export default function AddNew({ type, tag }) {
                         <div>
                             <label className="block text-white mb-1 pr-4" htmlFor="inline-full-name">
                                 {
-                                    type === 'document' ? "نام مجله" : "انتشارات"
+                                    type === 'documents' ? "نام مجله" : "انتشارات"
                                 }
                             </label>
                         </div>
@@ -502,7 +502,7 @@ export default function AddNew({ type, tag }) {
                                 type="text"
                                 name="pubOrMag"
                                 value={AddNewData.formData2.pubOrMag}
-                                placeholder={`${type === 'document' ? "نام مجله" : "انتشارات"} را وارد کنید`}
+                                placeholder={`${type === 'documents' ? "نام مجله" : "انتشارات"} را وارد کنید`}
                                 onChange={handleChange2}
                             />
                         </div>

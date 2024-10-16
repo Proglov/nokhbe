@@ -106,7 +106,7 @@ export default function AddSegment({ tag }) {
                         <div className='text-center'>
                             افزودن کتاب
                         </div>
-                        <AddNew type='book' tag={tag} />
+                        <AddNew type='books' tag={tag} />
                     </div>
                 </TabPanel>
                 <TabPanel value={addSegmentsPage} index={4}>
@@ -114,7 +114,7 @@ export default function AddSegment({ tag }) {
                         <div className='text-center'>
                             افزودن مقاله
                         </div>
-                        <AddNew type='document' tag={tag} />
+                        <AddNew type='documents' tag={tag} />
                     </div>
                 </TabPanel>
             </div>

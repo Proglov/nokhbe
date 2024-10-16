@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react';
 import ControlPanel from '@/components/admin/posts/ControlPanel';
+import ControlPanelBook from '@/components/admin/books/ControlPanel';
 import Statistics from '@/components/admin/Statistics';
 import AddSegment from '@/components/admin/addPost/AddSegment';
 import useAdminHooks, { useAdminContext } from '@/hooks/useAdminHooks';
@@ -14,6 +15,7 @@ import { FcStatistics } from "react-icons/fc";
 import { MdAddToPhotos, MdTableChart } from "react-icons/md";
 import { BsPersonVcard } from "react-icons/bs";
 import { GrUserAdmin } from "react-icons/gr";
+import { FaBookBookmark } from "react-icons/fa6";
 import CronjobButtons from './CronjobButtons';
 
 export default function ClientSidePage({ role, clubs }) {
@@ -88,8 +90,8 @@ export default function ClientSidePage({ role, clubs }) {
                 <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel2a-content"
-                        id="panel2a-header"
+                        aria-controls="panel3a-content"
+                        id="panel3a-header"
                         className={`${expanded !== 'panel3' ? 'hover:bg-cyan-100' : ''}`}
                     >
                         <Typography className='flex'>
@@ -111,8 +113,8 @@ export default function ClientSidePage({ role, clubs }) {
                     <Accordion expanded={expanded === 'panel4'} onChange={handleChange('panel4')}>
                         <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
-                            aria-controls="panel2a-content"
-                            id="panel2a-header"
+                            aria-controls="panel4a-content"
+                            id="panel4a-header"
                             className={`${expanded !== 'panel4' ? 'hover:bg-amber-100' : ''}`}
                         >
                             <Typography className='flex'>
@@ -125,6 +127,30 @@ export default function ClientSidePage({ role, clubs }) {
                         <AccordionDetails>
                             <useAdminContext.Provider value={adminHooks}>
                                 <UsersSection type={'news'} />
+                            </useAdminContext.Provider>
+                        </AccordionDetails>
+                    </Accordion>
+                }
+
+                {
+                    role == 'admin' &&
+                    <Accordion expanded={expanded === 'panel5'} onChange={handleChange('panel5')}>
+                        <AccordionSummary
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls="panel5a-content"
+                            id="panel5a-header"
+                            className={`${expanded !== 'panel4' ? 'hover:bg-rose-200' : ''}`}
+                        >
+                            <Typography className='flex'>
+                                <span className='m-1'>
+                                    <FaBookBookmark />
+                                </span>
+                                لیست کتاب ها و مقالات
+                            </Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                            <useAdminContext.Provider value={adminHooks}>
+                                <ControlPanelBook role={role} />
                             </useAdminContext.Provider>
                         </AccordionDetails>
                     </Accordion>

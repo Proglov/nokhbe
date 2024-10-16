@@ -206,6 +206,7 @@ export const GetRequestDocumentAndBook = async (type, url) => {
 
 
         const { queryObj, countObj } = getQueries(page, perPage)
+        queryObj.orderBy = {}
 
         const data = await prisma[type].findMany(queryObj)
 
