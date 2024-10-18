@@ -10,8 +10,8 @@ import "@/styles/Home/HomeSwiper.css"
 
 const defaultSources = [
     '/img/home-main/firstImage.jpg',
-    '/img/home-main/secondImage.jpg',
     '/img/home-main/thirdImage.jpg',
+    '/img/home-main/secondImage.jpg',
 ];
 
 function Arrow(props) {
