@@ -1,1 +1,1 @@
-export const statisticsView = 3945;
+export const statisticsView = 4945;

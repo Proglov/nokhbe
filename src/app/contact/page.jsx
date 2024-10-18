@@ -27,9 +27,7 @@ export default function page() {
                                 دفتر مرکزی تهران:  خیابان کریمخان زند، بین ایرانشهر و خردمند جنوبی، پلاک ١۰۸
                             </div>
 
-                            <div className="pt-2 sm:text-base text-sm" style={{ textAlign: 'justify' }}>
-                                تلفن تماس: ۰۱۱۴۴۲۰۳۷۱۱
-                            </div>
+                            <span><span className=''>تلفن تماس<span style={{ color: 'red' }}>:</span></span> ۰۱۱۴۴۲۰۳۷۱۱ - ۰۲١۸۸۳١۴۶۶١</span>
 
                             <div className="pt-2 sm:text-base text-sm" style={{ textAlign: 'justify' }}>
                                 فکس :   ۰۱۱۴۴۲۰۳۷۵۵

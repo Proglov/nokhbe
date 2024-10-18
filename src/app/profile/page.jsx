@@ -18,9 +18,9 @@ export default async function Profile() {
         redirect('/authentication')
 
     return (
-        <FormControl className="w-full">
-            <Grid container spacing={2} className='max-w-xl mx-auto m-3'>
+        <FormControl className="w-full mt-20">
 
+            <div className='max-w-xl m-3 mb-0 mt-2 md:mt-5 mx-auto w-full p-3'>
                 {
                     user.role === 'clubBoss' ?
                         <Link href='/clubBoss' className='text-cyan-700 text-lg underline flex items-center gap-2'>
@@ -34,7 +34,9 @@ export default async function Profile() {
                             <GrUserAdmin />
                         </Link>
                 }
+            </div>
 
+            <Grid container spacing={2} className='max-w-xl mx-auto m-3 mt-0 justify-center p-6 pt-2'>
 
                 <Grid item xs={12} className='text-center text-red-500'>
                     مشخصات من

@@ -6,7 +6,7 @@ import { Introduction, NewsAndEvents } from './MenuNavClientComponents';
 export default async function MenuNav() {
 
     return (
-        <nav className="sticky bg-blue-950 mt-20 lg:mt-24">
+        <nav className="sticky bg-blue-950 mt-[70px] sm:mt-20 lg:mt-24">
             <div className="max-w-screen-xl px-4 mx-auto" style={{ display: 'flex', justifyContent: 'center', position: 'relative', height: '62px' }}>
                 <div className="flex justify-space-evenly">
                     <ul className={`flex flex-row space-x-2 ${styles.customSize}`} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>

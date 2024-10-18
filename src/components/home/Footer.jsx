@@ -81,7 +81,7 @@ export default function Footer() {
                 </div>
                 <br />
                 <div className='flex flex-row'>
-                    <span><span className=''>تلفن تماس<span style={{ color: 'red' }}>:</span></span> ۰۱۱۴۴۲۰۳۷۱۱</span>
+                    <span><span className=''>تلفن تماس<span style={{ color: 'red' }}>:</span></span> ۰۱۱۴۴۲۰۳۷۱۱ - ۰۲١۸۸۳١۴۶۶١</span>
                 </div>
                 <br />
                 <div className='flex flex-row'>
