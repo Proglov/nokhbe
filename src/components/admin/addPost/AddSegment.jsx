@@ -47,6 +47,8 @@ export default function AddSegment({ tag }) {
                 orientation='horizontal'
                 value={addSegmentsPage}
                 onChange={handleChange}
+                variant='scrollable'
+                visibleScrollbar
                 aria-label="horizontal tabs example"
                 textColor='inherit'
                 TabIndicatorProps={{
@@ -69,6 +71,11 @@ export default function AddSegment({ tag }) {
                 aria-label="Vertical tabs example"
                 sx={{ borderLeft: 1, borderColor: 'divider' }}
                 textColor='inherit'
+                TabIndicatorProps={{
+                    style: {
+                        backgroundColor: "#D97D54"
+                    }
+                }}
             >
                 <Tab label="اخبار" {...a11yProps(0)} />
                 <Tab label="اطلاعیه" {...a11yProps(1)} />

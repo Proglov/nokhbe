@@ -28,7 +28,7 @@ export default function ClientSidePage({ role, clubs }) {
     const adminHooks = useAdminHooks();
 
     return (
-        <div className='min-h-screen'>
+        <div className='min-h-screen mt-24'>
             <Typography className="my-3 mr-3 flex" variant="h6" color={'primary'}>
                 صفحه ی مدیریت
                 <span className='m-2'>
