@@ -328,3 +328,58 @@ export const PatchByIdRequest = async (type, body, id) => {
         return { message: `PATCH ${type.toUpperCase()} ${id} ERROR`, error, status: 500 }
     }
 }
+
+export const DeleteByIdRequestDocumentAndBook = async (type, id) => {
+    try {
+        const userRole = await getUserRole()
+        if (userRole !== "Admin")
+            return { message: "Unauthorized", error, status: 400 }
+
+        const data = await prisma[type].findUnique({
+            where: { id }
+        })
+        if (!data) {
+            return { message: `${type.toUpperCase()} ${id} NOT FOUND`, status: 404 }
+        }
+
+        await prisma[type].delete({
+            where: { id }
+        })
+        return { message: `${type.toUpperCase()} HAS BEEN DELETED`, status: 200 }
+    } catch (error) {
+        return { message: `DELETE ${type.toUpperCase()} ${id} ERROR`, error, status: 500 }
+    }
+}
+
+export const PatchByIdRequestDocumentAndBook = async (type, body, id) => {
+    try {
+        const userRole = await getUserRole()
+        if (userRole !== "Admin")
+            return { message: "Unauthorized", status: 400 }
+
+
+        const data = {
+            name: body?.name,
+            writer: body?.writer,
+            category: body?.category,
+            Link: body?.Link,
+        }
+
+        if (type === 'book') data.publisher = body?.publisher
+        else if (type === 'document') data.magazine = body?.magazine
+
+        const updateData = await prisma[type].update({
+            where: { id },
+            data
+        })
+        if (!updateData) {
+            return { message: `${type.toUpperCase()} ${id} NOT FOUND`, status: 404 }
+        }
+
+        const dataWithTrueImages = await getTrueImagesUrl(updateData)
+        return { data: dataWithTrueImages, status: 200 }
+
+    } catch (error) {
+        return { message: `PATCH ${type.toUpperCase()} ${id} ERROR`, error, status: 500 }
+    }
+}
