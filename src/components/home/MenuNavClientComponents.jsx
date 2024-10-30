@@ -208,3 +208,61 @@ export const NewsAndEvents = () => {
         </li>
     )
 }
+
+export const BooksAndDocs = () => {
+    const [anchorEl1, setAnchorEl1] = useState(null);
+
+    const handleClick1 = (event) => {
+        setAnchorEl1(event.currentTarget);
+    };
+
+
+    const handleClose = () => {
+        setAnchorEl1(null);
+    };
+
+    return (
+        <li className='ml-2 text-center'>
+            <Button
+                id="dropdownDelayButton1"
+                aria-controls="dropdownDelay1"
+                aria-haspopup="true"
+                aria-expanded={Boolean(anchorEl1)}
+                onClick={handleClick1}
+                className="text-white pt-6 text-center inline-flex items-center"
+                style={{ color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+
+            >
+                <span className={styles.customSize}>کتاب و مقاله</span>
+                <IoMdArrowDropdown style={{ fontSize: '18px' }} />
+            </Button>
+            <Menu
+                id="dropdownDelay1"
+                anchorEl={anchorEl1}
+                open={Boolean(anchorEl1)}
+                onClose={handleClose}
+                MenuListProps={{
+                    'aria-labelledby': 'dropdownDelayButton1'
+                }}
+                style={{ marginTop: '-10px' }}
+            >
+                <Box sx={{ bgcolor: 'linear-gradient(to bottom, #090072 40%, #ff9d33)' }}>
+                    <li className='px-5 py-1 sm:px-3 md:px-5 lg:px-10' style={{ borderBottom: '3px solid black', textAlign: 'center' }}>
+                        <Box sx={{ fontSize: { xs: '10px', sm: '15px', md: '20px', lg: '23px', paddingX: { xs: '5px', sm: '4px', md: '6px', lg: '8px' } } }} onClick={handleClose}>
+                            <Link href='/books'>
+                                کتاب ها
+                            </Link>
+                        </Box>
+                    </li>
+                    <li className='py-1 px-5 sm:px-3 md:px-5 lg:px-10' style={{ textAlign: 'center' }}>
+                        <Box sx={{ fontSize: { xs: '10px', sm: '15px', md: '20px', lg: '23px', paddingX: { xs: '5px', sm: '4px', md: '6px', lg: '8px' } } }} onClick={handleClose}>
+                            <Link href='/docs'>
+                                مقالات
+                            </Link>
+                        </Box>
+                    </li>
+                </Box>
+            </Menu>
+        </li>
+    )
+}
