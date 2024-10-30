@@ -362,7 +362,7 @@ export const PatchByIdRequestDocumentAndBook = async (type, body, id) => {
             name: body?.name,
             writer: body?.writer,
             category: body?.category,
-            Link: body?.Link,
+            link: body?.link,
         }
 
         if (type === 'book') data.publisher = body?.publisher
@@ -376,10 +376,10 @@ export const PatchByIdRequestDocumentAndBook = async (type, body, id) => {
             return { message: `${type.toUpperCase()} ${id} NOT FOUND`, status: 404 }
         }
 
-        const dataWithTrueImages = await getTrueImagesUrl(updateData)
-        return { data: dataWithTrueImages, status: 200 }
+        return { data: updateData, status: 200 }
 
     } catch (error) {
+        console.log(error);
         return { message: `PATCH ${type.toUpperCase()} ${id} ERROR`, error, status: 500 }
     }
 }

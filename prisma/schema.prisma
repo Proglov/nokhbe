@@ -90,7 +90,7 @@ model Book {
   writer    String
   publisher String
   category  String
-  Link      String?
+  link      String?
 }
 
 model Document {

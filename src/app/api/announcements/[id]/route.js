@@ -26,5 +26,5 @@ export const PATCH = async (req, { params }) => {
         const { status, ...rest } = res
         return NextResponse.json({ ...rest }, { status })
     }
-    return NextResponse.json(data.message);
+    return NextResponse.json({ message: res.message, error: res.error });
 }
