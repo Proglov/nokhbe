@@ -4,7 +4,7 @@ import { Box } from "@mui/material";
 export default function Component({ type, item }) {
 
     return (
-        <div className="border rounded-xl p-3 min-w-40">
+        <div className="border rounded-xl p-3 min-w-40 my-3">
             <Box>
                 نام:
                 {' '}
