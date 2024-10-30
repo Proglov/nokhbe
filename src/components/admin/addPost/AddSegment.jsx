@@ -39,7 +39,7 @@ export default function AddSegment({ tag }) {
 
     return (
         <Box
-            className='ml-4 mt-5 p-3 pr-5 d-flex lg:flex-row flex-col text-white'
+            className='ml-4 mt-5 mx-auto p-3 pr-5 d-flex lg:flex-row flex-col text-white'
             sx={{ flexGrow: 1, display: 'flex', borderTopLeftRadius: '20px', borderBottomLeftRadius: '20px', background: 'linear-gradient(to right top, #22d3ee, #7c3aed 80%)' }}
         >
             <Tabs
@@ -47,9 +47,11 @@ export default function AddSegment({ tag }) {
                 orientation='horizontal'
                 value={addSegmentsPage}
                 onChange={handleChange}
-                variant='scrollable'
+                variant="scrollable"
                 visibleScrollbar
-                aria-label="horizontal tabs example"
+                scrollButtons
+                allowScrollButtonsMobile
+                aria-label="scrollable auto tabs example"
                 textColor='inherit'
                 TabIndicatorProps={{
                     style: {
