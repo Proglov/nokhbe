@@ -40,6 +40,7 @@ export default function Page({ params }) {
                 setLoading(false);
             });
     }, [params.id]);
+
     return (
         <Grid item xs={12} sm={8} md={8} className="grid-item">
             {

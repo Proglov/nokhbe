@@ -2,14 +2,17 @@ import { Button, Grid, Pagination, Stack } from "@mui/material"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import ModalImages from "./ModalImages"
+import ClientSideButton from "./ClientSideButton"
 
-const Component = ({ title, imageURL, href }) => {
+
+const Component = ({ title, imagesURL }) => {
     return (
         <Grid item xs={10} sm={3.5} md={2} lg={1.8} xl={1.5}>
-            <Link href={href}>
-                <Image src={imageURL || '/img/no-pic.png'} className='rounded-md' blurDataURL={'img/wait.png'} placeholder="blur" alt={title} width={1960} height={1080} />
+            <ClientSideButton links={imagesURL}>
+                <Image src={imagesURL[0] || '/img/no-pic.png'} className='rounded-md' blurDataURL={'img/wait.png'} placeholder="blur" alt={title} width={1960} height={1080} />
                 {title}
-            </Link>
+            </ClientSideButton>
         </Grid>
     )
 }
@@ -48,13 +51,17 @@ export default function MainPictureArchive({ type, data, loading, error, lastPag
                                 اطلاعاتی جهت نمایش وجود ندارد!
                             </>
                             :
-                            <Grid container gap={2} justifyContent={'start'} className="mr-3">
-                                {
-                                    data.map((item, i) => (
-                                        <Component key={i} title={item?.title} imageURL={item?.imagesURL[0]} href={`/${type}/${item?.id}`} />
-                                    ))
-                                }
-                            </Grid>
+                            <ModalImages>
+                                <Grid container gap={2} justifyContent={'start'} className="mr-3">
+                                    {
+                                        data.map((item, i) => {
+                                            if (item?.imagesURL?.length)
+                                                return <Component key={i} title={item?.title} imagesURL={item?.imagesURL} href={`/${type}/${item?.id}`} />
+                                            return
+                                        })
+                                    }
+                                </Grid>
+                            </ModalImages>
             }
 
 
