@@ -101,3 +101,19 @@ model Document {
   category String
   link     String?
 }
+
+model Idea {
+  id               String @id @default(auto()) @map("_id") @db.ObjectId
+  name             String
+  briefDiscription String
+  discription      String
+  applicant        String
+  budget           Int
+}
+
+model Investor {
+  id         String @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  conditions String
+  budget     Int
+}
