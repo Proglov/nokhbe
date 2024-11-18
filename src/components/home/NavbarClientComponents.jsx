@@ -61,12 +61,14 @@ const NavbarClientComponent = ({ session }) => {
         </List >
     )
     else return (
-        <Typography sx={{ display: 'flex', alignItems: 'center', backgroundColor: ' #ffffff ', borderRadius: '15px', color: 'black', fontSize: { xs: '10px', sm: '18px', fontFamily: 'Shabnam' }, minWidth: '50px' }} className='px-2 sm:p-1 opacity-80 mx-1 my-5'>
-            <LiaSignInAltSolid style={{ fontSize: '25px' }} className='text-green-600' />
-            <Link href={'/authentication'}>
-                ورود
-            </Link>
-        </Typography>
+        <Link href={'/authentication'}>
+            <Typography sx={{ display: 'flex', alignItems: 'center', backgroundColor: ' #ffffff ', borderRadius: '15px', color: 'black', fontSize: { xs: '10px', sm: '18px', fontFamily: 'Shabnam' }, minWidth: '50px' }} className='px-2 sm:p-1 opacity-80 mx-1 my-5'>
+                <LiaSignInAltSolid style={{ fontSize: '25px' }} className='text-green-600' />
+                <Typography>
+                    ورود
+                </Typography>
+            </Typography>
+        </Link>
     )
 };
 
