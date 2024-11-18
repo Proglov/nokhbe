@@ -64,6 +64,8 @@ export default function AddSegment({ tag }) {
                 <Tab label="رویداد" {...a11yProps(2)} />
                 <Tab label="کتاب" {...a11yProps(3)} />
                 <Tab label="مقاله" {...a11yProps(4)} />
+                <Tab label="ایده" {...a11yProps(5)} />
+                <Tab label="سرمایه گذار" {...a11yProps(6)} />
             </Tabs>
             <Tabs
                 className='lg:block hidden self-start'
@@ -84,6 +86,8 @@ export default function AddSegment({ tag }) {
                 <Tab label="رویداد" {...a11yProps(2)} />
                 <Tab label="کتاب" {...a11yProps(3)} />
                 <Tab label="مقاله" {...a11yProps(4)} />
+                <Tab label="ایده" {...a11yProps(5)} />
+                <Tab label="سرمایه گذار" {...a11yProps(6)} />
             </Tabs>
             <div style={{ width: '100%' }}>
                 <TabPanel value={addSegmentsPage} index={0}>
@@ -124,6 +128,22 @@ export default function AddSegment({ tag }) {
                             افزودن مقاله
                         </div>
                         <AddNew type='documents' tag={tag} />
+                    </div>
+                </TabPanel>
+                <TabPanel value={addSegmentsPage} index={5}>
+                    <div>
+                        <div className='text-center'>
+                            افزودن ایده
+                        </div>
+                        <AddNew type='ideas' tag={tag} />
+                    </div>
+                </TabPanel>
+                <TabPanel value={addSegmentsPage} index={6}>
+                    <div>
+                        <div className='text-center'>
+                            افزودن سرمایه گذار
+                        </div>
+                        <AddNew type='investors' tag={tag} />
                     </div>
                 </TabPanel>
             </div>

@@ -108,12 +108,12 @@ model Idea {
   briefDiscription String
   discription      String
   applicant        String
-  budget           Int
+  budget           String
 }
 
 model Investor {
   id         String @id @default(auto()) @map("_id") @db.ObjectId
   name       String
   conditions String
-  budget     Int
+  budget     String
 }

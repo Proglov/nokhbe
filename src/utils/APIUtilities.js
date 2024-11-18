@@ -248,7 +248,7 @@ const checkCredentials = (body, type) => {
         }
 
     } else if (type === 'idea') {
-        if (!!body?.name, !!body?.briefDiscription, !!body?.discription, !!body?.applicant, !!body?.budget)
+        if (!body?.name, !body?.briefDiscription, !body?.discription, !body?.applicant, !body?.budget)
             return { credentials: null, status: 400 }
         else return {
             status: 200,
@@ -262,7 +262,7 @@ const checkCredentials = (body, type) => {
         }
 
     } else if (type === 'investor') {
-        if (!!body?.name, !!body?.conditions, !!body?.budget)
+        if (!body?.name, !body?.conditions, !body?.budget)
             return { credentials: null, status: 400 }
         else return {
             status: 200,
@@ -286,9 +286,10 @@ export const PostRequestDocumentAndBook = async (type, body) => {
         if (status !== 200)
             return { message: "invalid credentials", status: 400 }
 
-        const newData = await prisma[type].create({ credentials })
+        const newData = await prisma[type].create({ data: credentials })
         return { data: newData }
     } catch (error) {
+        console.log(error);
         return { message: `POST A NEW ${type.toUpperCase()} ERROR`, error, status: 500 }
     }
 }

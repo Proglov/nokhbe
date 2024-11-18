@@ -65,12 +65,24 @@ export default function AddNew({ type, tag }) {
             category: '',
             link: '',
             pubOrMag: '',
+        },
+        formData3: {
+            name: '',
+            briefDiscription: '',
+            discription: '',
+            applicant: '',
+            budget: '',
+        },
+        formData4: {
+            name: '',
+            conditions: '',
+            budget: '',
         }
     })
 
     const { setStaticProps, setInfoItems, currentInfoPage, addSegmentsPage, controlPanelsPage } = useContext(useAdminContext)
 
-    const itemType = type === 'events' ? "رویداد" : type === 'news' ? "خبر" : type === 'documents' ? 'مقاله' : type === 'books' ? "کتاب" : "اطلاعیه"
+    const itemType = type === 'events' ? "رویداد" : type === 'news' ? "خبر" : type === 'documents' ? 'مقاله' : type === 'books' ? "کتاب" : type === 'investors' ? "سرمایه گذار" : type === 'ideas' ? "ایده" : "اطلاعیه"
 
     function updateFileProgress(key, progress) {
         setFileStates((fileStates) => {
@@ -108,6 +120,36 @@ export default function AddNew({ type, tag }) {
                 ...prevProps,
                 formData2: {
                     ...prevProps.formData2,
+                    [name]: value,
+                },
+                error: ''
+            }
+        })
+    };
+
+    const handleChange3 = (event) => {
+        const { name, value } = event.target;
+
+        setAddNewData(prevProps => {
+            return {
+                ...prevProps,
+                formData3: {
+                    ...prevProps.formData3,
+                    [name]: value,
+                },
+                error: ''
+            }
+        })
+    };
+
+    const handleChange4 = (event) => {
+        const { name, value } = event.target;
+
+        setAddNewData(prevProps => {
+            return {
+                ...prevProps,
+                formData4: {
+                    ...prevProps.formData4,
                     [name]: value,
                 },
                 error: ''
@@ -425,6 +467,234 @@ export default function AddNew({ type, tag }) {
 
     };
 
+    const onSubmitForm3 = async () => {
+        setAddNewData(prevProps => ({
+            ...prevProps,
+            isSubmitting: true
+        }));
+
+        if (AddNewData.formData3.name === '') {
+            setAddNewData(prevProps => ({
+                ...prevProps,
+                error: `نام ${itemType} ضروری میباشد`,
+                isSubmitting: false
+            }));
+            setTimeout(() => setAddNewData(prevProps => ({
+                ...prevProps,
+                error: '',
+                isSubmitting: false
+            })), 5000);
+        } else if (AddNewData.formData3.briefDiscription === '') {
+            setAddNewData(prevProps => ({
+                ...prevProps,
+                error: `شرح مختصر ${itemType} ضروری میباشد`,
+                isSubmitting: false
+            }));
+            setTimeout(() => setAddNewData(prevProps => ({
+                ...prevProps,
+                error: ''
+            })), 5000);
+        } else if (AddNewData.formData3.discription === '') {
+            setAddNewData(prevProps => ({
+                ...prevProps,
+                error: `شرح کامل ${itemType} ضروری میباشد`,
+                isSubmitting: false
+            }));
+            setTimeout(() => setAddNewData(prevProps => ({
+                ...prevProps,
+                error: ''
+            })), 5000);
+        } else if (AddNewData.formData3.applicant === '') {
+            setAddNewData(prevProps => ({
+                ...prevProps,
+                error: `درخواست دهنده ${itemType} ضروری میباشد`,
+                isSubmitting: false
+            }));
+            setTimeout(() => setAddNewData(prevProps => ({
+                ...prevProps,
+                error: ''
+            })), 5000);
+        } else if (AddNewData.formData3.budget === '') {
+            setAddNewData(prevProps => ({
+                ...prevProps,
+                error: `بودجه ${itemType} ضروری میباشد`,
+                isSubmitting: false
+            }));
+            setTimeout(() => setAddNewData(prevProps => ({
+                ...prevProps,
+                error: ''
+            })), 5000);
+        } else {
+
+            let newBody = {};
+
+            newBody = {
+                ...newBody,
+                "name": AddNewData.formData3.name,
+                "applicant": AddNewData.formData3.applicant,
+                "briefDiscription": AddNewData.formData3.briefDiscription,
+                "discription": AddNewData.formData3.discription,
+                "budget": AddNewData.formData3.budget
+            }
+
+            fetch(`/api/${type}`, {
+                headers: { 'Content-Type': 'application/json' },
+                method: 'POST',
+                body: JSON.stringify(newBody)
+            })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('لطفا اتصال اینترنت خود را بررسی کنید');
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    if (data?.error?.name === "PrismaClientKnownRequestError") {
+                        setAddNewData(prevProps => ({
+                            ...prevProps,
+                            isSubmitting: false,
+                            error: data?.message + ' ; ' + data?.error?.meta?.message
+                        }));
+                    } else {
+                        setAddNewData(prevProps => ({
+                            ...prevProps,
+                            success: `${itemType} با موفقیت اضافه شد!`,
+                            formData3: {
+                                name: '',
+                                budget: '',
+                                applicant: '',
+                                briefDiscription: '',
+                                discription: '',
+                            },
+                            isSubmitting: false
+                        }));
+
+                        //show success for five seconds
+                        setTimeout(() => setAddNewData(prevProps => ({
+                            ...prevProps,
+                            success: ''
+                        })), 5000);
+
+                        newBody.id = data?.id
+
+                        if (addSegmentsPage === controlPanelsPage && currentInfoPage === 1) {
+                            setInfoItems(prevItems => { return [newBody, ...prevItems] })
+                        }
+                    }
+                })
+                .catch((_err) => {
+                    setAddNewData(prevProps => ({
+                        ...prevProps,
+                        error: 'خطایی رخ داده است',
+                        isSubmitting: false
+                    }));
+                });
+        }
+
+    };
+
+    const onSubmitForm4 = async () => {
+        setAddNewData(prevProps => ({
+            ...prevProps,
+            isSubmitting: true
+        }));
+
+        if (AddNewData.formData4.name === '') {
+            setAddNewData(prevProps => ({
+                ...prevProps,
+                error: `نام ${itemType} ضروری میباشد`,
+                isSubmitting: false
+            }));
+            setTimeout(() => setAddNewData(prevProps => ({
+                ...prevProps,
+                error: '',
+                isSubmitting: false
+            })), 5000);
+        } else if (AddNewData.formData4.conditions === '') {
+            setAddNewData(prevProps => ({
+                ...prevProps,
+                error: `شرایط ${itemType} ضروری میباشد`,
+                isSubmitting: false
+            }));
+            setTimeout(() => setAddNewData(prevProps => ({
+                ...prevProps,
+                error: ''
+            })), 5000);
+        } else if (AddNewData.formData4.budget === '') {
+            setAddNewData(prevProps => ({
+                ...prevProps,
+                error: `بودجه ${itemType} ضروری میباشد`,
+                isSubmitting: false
+            }));
+            setTimeout(() => setAddNewData(prevProps => ({
+                ...prevProps,
+                error: ''
+            })), 5000);
+        } else {
+
+            let newBody = {};
+
+            newBody = {
+                ...newBody,
+                "name": AddNewData.formData4.name,
+                "conditions": AddNewData.formData4.conditions,
+                "budget": AddNewData.formData4.budget
+            }
+
+            fetch(`/api/${type}`, {
+                headers: { 'Content-Type': 'application/json' },
+                method: 'POST',
+                body: JSON.stringify(newBody)
+            })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('لطفا اتصال اینترنت خود را بررسی کنید');
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    if (data?.error?.name === "PrismaClientKnownRequestError") {
+                        setAddNewData(prevProps => ({
+                            ...prevProps,
+                            isSubmitting: false,
+                            error: data?.message + ' ; ' + data?.error?.meta?.message
+                        }));
+                    } else {
+                        setAddNewData(prevProps => ({
+                            ...prevProps,
+                            success: `${itemType} با موفقیت اضافه شد!`,
+                            formData4: {
+                                name: '',
+                                budget: '',
+                                conditions: ''
+                            },
+                            isSubmitting: false
+                        }));
+
+                        //show success for five seconds
+                        setTimeout(() => setAddNewData(prevProps => ({
+                            ...prevProps,
+                            success: ''
+                        })), 5000);
+
+                        newBody.id = data?.id
+
+                        if (addSegmentsPage === controlPanelsPage && currentInfoPage === 1) {
+                            setInfoItems(prevItems => { return [newBody, ...prevItems] })
+                        }
+                    }
+                })
+                .catch((_err) => {
+                    setAddNewData(prevProps => ({
+                        ...prevProps,
+                        error: 'خطایی رخ داده است',
+                        isSubmitting: false
+                    }));
+                });
+        }
+
+    };
+
     if (type === 'documents' || type === 'books') return (
         <div className="mt-5">
             <FormControl className="w-full">
@@ -535,6 +805,228 @@ export default function AddNew({ type, tag }) {
                             type="submit"
                             disabled={AddNewData.isSubmitting}
                             onClick={onSubmitForm2}
+                        >
+                            ارسال
+                        </Button>
+                    </Grid>
+                </Grid>
+
+            </FormControl>
+            <div className='w-full text-center'>
+                {AddNewData.isSubmitting && <div className='text-green-700 bg-slate-200 mt-3 rounded-xl text-center'>
+                    در حال ارسال ...
+                </div>}
+                {AddNewData.success !== '' ? <div className='text-green-700 mt-3 bg-slate-200 text-center rounded-xl'>
+                    {AddNewData.success}
+                </div> : AddNewData.error !== '' ? <div className='text-red-600 mt-3 bg-slate-200 text-center rounded-xl'>
+                    {AddNewData.error}
+                </div> : ''}
+            </div>
+        </div>
+    )
+    else if (type === 'ideas') return (
+        <div className="mt-5">
+            <FormControl className="w-full">
+                <Grid container spacing={2}>
+
+                    <Grid item xs={12} sm={12} md={12} lg={6}>
+                        <div>
+                            <label className="block text-white mb-1 pr-4" htmlFor="inline-full-name">
+                                عنوان {itemType}
+                            </label>
+                        </div>
+                        <div>
+                            <input
+                                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                                id="inline-full-name"
+                                type="text"
+                                name="name"
+                                value={AddNewData.formData3.name}
+                                placeholder={`عنوان ${itemType} را وارد کنید`}
+                                onChange={handleChange3}
+                            />
+                        </div>
+                    </Grid>
+
+
+                    <Grid item xs={12} sm={12} md={12} lg={6}>
+                        <div>
+                            <label className="block text-white mb-1 pr-4" htmlFor="inline-full-name">
+                                شرح مختصر
+                            </label>
+                        </div>
+                        <div>
+                            <input
+                                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                                id="inline-full-name"
+                                type="text"
+                                name="briefDiscription"
+                                value={AddNewData.formData3.briefDiscription}
+                                placeholder={`شرح مختصر ${itemType} را وارد کنید`}
+                                onChange={handleChange3}
+                            />
+                        </div>
+                    </Grid>
+
+
+                    <Grid item xs={12} sm={12} md={12} lg={6}>
+                        <div>
+                            <label className="block text-white mb-1 pr-4" htmlFor="inline-full-name">
+                                شرح کامل
+                            </label>
+                        </div>
+                        <div>
+                            <input
+                                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                                id="inline-full-name"
+                                type="text"
+                                name="discription"
+                                value={AddNewData.formData3.discription}
+                                placeholder={`شرح کامل ${itemType} را وارد کنید`}
+                                onChange={handleChange3}
+                            />
+                        </div>
+                    </Grid>
+
+                    <Grid item xs={12} sm={12} md={12} lg={6}>
+                        <div>
+                            <label className="block text-white mb-1 pr-4" htmlFor="inline-full-name">
+                                درخواست دهنده
+                            </label>
+                        </div>
+                        <div>
+                            <input
+                                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                                id="inline-full-name"
+                                type="text"
+                                name="applicant"
+                                value={AddNewData.formData3.applicant}
+                                placeholder={`درخواست دهنده ${itemType} را وارد کنید`}
+                                onChange={handleChange3}
+                            />
+                        </div>
+                    </Grid>
+
+
+                    <Grid item xs={12} sm={12} md={12} lg={6}>
+                        <div>
+                            <label className="block text-white mb-1 pr-4" htmlFor="inline-full-name">
+                                بودجه
+                            </label>
+                        </div>
+                        <div>
+                            <input
+                                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                                id="inline-full-name"
+                                type="text"
+                                name="budget"
+                                value={AddNewData.formData3.budget}
+                                placeholder={`بودجه ${itemType} را وارد کنید`}
+                                onChange={handleChange3}
+                            />
+                        </div>
+                    </Grid>
+
+
+
+                    <Grid item xs={12}>
+                        <Button
+                            variant='contained'
+                            className='mt-2 bg-blue-600 hover:bg-blue-500 text-white py-2 px-4 rounded'
+                            type="submit"
+                            disabled={AddNewData.isSubmitting}
+                            onClick={onSubmitForm3}
+                        >
+                            ارسال
+                        </Button>
+                    </Grid>
+                </Grid>
+
+            </FormControl>
+            <div className='w-full text-center'>
+                {AddNewData.isSubmitting && <div className='text-green-700 bg-slate-200 mt-3 rounded-xl text-center'>
+                    در حال ارسال ...
+                </div>}
+                {AddNewData.success !== '' ? <div className='text-green-700 mt-3 bg-slate-200 text-center rounded-xl'>
+                    {AddNewData.success}
+                </div> : AddNewData.error !== '' ? <div className='text-red-600 mt-3 bg-slate-200 text-center rounded-xl'>
+                    {AddNewData.error}
+                </div> : ''}
+            </div>
+        </div>
+    )
+    else if (type === 'investors') return (
+        <div className="mt-5">
+            <FormControl className="w-full">
+                <Grid container spacing={2}>
+
+                    <Grid item xs={12} sm={12} md={12} lg={6}>
+                        <div>
+                            <label className="block text-white mb-1 pr-4" htmlFor="inline-full-name">
+                                نام {itemType}
+                            </label>
+                        </div>
+                        <div>
+                            <input
+                                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                                id="inline-full-name"
+                                type="text"
+                                name="name"
+                                value={AddNewData.formData4.name}
+                                placeholder={`نام ${itemType} را وارد کنید`}
+                                onChange={handleChange4}
+                            />
+                        </div>
+                    </Grid>
+
+
+                    <Grid item xs={12} sm={12} md={12} lg={6}>
+                        <div>
+                            <label className="block text-white mb-1 pr-4" htmlFor="inline-full-name">
+                                شرایط
+                            </label>
+                        </div>
+                        <div>
+                            <input
+                                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                                id="inline-full-name"
+                                type="text"
+                                name="conditions"
+                                value={AddNewData.formData4.conditions}
+                                placeholder={`شرایط ${itemType} را وارد کنید`}
+                                onChange={handleChange4}
+                            />
+                        </div>
+                    </Grid>
+
+
+                    <Grid item xs={12} sm={12} md={12} lg={6}>
+                        <div>
+                            <label className="block text-white mb-1 pr-4" htmlFor="inline-full-name">
+                                بودجه
+                            </label>
+                        </div>
+                        <div>
+                            <input
+                                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                                id="inline-full-name"
+                                type="text"
+                                name="budget"
+                                value={AddNewData.formData4.budget}
+                                placeholder={`بودجه ${itemType} را وارد کنید`}
+                                onChange={handleChange4}
+                            />
+                        </div>
+                    </Grid>
+
+
+                    <Grid item xs={12}>
+                        <Button
+                            variant='contained'
+                            className='mt-2 bg-blue-600 hover:bg-blue-500 text-white py-2 px-4 rounded'
+                            type="submit"
+                            disabled={AddNewData.isSubmitting}
+                            onClick={onSubmitForm4}
                         >
                             ارسال
                         </Button>

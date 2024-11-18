@@ -4,6 +4,7 @@ import { NextResponse } from 'next/server'
 
 export const POST = async (req) => {
     const body = await req.json()
+    console.log(body);
     let res = await PostRequestDocumentAndBook('investor', body)
     if (res?.status === 500 || res?.status === 403 || res?.status === 400) {
         const { status, ...rest } = res
