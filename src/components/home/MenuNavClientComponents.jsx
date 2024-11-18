@@ -233,7 +233,7 @@ export const BooksAndDocs = () => {
                 style={{ color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
 
             >
-                <span className={styles.customSize}>کتاب و مقاله</span>
+                <span className={styles.customSize}>بانک علمی</span>
                 <IoMdArrowDropdown style={{ fontSize: '18px' }} />
             </Button>
             <Menu

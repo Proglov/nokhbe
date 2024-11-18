@@ -30,11 +30,23 @@ const Navbar = async () => {
                         </Link>
                     </Box>
 
-                    <div className='flex items-center'>
+                    <div className='flex items-center gap-5'>
 
                         <NavbarClientComponent session={session} />
 
-                        <NavbarCalendar />
+
+                        <Box sx={{ width: { xs: '50px', sm: '50px', md: '60px', lg: '70px' } }}>
+                            <Link href='/'>
+                                <Image
+                                    src='/img/brand.jpg'
+                                    blurDataURL={'img/wait.png'}
+                                    placeholder="blur"
+                                    alt="brand"
+                                    width={100}
+                                    height={100}
+                                />
+                            </Link>
+                        </Box>
 
                     </div>
 

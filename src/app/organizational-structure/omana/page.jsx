@@ -1,22 +1,25 @@
 import LastNews from "@/components/events/LastNews";
 import { Grid, Typography } from "@mui/material";
 import Image from "next/image";
-import Link from "next/link";
+// import Link from "next/link";
 
 export default function page() {
-    const src1 = '/img/members/nurian.jpg';
-    const src2 = '/img/members/ranjbar.jpg';
-    const src3 = '/img/members/razavi.jpg';
-    const src4 = '/img/members/zare.jpg';
-    const src5 = '/img/members/falahian.jpg';
-    const src6 = '/img/members/hashemi.jpg';
-    const src7 = '/img/members/roudi.jpg';
-    const src8 = '/img/members/rostami.jpg';
-    const src9 = '/img/members/sobhani.jpg';
-    const src10 = '/img/members/ahmadi.jpg';
-    const src11 = '/img/members/attar.jpg';
-    const src12 = '/img/members/lamei.jpg';
-    const src13 = '/img/members/yousef.jpg';
+    // const src1 = '/img/members/nurian.jpg';
+    // const src2 = '/img/members/ranjbar.jpg';
+    // const src3 = '/img/members/razavi.jpg';
+    // const src4 = '/img/members/zare.jpg';
+    // const src5 = '/img/members/falahian.jpg';
+    // const src6 = '/img/members/hashemi.jpg';
+    // const src7 = '/img/members/roudi.jpg';
+    // const src8 = '/img/members/rostami.jpg';
+    // const src9 = '/img/members/sobhani.jpg';
+    // const src10 = '/img/members/ahmadi.jpg';
+    // const src11 = '/img/members/attar.jpg';
+    // const src12 = '/img/members/lamei.jpg';
+    // const src13 = '/img/members/yousef.jpg';
+
+
+    const src = '/img/members/heyatomana.png';
 
     return (
         <Grid container spacing={8} className="p-3">
@@ -28,7 +31,10 @@ export default function page() {
                     </Typography>
                 </div>
 
-                <div className="my-6">
+
+                <Image className="mx-auto rounded-3xl" src={src} blurDataURL={'img/wait.png'} placeholder="blur" width={1000} height={1000} alt="Activities" />
+
+                {/* <div className="my-6">
                     <Typography variant="h1" sx={{ fontSize: { xs: '15px', sm: '18px', md: '20px' } }}>
                         اعضا حقوقی
                     </Typography>
@@ -202,7 +208,7 @@ export default function page() {
                         </Link>
                     </Grid>
 
-                </Grid>
+                </Grid> */}
             </Grid>
             <Grid item xs={12} sm={5} md={4} className="grid-item">
                 <LastNews type='news' />
