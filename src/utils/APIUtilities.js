@@ -218,31 +218,77 @@ export const GetRequestDocumentAndBook = async (type, url) => {
     }
 }
 
+const checkCredentials = (body, type) => {
+    if (type === 'document') {
+        if (!body?.name || !body?.writer || !body?.category || !body?.magazine)
+            return { credentials: null, status: 400 }
+        else return {
+            status: 200,
+            credentials: {
+                name: body?.name,
+                writer: body?.writer,
+                magazine: body?.magazine,
+                category: body?.category,
+                link: body?.link
+            }
+        }
+
+    } else if (type === 'book') {
+        if (!body?.name || !body?.writer || !body?.category || !body?.publisher)
+            return { credentials: null, status: 400 }
+        else return {
+            status: 200,
+            credentials: {
+                name: body?.name,
+                writer: body?.writer,
+                publisher: body?.publisher,
+                category: body?.category,
+                link: body?.link
+            }
+        }
+
+    } else if (type === 'idea') {
+        if (!!body?.name, !!body?.briefDiscription, !!body?.discription, !!body?.applicant, !!body?.budget)
+            return { credentials: null, status: 400 }
+        else return {
+            status: 200,
+            credentials: {
+                name: body?.name,
+                briefDiscription: body?.briefDiscription,
+                discription: body?.discription,
+                applicant: body?.applicant,
+                budget: body?.budget
+            }
+        }
+
+    } else if (type === 'investor') {
+        if (!!body?.name, !!body?.conditions, !!body?.budget)
+            return { credentials: null, status: 400 }
+        else return {
+            status: 200,
+            credentials: {
+                name: body?.name,
+                conditions: body?.conditions,
+                budget: body?.budget
+            }
+        }
+
+    }
+}
+
 export const PostRequestDocumentAndBook = async (type, body) => {
     try {
         const userRole = await getUserRole()
         if (userRole !== "Admin")
             return { message: "Unauthorized", status: 403 }
 
-        const { name, writer, magazine, publisher, category, link } = body
-        if (!name || !writer || !category || (!magazine && type === 'document') || (!publisher && type === 'book'))
+        const { credentials, status } = checkCredentials(body, type);
+        if (status !== 200)
             return { message: "invalid credentials", status: 400 }
 
-        const data = {
-            name,
-            writer,
-            category
-        }
-
-        if (!!link) data.link = link
-
-        if (type === 'document') data.magazine = magazine
-        else data.publisher = publisher
-
-        const newData = await prisma[type].create({ data })
+        const newData = await prisma[type].create({ credentials })
         return { data: newData }
     } catch (error) {
-        console.log(error);
         return { message: `POST A NEW ${type.toUpperCase()} ERROR`, error, status: 500 }
     }
 }
