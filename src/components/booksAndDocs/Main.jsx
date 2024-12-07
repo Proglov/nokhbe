@@ -4,7 +4,7 @@ import InfiniteScroll from './InfiniteScroll'
 
 
 export default function Main({ type }) {
-    const url = process.env.NEXT_PUBLIC_API_URL + '/api/' + type + '?'
+    const url = '/api/' + type + '?'
     const perPage = 20
 
     const [data, setData] = useState([])
