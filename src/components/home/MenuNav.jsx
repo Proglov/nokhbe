@@ -1,7 +1,7 @@
 import { Divider } from '@mui/material';
 import styles from '../../styles/Home/MenuNav.module.css'
 import Link from 'next/link';
-import { BooksAndDocs, IndustryBank, Introduction, NewsAndEvents } from './MenuNavClientComponents';
+import { InfoBank, Introduction, NewsAndEvents } from './MenuNavClientComponents';
 
 export default async function MenuNav() {
 
@@ -33,11 +33,7 @@ export default async function MenuNav() {
 
                         <Divider orientation='vertical' sx={{ backgroundColor: 'white', height: '50%' }} />
 
-                        <BooksAndDocs />
-
-                        <Divider orientation='vertical' sx={{ backgroundColor: 'white', height: '50%' }} />
-
-                        <IndustryBank />
+                        <InfoBank />
 
                         <Divider orientation='vertical' sx={{ backgroundColor: 'white', height: '50%' }} />
 
