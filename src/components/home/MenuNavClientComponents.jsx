@@ -285,7 +285,7 @@ export const InfoBank = () => {
                             MenuListProps={{
                                 'aria-labelledby': 'dropdownDelayButton2',
                             }}
-                            sx={{ marginLeft: { xs: '22vw', sm: '15vw' }, marginTop: '-8vw' }}>
+                            sx={{ marginLeft: { xs: '20vw', sm: '15vw' }, marginTop: '-10vw' }}>
                             <li className='py-1 px-5 sm:px-3 md:px-5 lg:px-10' style={{ borderBottom: '3px solid black' }}>
                                 <Box sx={{ fontSize: { xs: '10px', sm: '15px', md: '20px', lg: '23px', paddingX: { xs: '5px', sm: '4px', md: '6px', lg: '8px' } } }} onClick={handleClose}>
                                     <Link href='/books'>
@@ -325,7 +325,7 @@ export const InfoBank = () => {
                             MenuListProps={{
                                 'aria-labelledby': 'dropdownDelayButton2',
                             }}
-                            sx={{ marginLeft: { xs: '22vw', sm: '-22vw' }, marginTop: '-8vw' }}>
+                            sx={{ marginLeft: { xs: '22vw', sm: '15vw' }, marginTop: '-8vw' }}>
                             <li className='py-1 px-5 sm:px-3 md:px-5 lg:px-10' style={{ borderBottom: '3px solid black' }}>
                                 <Box sx={{ fontSize: { xs: '10px', sm: '15px', md: '20px', lg: '23px', paddingX: { xs: '5px', sm: '4px', md: '6px', lg: '8px' } } }} onClick={handleClose}>
                                     <Link href='/ideas'>
