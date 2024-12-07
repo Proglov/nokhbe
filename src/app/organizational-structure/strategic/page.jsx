@@ -19,8 +19,8 @@ export default function page() {
 
                     <Grid container gap={2}>
 
-                        <Grid item xs={3.7} className="mt-5">
-                            <Image className="mx-auto rounded-3xl mt-[-15px]" src={src3} blurDataURL={'img/wait.png'} placeholder="blur" width={240} height={100} alt="Activities" />
+                        <Grid item xs={3.7} className="mt-7">
+                            <Image className="mx-auto rounded-3xl mt-[-15px]" src={src3} blurDataURL={'img/wait.png'} placeholder="blur" width={200} height={100} alt="Activities" />
                             <Link href={'https://civilica.com/p/240413/'} className="p-1 text-center text-sm">
                                 دکتر سید محمد حسین رضوی
                                 <br />
@@ -37,8 +37,8 @@ export default function page() {
                             </Link>
                         </Grid>
 
-                        <Grid item xs={3.7} className="mt-5">
-                            <Image className="mx-auto rounded-3xl" src={src8} blurDataURL={'img/wait.png'} placeholder="blur" width={260} height={120} alt="Activities" />
+                        <Grid item xs={3.7} className="mt-3">
+                            <Image className="mx-auto rounded-3xl" src={src8} blurDataURL={'img/wait.png'} placeholder="blur" width={200} height={100} alt="Activities" />
                             <Link href={'https://civilica.com/p/182461/'} className="p-1 text-center text-sm">
                                 دکتر عباسعلی رستمی
                                 <br />
